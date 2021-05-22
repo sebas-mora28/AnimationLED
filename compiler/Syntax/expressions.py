@@ -10,7 +10,9 @@ def p_expression_set(p):
 
 def p_expression(p):
     '''expression : variableAssign 
-                  | built_in_functions'''
+                  | built_in_functions
+                  | procedure
+                  | procedureCall'''
         
     p[0] = p[1]
 

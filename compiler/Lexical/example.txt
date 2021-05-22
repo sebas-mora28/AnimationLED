@@ -14,10 +14,16 @@
 
 
 #matrix = [];
-matrix = [[True, True], [True, True]];
+#matrix = [[True, True], [True, True]];
 
 #if x >= 2
 
 
 #call main
 
+
+Procedure main(args)
+begin 
+end;
+
+Call main(1);

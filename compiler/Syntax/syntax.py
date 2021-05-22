@@ -2,12 +2,12 @@ import sys
 sys.path.append("..")
 import yacc 
 from Lexical.lexer import Lexer
-from Syntax.procedures import *
 from Syntax.builtInFunction import * 
-from Syntax.arithmetic_operation import *
 from Syntax.variableAssign import *
 from Syntax.expressions import *
 from Syntax.list import * 
+from Syntax.proceduresCall import *
+from Syntax.procedures import *
 
 def p_program(p):
     ''' program : expression_set '''
@@ -16,8 +16,8 @@ def p_program(p):
 
 
 def p_error(p):
-        print("error")
-        #print(f"Syntax error in input: line {p.lineno} in {p.value} token")
+        #print("error")
+        print(f"Syntax error in input: line {p.lineno} in {p.value} token")
 
 
 
