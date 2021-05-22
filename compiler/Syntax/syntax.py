@@ -2,41 +2,28 @@ import sys
 sys.path.append("..")
 import yacc 
 from Lexical.lexer import Lexer
-
-class Syntax(object):
-
-    def __init__(self, sourceCode):
-        self.lexer= Lexer(); 
-        self.sourceCode = sourceCode 
-        self.tokens = self.lexer.tokens
-        self.parser = yacc.yacc(module=self)
-
-    def syntaxAnalysis(self):
-        return self.parser.parse(self.sourceCode, self.lexer)
-
-
-    def p_expression(self, p):
-        '''expression : INTEGER 
-                      | ID'''
-        p[0] = p[1]
-
-
-    def p_math_operation(self, p):
-        '''expression : expression PLUS expression SEMICOLON
-                      | expression MINUS expression SEMICOLON
-                      | expression DIVIDE expression SEMICOLON
-                      | expression DIVIDEENTIRE expression SEMICOLON
-                      | expression TIMES expression SEMICOLON
-                      | expression MODULE expression SEMICOLON'''
-
-        p[0] = p[1] + p[3]
+from Syntax.procedures import *
+from Syntax.builtInFunction import * 
+from Syntax.arithmetic_operation import *
+from Syntax.variableAssign import *
 
 
 
-    def p_empty(self, p):
-        '''empty : '''
-        p[0] = None
+def p_program(p):
+    ''' program : expressions '''
+    p[0] = p[1]
 
-    def p_error(self, p):
+
+
+def p_error(p):
         print("Syntax error in input!")
+
+
+
+def systaxAnalysis(sourceCode, lexer):
+    tokens = lexer.tokens
+    parser = yacc.yacc(start="program")
+    result = parser.parse(sourceCode, lexer)
+    print(result)
+    return result
 

@@ -21,12 +21,10 @@ class Lexer(object):
         'in': 'IN',
         'step': 'STEP',
 
-    
-        #Built-in function
         'list':'LIST',
         'range':'RANGE',
         'len':'LEN',
-        'call':'CALL',
+        'Call':'CALL',
         'Blink': 'BLINK',
         'Delay': 'DELAY',
         'PrintLed':'PRINTLED',
@@ -40,10 +38,12 @@ class Lexer(object):
     tokens = [
         'ID',
 
+        'TIMERANGE',
+
 
         # Data types 
         'INTEGER',
-        'BOLEAN',
+        'BOOLEAN',
 
 
         #Literals
@@ -66,7 +66,7 @@ class Lexer(object):
         'RSBRACKET',
         'LCBRACKET',
         'RCBRACKET',
-
+    
         #List
         'INSERT',
         'DELETE',
@@ -105,13 +105,6 @@ class Lexer(object):
         t.value = int(t.value)
         return t
 
-
-    def t_ID(self, t):
-        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
-        t.type = self.reserved.get(t.value, 'ID')
-        return t
-    
-
     
     def t_newline(self, t):
         r'\n+'
@@ -122,7 +115,6 @@ class Lexer(object):
     def t_INSERT(self , t):
         r'\.insert'
         return t 
-
 
 
     def t_DELETE(self, t):
@@ -138,10 +130,16 @@ class Lexer(object):
 
 
     def t_TIMERANGE(self, t):
-        r'\ SeG|Mil|Min'
+        r'\"(Seg|Min|Mil)\"'
+        t.value = t.value[1:-1]
         return t
 
 
+    def t_ID(self, t):
+        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
+        t.type = self.reserved.get(t.value, 'ID')
+        return t
+    
 
     def t_OBJECTTYPE(self, t):
         r'\ "C"|"F"|"M"'
@@ -169,8 +167,9 @@ class Lexer(object):
 
 
     def t_error(self, t):
-        print("Illegal character '%s'" % t.value[0])
+        print("Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)
         t.lexer.skip(1)
+
 
     def input(self, sourceCode):
         self.lexer.input(sourceCode)
@@ -187,6 +186,7 @@ class Lexer(object):
             if not tok:
                 break
             print(tok)
+
 
 
 

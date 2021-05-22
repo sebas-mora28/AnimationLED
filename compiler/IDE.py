@@ -9,8 +9,17 @@ root.geometry("900x600")
 
 
 
+def compile(code):
+    lexer = Lexer()
+    lexer.lexicalAnalysis(code)
+    result = systaxAnalysis(code, lexer)
+
+
+
 canvas = Canvas(root, width=900, height=600)
 canvas.place(x=0, y=0)
+
+
 
 
 codePad = Text(canvas, width=105, height=20)
@@ -18,12 +27,7 @@ codePad.place(x=20, y=30)
 
 
 
-def compile(code):
-    lexer = Lexer()
-    lexer.lexicalAnalysis(code)
-    syntax = Syntax(code)
-    result = syntax.syntaxAnalysis()
-    print(result)
+
 
 
 
@@ -32,4 +36,4 @@ compileButton.place(x=20, y=500)
 
 
 
-root.mainloop()
+#root.mainloop()
