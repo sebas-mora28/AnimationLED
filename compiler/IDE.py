@@ -36,4 +36,4 @@ compileButton.place(x=20, y=500)
 
 
 
-#root.mainloop()
+root.mainloop()

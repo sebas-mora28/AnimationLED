@@ -6,17 +6,18 @@ from Syntax.procedures import *
 from Syntax.builtInFunction import * 
 from Syntax.arithmetic_operation import *
 from Syntax.variableAssign import *
-
-
+from Syntax.expressions import *
+from Syntax.list import * 
 
 def p_program(p):
-    ''' program : expressions '''
+    ''' program : expression_set '''
     p[0] = p[1]
 
 
 
 def p_error(p):
-        print("Syntax error in input!")
+        print("error")
+        #print(f"Syntax error in input: line {p.lineno} in {p.value} token")
 
 
 

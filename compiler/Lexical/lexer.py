@@ -135,16 +135,9 @@ class Lexer(object):
         return t
 
 
-    def t_ID(self, t):
-        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
-        t.type = self.reserved.get(t.value, 'ID')
-        return t
-    
 
     def t_OBJECTTYPE(self, t):
         r'\ "C"|"F"|"M"'
-
-
 
     def t_LISTSHAPE(self, t):
         r'\.shape( F | C)'
@@ -156,6 +149,10 @@ class Lexer(object):
 
     def t_BOOLEAN(self, t):
         r'True|False'
+        if(t.value == "True"):
+            t.value = True
+        else: 
+            t.value = False
         return t
 
 
@@ -165,6 +162,11 @@ class Lexer(object):
         return t
 
 
+    def t_ID(self, t):
+        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
+        t.type = self.reserved.get(t.value, 'ID')
+        return t
+    
 
     def t_error(self, t):
         print("Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)

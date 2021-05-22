@@ -9,7 +9,7 @@ __pycache__/
 *$py.class
 
 
-Lexical/
+Lexical/__pycache__
 Syntax/__pycache__
 
 g

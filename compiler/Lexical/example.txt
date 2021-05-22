@@ -1,20 +1,23 @@
- var = 3;
+#var = 3;
 
- num1, num2 = 3, 5;
+#num1, num2 = 3, 5;
  
-Delay( 6, "Mil");
+#Delay( 6, "Mil");
 
 
-matriz.insert(1, 1, 1);
-matriz.del(1, 1);
+#matriz.insert(1, 1, 1);
+#matriz.del(1, 1);
 
-Procedure main(args1, args2)
-begin 
-end 
-
-
-if x >= 2
+#Procedure main(args1, args2)
+#begin 
+#end 
 
 
-call main
+#matrix = [];
+matrix = [[True, True], [True, True]];
+
+#if x >= 2
+
+
+#call main
 
