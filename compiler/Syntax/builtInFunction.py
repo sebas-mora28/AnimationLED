@@ -11,7 +11,8 @@ def p_built_in_functions(p):
                           | matrix_insert
                           | matrix_delete
                           | matrix_dimensions
-                          | list_boolean_operation'''
+                          | list_boolean_operation
+                          | list_creation'''
     p[0] = p[1]
 
 
@@ -53,6 +54,17 @@ def p_len_index(p):
     '''len : LEN LPAREN ID index RPAREN SEMICOLON'''
     print("LEN")
 
+
+#range
+
+
+def p_list_creation(p):
+    '''list_creation : LIST LPAREN range RPAREN SEMICOLON'''
+    print("LIST CREATION")
+
+
+def p_range(p):
+    'range : RANGE LPAREN INTEGER COMMA BOOLEAN RPAREN'
 
 
 #list insert 

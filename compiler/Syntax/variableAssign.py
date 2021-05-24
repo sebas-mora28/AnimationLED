@@ -11,6 +11,9 @@ def p_value(p):
     p[0] = [1]
 
 
+
+# Asignacion de variable 
+
 def p_variable_assign_1(p):
     '''variable_assign : ID ASSIGN value SEMICOLON'''
     p[0] = p[1]
@@ -22,9 +25,15 @@ def p_variable_assign_2(p):
     #Se asgina los valores a la variables
 
 
+
+
+#Manejo de indices
+
+
 def p_index_access(p):
     '''index_access : ID index'''
     p[0] = p[1]
+
 
 def p_index_assign(p):
     '''index_assign : ID index ASSIGN value SEMICOLON'''
@@ -33,7 +42,6 @@ def p_index_assign(p):
 def p_index_list(p):
     '''index : LSBRACKET index_type RSBRACKET'''
     print("LIST INDEX")
-
 
 def p_index_matrix(p):
     '''index :  LSBRACKET index_type RSBRACKET LSBRACKET index_type RSBRACKET '''
@@ -47,11 +55,13 @@ def p_index_type(p):
                   | ID 
                   | INTEGER'''
 
+
 def p_index_value(p):
     '''index_value : ID 
                    | INTEGER'''
 
     p[0] = p[1]
+
 
 def p_index_range(p):
     '''index_range : index_value COLON index_value'''
