@@ -39,6 +39,7 @@ class Lexer(object):
         'ID',
 
         'TIMERANGE',
+        'OBJECTTYPE',
 
 
         # Data types 
@@ -124,7 +125,8 @@ class Lexer(object):
 
 
     def t_LISTOPERATOR(self , t):
-        r'\.(T|F|Neg)'
+        r'\.(Neg|N|T)'
+        t.value = t.value[1:]
         return t 
 
 
@@ -137,10 +139,13 @@ class Lexer(object):
 
 
     def t_OBJECTTYPE(self, t):
-        r'\ "C"|"F"|"M"'
+        r'\"(C|F|M)\"'
+        t.value = t.value[1:-1]
+        return t
+
 
     def t_LISTSHAPE(self, t):
-        r'\.shape( F | C)'
+        r'\.shape(F|C)'
         return t
 
     def t_COMMENT(self, t):
@@ -156,11 +161,9 @@ class Lexer(object):
         return t
 
 
-
     def t_COMPARATOR(self, t):
         r'<\=|>\=|=\=|!\=|<|>'
         return t
-
 
     def t_ID(self, t):
         r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""

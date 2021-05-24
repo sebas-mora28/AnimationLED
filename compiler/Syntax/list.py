@@ -7,7 +7,6 @@ def p_init_list(p):
 
 def p_list(p):
     '''list : LSBRACKET element_set RSBRACKET'''
-    print(p[1])
     p[0] = p[1]
 
 

@@ -8,9 +8,12 @@ from Syntax.expressions import *
 from Syntax.list import * 
 from Syntax.proceduresCall import *
 from Syntax.procedures import *
+from Syntax.conditional import *
+from Syntax.loops import * 
+
 
 def p_program(p):
-    ''' program : expression_set '''
+    '''program : expressions_set '''
     p[0] = p[1]
 
 

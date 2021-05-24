@@ -27,3 +27,49 @@ begin
 end;
 
 Call main(1);
+
+
+if var == True {
+    var  = 5;
+};
+
+if var == 1 {
+    var  = 5;
+};
+
+for var in x {
+    x = 1;
+};
+
+
+lista[1] = 2;
+lista[1][3] = 2;
+lista[3,3] = True;
+lista[3:3] = False;
+lista[:,3] = False;
+
+
+Blink(lista[4], 1, "Seg", True);
+
+PrintLed(1, 1, True)
+
+PrintLedX("C", 2, lista);
+
+MiNuevaMatriz.insert(True , 0, 0);
+MiNuevaMatriz.insert([[True, True, False, True]] , 0, 0);
+
+MiMatriz.del(1,0);
+
+
+lista.insert(2, False);
+lista.del(4);
+
+
+lista.shapeC;
+lista.shapeF;
+
+
+lista[1].Neg;
+lista[1].T;
+lista[2].N;
+
