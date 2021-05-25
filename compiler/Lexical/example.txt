@@ -1,3 +1,16 @@
+
+
+
+
+
+Procedure Main()
+{ 
+    var = [True, True, True];
+};
+
+
+
+
 #var = 3;
 
 #num1, num2 = 3, 5;
@@ -5,73 +18,72 @@
 #Delay( 6, "Mil");
 
 
-#matriz.insert(1, 1, 1);
+#matriz.insert(True, 1, 1);
 #matriz.del(1, 1);
 
-#Procedure main(args1, args2)
-#begin 
-#end 
+
 
 
 #matrix = [];
 #matrix = [[True, True], [True, True]];
 
 #if x >= 2
+#{
+
+#};
 
 
-#call main
+#Call main();
 
 
-Procedure main(args)
-begin 
-end;
-
-Call main(1);
 
 
-if var == True {
-    var  = 5;
-};
-
-if var >= 1 {
-    var  = 5;
-};
-
-for var in x {
-    x = 1;
-};
+#Call main(1);
 
 
-lista[1] = 2;
-lista[1][3] = 2;
-lista[3,3] = True;
-lista[3:3] = False;
-lista[:,3] = False;
+#if var == True {
+#    var  = 5;
+#};
+
+#if var >= 1 {
+#    var  = 5;
+#};
+
+#for var in x {
+#    x = 1;
+#};
 
 
-Blink(lista[4], 1, "Seg", True);
-
-PrintLed(1, 1, True)
-
-PrintLedX("C", 2, lista);
-
-MiNuevaMatriz.insert(True , 0, 0);
-MiNuevaMatriz.insert([[True, True, False, True]] , 0, 0);
-
-MiMatriz.del(1,0);
+#lista[1] = 2;
+#lista[1][3] = 2;
+#lista[3,3] = True;
+#lista[3:3] = False;
+#lista[:,3] = False;
 
 
-lista.insert(2, False);
-lista.del(4);
+#Blink("C", 1, "Seg", True);
+
+#PrintLed(1, 1, True)
+
+#PrintLedX("C", 2, lista);
+
+#MiNuevaMatriz.insert(True , 0, 0);
+#MiNuevaMatriz.insert([[True, True, False, True]] , 0, 0);
+
+#MiMatriz.del(1,0);
 
 
-lista.shapeC;
-lista.shapeF;
+#lista.insert(2, False);
+#lista.del(4);
 
 
-lista[1].Neg;
-lista[1].T;
-lista[2].N;
+#lista.shapeC;
+#lista.shapeF;
 
 
-list(range(4, True));
+#lista[1].Neg;
+#lista[1].T;
+#lista[2].N;
+
+
+#list(range(4, True));

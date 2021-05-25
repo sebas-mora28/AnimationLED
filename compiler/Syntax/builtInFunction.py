@@ -24,7 +24,7 @@ def p_delay(p):
 
 
 def p_blink(p):
-    '''blink : BLINK LPAREN index_access COMMA INTEGER COMMA TIMERANGE COMMA BOOLEAN RPAREN SEMICOLON'''
+    '''blink : BLINK LPAREN OBJECTTYPE COMMA INTEGER COMMA TIMERANGE COMMA BOOLEAN RPAREN SEMICOLON'''
     print("blink")
 
 

@@ -16,8 +16,6 @@ class Lexer(object):
         'else': 'ELSE',
         'while': 'WHILE',
         'for': 'FOR',
-        'begin':'BEGIN',
-        'end': 'END',
         'in': 'IN',
         'step': 'STEP',
 

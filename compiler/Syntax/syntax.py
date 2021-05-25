@@ -10,13 +10,15 @@ from Syntax.proceduresCall import *
 from Syntax.procedures import *
 from Syntax.conditional import *
 from Syntax.loops import * 
+from Sematic.SemanticAnalysis import *
+
+
 
 
 def p_program(p):
-    '''program : expressions_set '''
-    p[0] = p[1]
-
-
+    '''program : expressions_set'''
+    print(p[1])
+    p[0] = Program(p[1])
 
 def p_error(p):
         #print("error")
@@ -28,6 +30,5 @@ def systaxAnalysis(sourceCode, lexer):
     tokens = lexer.tokens
     parser = yacc.yacc(start="program")
     result = parser.parse(sourceCode, lexer)
-    print(result)
     return result
 
