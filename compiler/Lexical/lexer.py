@@ -104,7 +104,9 @@ class Lexer(object):
         t.value = int(t.value)
         return t
 
-    
+    def t_SPACETAB(self,t):
+        r'[ \t]+'
+
     def t_newline(self, t):
         r'\n+'
         t.lexer.lineno += len(t.value)
@@ -184,6 +186,8 @@ class Lexer(object):
     
     def lexicalAnalysis(self, data):
         self.lexer.input(data)
+
+
         while True:
             tok = self.lexer.token()
             if not tok:

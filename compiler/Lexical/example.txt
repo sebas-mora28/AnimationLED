@@ -1,11 +1,25 @@
 
 
 
+Procedure funcion(arg1)
+{
+
+    var = 45;
+    var, caca = 56, True;
+};
 
 
 Procedure Main()
-{ 
-    var = [True, True, True];
+{
+    var = 2;
+
+    var = 5;
+    xd, num, caca = True , 43, False;
+
+    num1 = [[True, True, True], [True, True, True]];
+
+
+    Call funcion(3);
 };
 
 

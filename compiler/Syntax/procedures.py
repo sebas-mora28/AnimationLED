@@ -11,15 +11,17 @@ def p_procedure(p):
     if(p[2] == "Main"):
         p[0] = MainProcedure(p[2], [], p[6])
     else:
-        p[0] = Procedure(p[2],p[4],[6])
+        p[0] = Procedure(p[2],p[4],p[6])
+
+
 
 def p_procedure_parameters(p):
     '''procedure : PROCEDURE ID LPAREN parameters_set RPAREN LCBRACKET expressions_set RCBRACKET SEMICOLON'''
     print("PROCEDURE PARAMETER")
     if(p[2] == "Main"):
-        p[0] = MainProcedure(p[2], [], p[6])
+        p[0] = MainProcedure(p[2], p[4], p[7])
     else:
-        p[0] = Procedure(p[2],p[4],[6])
+        p[0] = Procedure(p[2],p[4],p[7])
 
 
 def p_parameter_set(p):

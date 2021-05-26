@@ -1,8 +1,7 @@
 
 
 
-
-class Symbol:
+class SymbolVariable:
 
     def __init__(self, ID, value, symbol_type, scope):
         self.ID = ID
@@ -24,16 +23,58 @@ class Symbol:
         return self.scope
 
 
+class SymbolProcedure:
+
+    def __init__(self, ID, procedure):
+        self.procedure = procedure
+        self.ID = ID
+
+    def getID(self):
+        return ID
+    
+    def getProcedure(self):
+        return self.procedure
+
+
 class SymbolTable:
 
     def __init__(self):
-        self.symbol_table = {}
+        self.variableTable = {}
+        self.procedureTable = {}
 
 
-    def add_symbol(self, ID, value, symbol_type, scope):
-        new_symbol = Symbol(ID, value, symbol_type, scope)
-        symbol_table[ID] = new_symbol
+    def addSymbol(self, ID, value, symbol_type, scope):
+        new_symbol = SymbolVariable(ID, value, symbol_type, scope)
+        self.variableTable[ID] = new_symbol
 
-    def get_symbol_by_ID(self , ID):
-        return self.symbol_table[ID]
+    def getSymbolByID(self , ID):
+        return self.variableTable[ID]
+
+    def addProcedureSymbol(self, ID, procedure):
+        new_procedure = SymbolProcedure(ID, procedure)
+        self.procedureTable[ID] = new_procedure
+
+    def changeSymbolValue(self, ID, value):
+        temp = self.variableTable[ID]
+        temp.value = value
+
+
+    def getProcedureByID(self, ID):
+        try:
+            return self.procedureTable[ID] 
+        except KeyError:
+            return None
+
+    def exist(self, ID):
+        return ID in self.variableTable
+
+
+    
+    def print(self):
+        for key in self.variableTable:
+            var = self.variableTable[key]
+
+            print(f"ID : {var.ID} value : {var.value} scope : {var.scope}")
+
+    
      

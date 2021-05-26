@@ -13,16 +13,23 @@ from Syntax.loops import *
 from Sematic.SemanticAnalysis import *
 
 
+parsed = None
 
+erorrs = []
 
 def p_program(p):
     '''program : expressions_set'''
     print(p[1])
     p[0] = Program(p[1])
 
+
+
 def p_error(p):
-        #print("error")
-        print(f"Syntax error in input: line {p.lineno} in {p.value} token")
+    if p:
+        erorrs.append(f"Syntax error in input: line {p.lineno} in {p.value} token")
+    else:
+        erorrs.append(f"Syntax error at EOF")
+
 
 
 

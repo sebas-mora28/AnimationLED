@@ -8,9 +8,15 @@ def compile(code):
     lexer = Lexer()
     lexer.lexicalAnalysis(code)
     res = systaxAnalysis(code, lexer)
-    semantic_analysis(res)
 
+    if erorrs == []:
+        program = semantic_analysis(res)
+        if program.getErrors() != []:
+            program.semanticError.printErrors()
 
+    else:
+        for i in range(len(erorrs)):
+            print(erorrs[i])
 
 file = open('example.txt', 'r')
 compile(file.read())
