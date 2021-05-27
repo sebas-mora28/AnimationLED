@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 import yacc 
 from Lexical.lexer import Lexer
-from Syntax.builtInFunction import * 
+from Syntax.builtInProcedures import * 
 from Syntax.variableAssign import *
 from Syntax.expressions import *
 from Syntax.list import * 

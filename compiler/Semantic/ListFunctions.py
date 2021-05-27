@@ -3,7 +3,7 @@ sys.path.append("..")
 from Semantic.Common import * 
 
 
-class matrixDimension(Instruction):
+class MatrixDimension(Instruction):
 
     def __init__(self, ID, dimension):
         self.ID = ID

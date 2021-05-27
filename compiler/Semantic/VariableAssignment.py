@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 from Semantic.IndexType import *
 from Semantic.Common import *
-from Semantic.BuiltInFunctions import *
+from Semantic.ListFunctions import *
 
 class value(Instruction):
 
@@ -27,7 +27,7 @@ class value(Instruction):
                 else:
                     program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
         
-        if isinstance(self.value, matrixDimension):
+        if isinstance(self.value, MatrixDimension):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
