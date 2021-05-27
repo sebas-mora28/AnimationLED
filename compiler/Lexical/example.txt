@@ -14,7 +14,7 @@ Procedure Main()
 {
     var = 56;
 
-    #var = True;
+    var = Procedure;
 
     #casa = var;
     #var = 1;

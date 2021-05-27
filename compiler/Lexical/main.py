@@ -7,16 +7,22 @@ from Semantic.SemanticAnalysis import *
 def compile(code):
     lexer = Lexer()
     lexer.lexicalAnalysis(code)
-    res = systaxAnalysis(code, lexer)
 
-    if erorrs == []:
-        program = semantic_analysis(res)
-        if program.getErrors() != []:
-            program.semanticError.printErrors()
+
+    if(lexer.errors == []): #Erorres en el analisis de lexico 
+        res = systaxAnalysis(code, lexer)
+        if syntaxErorrs == []:
+            program = semantic_analysis(res)
+            if program.getErrors() != []:
+                program.semanticError.printErrors()
+
+        else:
+            for i in range(len(syntaxErorrs)):
+                print(syntaxErorrs[i])
 
     else:
-        for i in range(len(erorrs)):
-            print(erorrs[i])
+        for i in range(len(lexer.errors)):
+                print(lexer.errors[i])
 
 file = open('example.txt', 'r')
 compile(file.read())

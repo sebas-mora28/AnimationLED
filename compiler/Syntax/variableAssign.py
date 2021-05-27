@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 from Semantic.SemanticAnalysis import *
 from Semantic.IndexType import *
-from Semantic.Atomic import *
+from Semantic.Common import *
 
 def p_value(p):
     '''value : INTEGER 

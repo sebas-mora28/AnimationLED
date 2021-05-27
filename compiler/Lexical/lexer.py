@@ -3,10 +3,15 @@ sys.path.append("..")
 import lex
 
 
+
+
+
+
 class Lexer(object):
 
     def __init__(self):
         self.lexer = lex.lex(object=self)
+        self.errors = []
 
 
     reserved = {
@@ -172,8 +177,7 @@ class Lexer(object):
     
 
     def t_error(self, t):
-        print("Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)
-        t.lexer.skip(1)
+        self.errors.append(f"Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)
 
 
     def input(self, sourceCode):
@@ -197,7 +201,4 @@ class Lexer(object):
 
 
 
-
-    
-    
     

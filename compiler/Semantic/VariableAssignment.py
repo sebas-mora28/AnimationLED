@@ -124,8 +124,10 @@ class IndexAssign(Instruction):
 
         if symbolTable.exist(self.ID):
             oldValue = symbolTable.getSymbolByID(self.ID)
-            if isinstance(oldValue.value, type(self.value)):
-                pass
+
+
+            pass
+        
                 
             
 
@@ -134,48 +136,3 @@ class IndexAssign(Instruction):
 
 
 
-
-        '''
-        if(symbolTable.exist(self.ID)):
-            variableSymbol = symbolTable.getSymbolByID(self.ID)
-            if(isinstance(variableSymbol.value, list)):
-
-                if isinstance(self.index, IndexOne):
-                    if isinstance(self.index.indexValue, int):
-                        if verifyListBoundaries(program, self.index.indexValue, variableSymbol):
-                            variableSymbol.value[self.index.indexValue] = self.value
-
-                    else:
-                        i = getIndexByID(program, symbolTable, self.index.indexValue)
-                        if verifyListBoundaries(program, i, variableSymbol):
-                            variableSymbol.value[i] = self.value
-                
-                
-                
-                if isinstance(self.index, IndexColumn):
-                    pass
-                if isinstance(self.index, IndexPair):
-                    pass 
-
-                if isinstance(self.index, IndexRange):
-                    if verifyListBoundaries_2(program, self.index.fromIndex, self.index.toIndex, variableSymbol):
-                        
-                        if(isinstance(self.value, list)):
-                            len_list = self.index.toIndex - self.index.fromIndex
-                            if(len_list == len(self.value)):
-                                variableSymbol.value[self.index.fromIndex:self.index.toIndex] = self.value
-
-                            else:
-                                program.semanticError.invalid_range_assignment(self.ID)
-                        else:
-                            program.semanticError.invalid_range_assignment(self.ID)
-
-                    else:
-                        pass
-            else:
-
-                program.semanticError.variable_is_not_a_list(self.ID)
-        
-        else:
-            program.semanticError.symbol_variable_not_found(self.ID)
-        '''

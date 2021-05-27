@@ -16,7 +16,7 @@ from Semantic.SemanticAnalysis import *
 
 parsed = None
 
-erorrs = []
+syntaxErorrs = []
 
 def p_program(p):
     '''program : expressions_set'''
@@ -27,9 +27,9 @@ def p_program(p):
 
 def p_error(p):
     if p:
-        erorrs.append(f"Syntax error in input: line {p.lineno} in {p.value} token")
+        syntaxErorrs.append(f"Syntax error in input: line {p.lineno} before {p.value} token")
     else:
-        erorrs.append(f"Syntax error at EOF")
+       syntaxErorrs.append(f"Syntax error at EOF")
 
 
 
