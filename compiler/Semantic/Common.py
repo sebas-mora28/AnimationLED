@@ -7,19 +7,17 @@ class Instruction:
 
 
 
-def verifyListBoundaries(program, index, listSymbol):
+def verifyListBoundariesOne(index, listSymbol):
         print(index)
         if index < len(listSymbol.value):
             return True
-        program.semanticError.index_out_of_range(listSymbol.ID)
         return False
 
     
-def verifyListBoundaries_2(program, index1, index2, listSymbol):
+def verifyListBoundaries_2(index1, index2, listSymbol):
         print(index2)
         if(index1 >= 0 and index2 < len(listSymbol.value)):
             return True  
-        program.semanticError.index_out_of_range(listSymbol.ID)
         return False
 
 
@@ -59,7 +57,7 @@ def isList(lista):
     if(lista == []):
         return True
 
-    for i in range(len(list)):
+    for i in range(len(lista)):
         if isinstance(lista[i], list):
             return False
     
@@ -74,8 +72,22 @@ def isMatrix(matrix):
     if(matrix == []):
         return True
 
-    for i in range(len(list)):
+    for i in range(len(matrix)):
         if not isinstance(matrix[i], list):
             return False
     
     return True
+
+
+
+
+def searchSymbolByID(ID, program, symbolTable):
+
+    if symbolTable.exist(ID):
+        return symbolTable.getSymbolByID(ID)
+
+    elif program.symbolTable.exist(ID):
+        return program.symbolTable.getSymbolByID(ID)
+
+    else:
+        return None

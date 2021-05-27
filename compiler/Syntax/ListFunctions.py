@@ -1,3 +1,10 @@
+import sys 
+sys.path.append("..")
+
+from Semantic.ListFunctions import *
+
+
+
 
 
 def p_built_in_functions(p):
@@ -10,7 +17,6 @@ def p_built_in_functions(p):
                           | list_delete 
                           | matrix_insert
                           | matrix_delete
-                          | matrix_dimensions
                           | list_boolean_operation
                           | list_creation'''
     p[0] = p[1]
@@ -74,13 +80,18 @@ def p_insert_value(p):
     '''insert_value : list 
                     | BOOLEAN'''
 
+    p[0] = p[1]
+
+
 def p_list_insert(p):
-    '''list_insert : ID INSERT LPAREN INTEGER COMMA insert_value RPAREN SEMICOLON'''
-    print("INSERT LIST")
+    '''list_insert : ID INSERT LPAREN INTEGER COMMA BOOLEAN RPAREN SEMICOLON'''
+    print("INSERT LIST" + str(p[6]))
+    p[0] = ListInsert(p[1], p[4], p[6])
 
 def p_list_delete(p):
     '''list_delete : ID DELETE LPAREN INTEGER RPAREN SEMICOLON'''
     print("DELETE LIST")
+    p[0] = ListDelete(p[1], p[4])
 
 
 
@@ -88,11 +99,12 @@ def p_list_delete(p):
 
 def p_matrix_insert(p):
     '''matrix_insert : ID INSERT LPAREN insert_value COMMA INTEGER RPAREN SEMICOLON'''
-    print("INSERT MATRIX")
+    p[0] = MatrixInsert(p[1], p[4], p[6], None)
 
 def p_matrix_insert_index(p):
     '''matrix_insert : ID INSERT LPAREN insert_value COMMA INTEGER COMMA INTEGER RPAREN SEMICOLON'''
     print("INSERT MATRIX INSERT")
+    p[0] = MatrixInsert(p[1], p[4], p[6], p[8])
 
 def p_matrix_delete(p):
     '''matrix_delete : ID DELETE LPAREN INTEGER COMMA INTEGER RPAREN SEMICOLON'''
@@ -100,9 +112,11 @@ def p_matrix_delete(p):
 
 
 def p_matrix_dimension(p):
-    '''matrix_dimensions : ID LISTSHAPE SEMICOLON '''
+    '''matrix_dimensions : ID LISTSHAPE '''
     print("MATRIX DIMENSIONS")
-
+    print(p[2])
+    p[0] = MatrixDimension(p[1], p[2])
+ 
 # list boolean operation 
 
 def p_list_boolean_operation(p):

@@ -5,25 +5,33 @@ Procedure funcion(arg1)
 {
     wht = 12;
     var = 43;
-    wht = var;
-    #num1[var] = False;
+    #num1[0] = [False, False];
 };
 
 
 Procedure Main()
 {
-    var = 56;
-
-    var = Procedure;
+    #var = True;
 
     #casa = var;
     #var = 1;
-    #xd, num, caca = True , 43, False;
+    xd, num, caca = True , 43, False;
 
-    num1 = [True, True, True, True, True, True];
+    #num = 54;
+
+    num1 = [[True, True, True, True, True, True], [True, True, True, True, True, True]];
 
 
-    #num1[2] =  False;
+    listica = [True , False, True];
+
+    listica.insert(2, True);
+    #listica.del(2);
+
+
+    num1.insert([[False], [False]], 1, 6);
+
+    cerote = num1.shapeC;
+    #num1 = xd;
     #num1[2] =  False;
 
     #num1[1:3] = [False, True];
@@ -31,7 +39,7 @@ Procedure Main()
     #num1[1:3] = [True, False];
 
     
-    Call funcion(3);
+    #Call funcion(3);
 };
 
 

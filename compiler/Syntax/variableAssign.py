@@ -11,7 +11,7 @@ def p_value(p):
               | list
               | len
               | list_creation
-              | matrix_dimensions
+              | matrix_dimensions 
               | arithmetic'''
     p[0] = value(p[1])
 
@@ -59,16 +59,9 @@ def p_index_access(p):
     p[0] = p[1]
 
 
-def p_index_assign_value(p):
-    '''index_assign_value : BOOLEAN
-                          | ID
-                          | list '''
-    p[0] = p[1]
-
-
 
 def p_index_assign(p):
-    '''index_assign : ID index ASSIGN index_assign_value SEMICOLON'''
+    '''index_assign : ID index ASSIGN value SEMICOLON'''
     print("INDEX ASSIGN")
     print(type(p[2]))
     p[0] = IndexAssign(p[1],p[2],p[4])

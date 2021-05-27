@@ -95,13 +95,13 @@ class CallProcedure(Instruction):
                     self.localsymbolTable.print()
 
                 else:
-                    program.semanticError.number_of_arguments_not_match(self.ID)
+                    program.semanticError.addError(f"Semantic error: Expect { len(procedure.getParameters())} arguments given {len(self.arguments)}")
             
             else:
-                program.semanticError.call_procedure_error(self.ID)
+                program.semanticError.addError(f"Semantic error: {self.ID} is not a procedure")
 
         else:
-            program.semanticError.symbol_procedure_not_found(self.ID)
+            program.semanticError.addError(f"Semantic error: Procedure {self.ID} not found")
 
 
 

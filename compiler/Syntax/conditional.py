@@ -15,5 +15,6 @@ def p_if_boolean(p):
 
 def p_conditional_iterable(p):
     '''conditional_iterable : ID
-                            | list'''
+                            | list
+                            | index_access'''
     p[0] = p[1]
