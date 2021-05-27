@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 from Lexical.lexer import *
 from Syntax.syntax import * 
-from Sematic.SemanticAnalysis import *
+from Semantic.SemanticAnalysis import *
 
 def compile(code):
     lexer = Lexer()

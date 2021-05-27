@@ -1,28 +1,20 @@
 import sys
 sys.path.append("..")
-from Sematic.SemanticError import *
-from Sematic.SymbolTable.SymbolTable import *
-from enum import Enum
-
-
-
-
-class Instruction:
-
-    def eval(self, program, symbolTable):
-        pass
+from Semantic.SemanticError import *
+from Semantic.SymbolTable.SymbolTable import *
+from Semantic.IndexType import * 
+from Semantic.VariableAssignment import * 
+from Semantic.common import *
+from Semantic.Atomic import *
 
 
 class Program:
-
-
 
     def __init__(self, expressions_set):
         self.expressions_set = expressions_set
         self.main = None
         self.semanticError = SemanticError()
-        self.progrmaOutput = []
-        self.output = []
+        self.programOutput = []
         self.symbolTable = SymbolTable()
 
 
@@ -101,6 +93,7 @@ class CallProcedure(Instruction):
                     for expression in expressions:
                         expression.eval(program, self.localsymbolTable)
 
+
                     self.localsymbolTable.print()
 
                 else:
@@ -127,79 +120,12 @@ class MainProcedure(Instruction):
 
         for expression in self.expressions:
             if expression:
-                if isinstance(expression, VariableAssign) or isinstance(expression, MultipleAssign):
+                if isinstance(expression, VariableAssign) or isinstance(expression, MultipleAssign) or isinstance(expression, IndexAssign):
                     expression.scope = "global"
                 
                 expression.eval(program, symbolTable)
         pass
 
-
-
-class VariableAssign(Instruction):
-
-    def __init__(self, ID, value):
-        self.ID = ID
-        self.value = value
-        self.scope = "local"
-        self.type = type(value)
-
-    def eval(self, program, symbolTable):
-        print(f"Se asigna una variable {self.scope}")
-    
-        if(self.scope == "global"):
-            self.assigment(program, program.symbolTable)
-        
-        else:
-            self.assigment(program, symbolTable)
-        
-
-    def assigment(self, program, symbolTable):
-        if(symbolTable.exist(self.ID)):
-                old_value = symbolTable.getSymbolByID(self.ID)
-                if(isinstance(old_value.value, self.type)):
-                    symbolTable.changeSymbolValue(self.ID, self.value)
-                else:
-                    program.semanticError.incompatible_ariable_type(self.ID)            
-        else:
-            symbolTable.addSymbol(self.ID, self.value, self.type, self.scope)
-
-     
-        
-
-class  MultipleAssign(Instruction):
-
-    def __init__(self, IDs, values):
-        self.IDs = IDs
-        self.values = values
-        self.scope = "local"
-
-    
-
-    def eval(self, program, symbolTable):
-
-        if(len(self.IDs) == len(self.values)):
-
-            for i in range(len(self.IDs)):
-
-                if(self.scope == "global"):
-                    self.assigment(program, program.symbolTable, self.IDs[i], self.values[i])
-                
-                else:
-                    self.assigment(program, symbolTable, self.IDs[i], self.values[i])
-
-        else:
-            program.semanticError.multiple_variable_declaration()
-
-
-    def assigment(self, program, symbolTable, ID, value):
-        if(symbolTable.exist(ID)):
-                old_value = symbolTable.getSymbolByID(ID)
-                if(isinstance(old_value.value, type(value))):
-                    symbolTable.changeSymbolValue(ID, value)
-                else:
-                    program.semanticError.incompatible_ariable_type(ID)            
-        else:
-            symbolTable.addSymbol(ID, value, type(value), self.scope)
 
 
 

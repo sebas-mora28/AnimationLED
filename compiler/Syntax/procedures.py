@@ -1,7 +1,7 @@
 import sys 
 sys.path.append("..")
 
-from Sematic.SemanticAnalysis import *
+from Semantic.SemanticAnalysis import *
 
 
 def p_procedure(p):

@@ -3,22 +3,34 @@
 
 Procedure funcion(arg1)
 {
-
-    var = 45;
-    var, caca = 56, True;
+    wht = 12;
+    var = 43;
+    wht = var;
+    #num1[var] = False;
 };
 
 
 Procedure Main()
 {
-    var = 2;
+    var = 56;
 
-    var = 5;
-    xd, num, caca = True , 43, False;
+    #var = True;
 
-    num1 = [[True, True, True], [True, True, True]];
+    #casa = var;
+    #var = 1;
+    #xd, num, caca = True , 43, False;
+
+    num1 = [True, True, True, True, True, True];
 
 
+    #num1[2] =  False;
+    #num1[2] =  False;
+
+    #num1[1:3] = [False, True];
+
+    #num1[1:3] = [True, False];
+
+    
     Call funcion(3);
 };
 

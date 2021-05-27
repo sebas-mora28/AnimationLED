@@ -10,7 +10,8 @@ from Syntax.proceduresCall import *
 from Syntax.procedures import *
 from Syntax.conditional import *
 from Syntax.loops import * 
-from Sematic.SemanticAnalysis import *
+from Syntax.arithmeticOperation import *
+from Semantic.SemanticAnalysis import *
 
 
 parsed = None

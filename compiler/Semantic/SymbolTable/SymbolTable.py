@@ -69,7 +69,7 @@ class SymbolTable:
         return ID in self.variableTable
 
 
-    
+
     def print(self):
         for key in self.variableTable:
             var = self.variableTable[key]

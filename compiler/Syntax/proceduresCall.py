@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-from Sematic.SemanticAnalysis import *
+from Semantic.SemanticAnalysis import *
 
 def p_procedureCall_no_arguments(p):
     '''procedureCall : CALL ID LPAREN RPAREN SEMICOLON'''
