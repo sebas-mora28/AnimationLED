@@ -4,9 +4,7 @@ from Semantic.SemanticError import *
 from Semantic.SymbolTable.SymbolTable import *
 from Semantic.IndexType import * 
 from Semantic.VariableAssignment import * 
-from Semantic.common import *
-from Semantic.Atomic import *
-
+from Semantic.Common import *
 
 class Program:
 

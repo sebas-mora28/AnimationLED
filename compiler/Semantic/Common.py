@@ -1,5 +1,12 @@
 
 
+class Instruction:
+
+    def eval(self, program, symbolTable):
+        pass
+
+
+
 def verifyListBoundaries(program, index, listSymbol):
         print(index)
         if index < len(listSymbol.value):

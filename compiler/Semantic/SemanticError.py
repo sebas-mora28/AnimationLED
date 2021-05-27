@@ -10,6 +10,8 @@ class SemanticError:
         for i in range(len(self.errors)):
             print(self.errors[i])
 
+
+
     def main_not_found(self):
         self.errors.append("Semantic error: Main not found")
 

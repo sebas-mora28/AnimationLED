@@ -35,14 +35,3 @@ class IndexOne:
         def __init__(self, index):
             self.indexValue = index
 
-
-
-
-class Blink(Instruction):
-
-    def __init__(self, time, timeRange):
-
-        self.time
-
-    
-    def eval(self, program, symbolTable):

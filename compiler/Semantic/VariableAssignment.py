@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 from Semantic.IndexType import *
-from Semantic.Atomic import *
+from Semantic.Common import *
 
 
 class value(Instruction):
@@ -122,16 +122,17 @@ class IndexAssign(Instruction):
 
     def eval(self,program, symbolTable):
 
-        pass
-
-        if(symbolTable.exist(self.ID)):
-            variableSymbol = symbolTable.getSymbolByID(self.ID)
-            if isinstance(variableSymbol.value, list):
-                
+        if symbolTable.exist(self.ID):
+            oldValue = symbolTable.getSymbolByID(self.ID)
+            if isinstance(oldValue.value, type(self.value)):
                 pass
+                
+            
 
             
         
+
+
 
 
         '''
@@ -154,8 +155,7 @@ class IndexAssign(Instruction):
                 if isinstance(self.index, IndexColumn):
                     pass
                 if isinstance(self.index, IndexPair):
-                    pass
-; 
+                    pass 
 
                 if isinstance(self.index, IndexRange):
                     if verifyListBoundaries_2(program, self.index.fromIndex, self.index.toIndex, variableSymbol):
@@ -179,5 +179,3 @@ class IndexAssign(Instruction):
         else:
             program.semanticError.symbol_variable_not_found(self.ID)
         '''
-
-
