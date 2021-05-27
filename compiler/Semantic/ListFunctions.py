@@ -106,7 +106,7 @@ class MatrixInsert(Instruction):
                                 else:
                                     program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
                         
-                            if self.insertionType == 1:
+                            elif self.insertionType == 1:
                                 if len(self.value) == len(symbol.value):
                                     if self.index == None:
                                         for i in range(len(symbol.value)):
@@ -118,11 +118,12 @@ class MatrixInsert(Instruction):
                                         else:
                                             program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
                                 else:
+                                    print("ENTRAAAA")
                                     program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid argument in insert function")
+                        program.semanticError.addError(f"Semantic error: Invalid argument in insert function in {self.ID}")
                 else:
-                    program.semanticError.addError(f"Semantic error: Invalid insertion type in insert function")
+                    program.semanticError.addError(f"Semantic error: Invalid insertion type in insert function in {self.ID}")
             else:
                 program.semanticError.addError(f"Semantic error: insert procedure only applicable in matrix, {self.ID} is not a matrix")
         else:

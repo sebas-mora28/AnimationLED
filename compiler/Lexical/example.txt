@@ -3,15 +3,16 @@
 
 Procedure funcion(arg1)
 {
-    wht = 12;
-    var = 43;
+    wht = var;
     #num1[0] = [False, False];
+
+    num1.insert([[False, False, False, False, False, False]], 0,0);
 };
 
 
 Procedure Main()
 {
-    #var = True;
+    var = 45;
 
     #casa = var;
     #var = 1;
@@ -21,6 +22,7 @@ Procedure Main()
 
     num1 = [[True, True, True, True, True, True], [True, True, True, True, True, True]];
 
+    num1.insert([[False, False, False, False, False, False]], 0);
 
     listica = [True , False, True];
 
@@ -28,7 +30,7 @@ Procedure Main()
     #listica.del(2);
 
 
-    num1.insert([[False], [False]], 1, 6);
+    #num1.insert([[False], [False]], 1, 6);
 
     cerote = num1.shapeC;
     #num1 = xd;
@@ -39,7 +41,7 @@ Procedure Main()
     #num1[1:3] = [True, False];
 
     
-    #Call funcion(3);
+    Call funcion(3);
 };
 
 
