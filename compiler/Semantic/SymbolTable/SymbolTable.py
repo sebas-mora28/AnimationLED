@@ -1,5 +1,5 @@
 
-
+import copy
 
 class SymbolVariable:
 
@@ -56,7 +56,7 @@ class SymbolTable:
 
     def changeSymbolValue(self, ID, value):
         temp = self.variableTable[ID]
-        temp.value = value
+        temp.value = copy.deepcopy(value)
 
 
     def getProcedureByID(self, ID):

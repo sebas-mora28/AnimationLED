@@ -111,41 +111,32 @@ class Lexer(object):
         r'[ \t]+'
 
     def t_newline(self, t):
-        r'\n+'
-        t.lexer.lineno += len(t.value)
-
-
+        r"""[\n]"""
+        t.lexer.lineno += 1
+        pass
 
     def t_INSERT(self , t):
         r'\.insert'
         return t 
 
-
     def t_DELETE(self, t):
         r'\.del'
         return t
-
-
 
     def t_LISTOPERATOR(self , t):
         r'\.(Neg|N|T)'
         t.value = t.value[1:]
         return t 
 
-
-
     def t_TIMERANGE(self, t):
         r'\"(Seg|Min|Mil)\"'
         t.value = t.value[1:-1]
         return t
 
-
-
     def t_OBJECTTYPE(self, t):
         r'\"(C|F|M)\"'
         t.value = t.value[1:-1]
         return t
-
 
     def t_LISTSHAPE(self, t):
         r'\.shape(F|C)'
@@ -175,7 +166,7 @@ class Lexer(object):
     
 
     def t_error(self, t):
-        self.errors.append(f"Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)
+        self.errors.append(f"Illegal character {t.value[0]} in line {t.lineno}")
 
 
     def input(self, sourceCode):

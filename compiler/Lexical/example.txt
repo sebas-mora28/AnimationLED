@@ -15,120 +15,22 @@ Procedure funcion(arg1)
 
 Procedure Main()
 {
-    var = 45;
 
-    #casa = var;
-    #var = 1;
-    #xd, num, caca = True , 43, False;
+    var1 = True;
 
-    num = range(3, True);
+    var2 = False; 
 
-    num1 = [[True, True, True, True, True, True], [True, True, True, True, True, True]];
+    lista = [False, False, False];
 
-    #num1.insert([[False, False, False, False, False, False]], 0);
-    num1.del(1,0);
-    #num1.del(1,0);
+    #lista.insert(2, True);
+    #lista.del(2);
 
-    listica = [True , False, True];
+    listica = lista;
 
-    listica.insert(2, True);
-    #listica.del(2);
+    listica.insert(3,True);
 
 
-    #num1.insert([[False], [False]], 1, 6);
 
-    listota = [True, False, True, True, False];
-
-    largo = len(listota);
-
-    cerote = num1.shapeC;
-    #num1 = xd;
-    #num1[2] =  False;
-
-    #num1[1:3] = [False, True];
-
-    #num1[1:3] = [True, False];
-
-    
-    Call funcion(3);
 };
 
-
-
-
-#var = 3;
-
-#num1, num2 = 3, 5;
- 
-#Delay( 6, "Mil");
-
-
-#matriz.insert(True, 1, 1);
-#matriz.del(1, 1);
-
-
-
-
-#matrix = [];
-#matrix = [[True, True], [True, True]];
-
-#if x >= 2
-#{
-
-#};
-
-
-#Call main();
-
-
-
-
-#Call main(1);
-
-
-#if var == True {
-#    var  = 5;
-#};
-
-#if var >= 1 {
-#    var  = 5;
-#};
-
-#for var in x {
-#    x = 1;
-#};
-
-
-#lista[1] = 2;
-#lista[1][3] = 2;
-#lista[3,3] = True;
-#lista[3:3] = False;
-#lista[:,3] = False;
-
-
-#Blink("C", 1, "Seg", True);
-
-#PrintLed(1, 1, True)
-
-#PrintLedX("C", 2, lista);
-
-#MiNuevaMatriz.insert(True , 0, 0);
-#MiNuevaMatriz.insert([[True, True, False, True]] , 0, 0);
-
-#MiMatriz.del(1,0);
-
-
-#lista.insert(2, False);
-#lista.del(4);
-
-
-#lista.shapeC;
-#lista.shapeF;
-
-
-#lista[1].Neg;
-#lista[1].T;
-#lista[2].N;
-
-
-#list(range(4, True));
+    

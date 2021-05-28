@@ -1,3 +1,4 @@
+from copy import deepcopy
 import sys
 sys.path.append("..")
 from Semantic.IndexType import *
