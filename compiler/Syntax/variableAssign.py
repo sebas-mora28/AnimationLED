@@ -10,9 +10,11 @@ def p_value(p):
               | ID
               | list
               | len
-              | list_creation
+              | range
               | matrix_dimensions 
               | arithmetic'''
+    
+    
     p[0] = value(p[1])
 
 

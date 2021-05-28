@@ -23,8 +23,6 @@ class Lexer(object):
         'for': 'FOR',
         'in': 'IN',
         'step': 'STEP',
-
-        'list':'LIST',
         'range':'RANGE',
         'len':'LEN',
         'Call':'CALL',
@@ -196,7 +194,6 @@ class Lexer(object):
             tok = self.lexer.token()
             if not tok:
                 break
-            print(tok)
 
 
 

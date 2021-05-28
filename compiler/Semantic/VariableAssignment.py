@@ -31,7 +31,16 @@ class value(Instruction):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
-     
+    
+        if isinstance(self.value, Len):
+            self.value = self.value.eval(program, symbolTable)
+            if self.value != None:
+                self.assignment(ID, program, symbolTable, scope)
+        
+        if isinstance(self.value, Range):
+            self.value = self.value.eval(program, symbolTable)
+            if self.value != None:
+                self.assignment(ID, program, symbolTable, scope)
             
 
     def assignment(self, ID, program, symbolTable, scope):
@@ -56,7 +65,6 @@ class VariableAssign(Instruction):
         self.scope = "local"
 
     def eval(self, program, symbolTable):
-        print(f"Se asigna una variable {self.scope}")
     
         if(self.scope == "global"):
             self.value.eval(self.ID, program, program.symbolTable, "global")
@@ -168,8 +176,6 @@ class IndexAssign(Instruction):
                         program.semanticError.addError(f"Semantic error: {self.ID} is not a list")
                 else:
                     program.semanticError.addError(f"Semantic error: Invalid index argument in {self.ID}")
-
-
         else:
             program.semanticError.addError(f"Semantic error: Variable {self.ID} not found")
 

@@ -10,7 +10,7 @@ class MatrixDimension(Instruction):
         self.dimension = dimension
 
     
-    def eval(self, program, symbolTable):
+    def getDimensions(self, program, symbolTable):
 
         symbolVariable = searchSymbolByID(self.ID, program, symbolTable)
 
@@ -105,7 +105,7 @@ class MatrixInsert(Instruction):
                                             program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
                                 else:
                                     program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
-                        
+
                             elif self.insertionType == 1:
                                 if len(self.value) == len(symbol.value):
                                     if self.index == None:
@@ -118,7 +118,7 @@ class MatrixInsert(Instruction):
                                         else:
                                             program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
                                 else:
-                                    print("ENTRAAAA")
+
                                     program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
                     else:
                         program.semanticError.addError(f"Semantic error: Invalid argument in insert function in {self.ID}")
@@ -128,3 +128,71 @@ class MatrixInsert(Instruction):
                 program.semanticError.addError(f"Semantic error: insert procedure only applicable in matrix, {self.ID} is not a matrix")
         else:
             program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
+
+
+class MatrixDelete(Instruction):
+
+    def __init__(self, ID, index, eliminationType):
+        self.ID = ID 
+        self.index = index
+        self.eliminationType = eliminationType
+
+    
+
+    def eval(self, program, symbolTable):
+
+        symbol = searchSymbolByID(self.ID, program, symbolTable)
+
+        if symbol != None:
+            if isMatrix(symbol.value):
+                if isinstance(self.index, int) and isinstance(self.eliminationType, int):
+                    print("Entraaaa" + str(self.index))
+                    if self.eliminationType == 0:
+                        if self.index < len(symbol.value):
+                            symbol.value.pop(self.index)
+                        else:
+                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+                    elif self.eliminationType == 1:
+                        if self.index < len(symbol.value[0]):
+                            for i in range(len(symbol.value)):
+                                symbol.value[i].pop(self.index)
+                        else:
+                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+
+                else:
+                    program.semanticError.addError(f"Semantic error: Invalid argument in insert function in {self.ID}")
+            else:
+                program.semanticError.addError(f"Semantic error: insert procedure only applicable in matrix, {self.ID} is not a matrix")
+        else:
+            program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
+
+
+
+
+class Len(Instruction):
+    def __init__(self, ID):
+        self.ID = ID
+
+    def eval(self, program, symbolTable):
+        symbol = searchSymbolByID(self.ID, program, symbolTable)
+        if symbol != None:
+            if isList(symbol.value) or isMatrix(symbol.value):
+                return len(symbol.value) 
+            else:
+                program.semanticError.addError(f"Semantic error: Argument {self.ID} is not a list or matrix")
+        else:
+            program.semanticeError.addError(f"Semantic error: Symbol {self.ID} not found")
+
+
+
+class Range(Instruction):
+
+    def __init__(self, list_size, value):
+        self.list_size = list_size
+        self.value = value
+
+    def eval(self, program, symbolTable):
+        if isinstance(self.list_size, int) or isinstance(self.value, bool):
+                return [self.value] * self.list_size
+        else:
+            program.semanticError.addError(f"Semantic error: Invalid argument in range function")

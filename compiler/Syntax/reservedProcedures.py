@@ -7,18 +7,16 @@ from Semantic.ListFunctions import *
 
 
 
-def p_built_in_functions(p):
-    '''built_in_functions : delay 
+def p_reserved_procedures(p):
+    '''reserved_procedures : delay 
                           | blink 
                           | printLed
                           | printLedX
-                          | len
                           | list_insert 
                           | list_delete 
                           | matrix_insert
                           | matrix_delete
-                          | list_boolean_operation
-                          | list_creation'''
+                          | list_boolean_operation'''
     p[0] = p[1]
 
 
@@ -54,23 +52,21 @@ def p_printLedX(p):
 
 #len 
 def p_len(p):
-    '''len : LEN LPAREN ID RPAREN SEMICOLON'''
+    '''len : LEN LPAREN ID RPAREN'''
+    print("leeeen")
+    p[0] = Len(p[3])
 
 def p_len_index(p):
-    '''len : LEN LPAREN ID index RPAREN SEMICOLON'''
+    '''len : LEN LPAREN ID index RPAREN'''
     print("LEN")
 
 
 #range
 
 
-def p_list_creation(p):
-    '''list_creation : LIST LPAREN range RPAREN SEMICOLON'''
-    print("LIST CREATION")
-
-
 def p_range(p):
     'range : RANGE LPAREN INTEGER COMMA BOOLEAN RPAREN'
+    p[0] = Range(p[3], p[5])
 
 
 #list insert 
@@ -109,6 +105,7 @@ def p_matrix_insert_index(p):
 def p_matrix_delete(p):
     '''matrix_delete : ID DELETE LPAREN INTEGER COMMA INTEGER RPAREN SEMICOLON'''
     print("DELETE MATRIX")
+    p[0] = MatrixDelete(p[1], p[4], p[6])
 
 
 def p_matrix_dimension(p):

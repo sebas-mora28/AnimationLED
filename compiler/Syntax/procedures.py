@@ -1,6 +1,7 @@
 import sys 
 sys.path.append("..")
 
+from Semantic.Procedures import *
 from Semantic.SemanticAnalysis import *
 
 

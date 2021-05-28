@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
-from Lexical.lexer import *
-from Syntax.syntax import * 
+from Lexical.Lexer import *
+from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
 
 def compile(code):

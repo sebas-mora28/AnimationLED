@@ -14,7 +14,7 @@ def p_expressions_set_1(p):
 
 def p_expression(p):
     '''expression : variable_assign 
-                  | built_in_functions
+                  | reserved_procedures
                   | index_assign
                   | procedure
                   | procedureCall

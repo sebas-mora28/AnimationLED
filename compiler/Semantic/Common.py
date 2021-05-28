@@ -6,7 +6,6 @@ class Instruction:
         pass
 
 
-
 def verifyListBoundariesOne(index, listSymbol):
         print(index)
         if index < len(listSymbol.value):
