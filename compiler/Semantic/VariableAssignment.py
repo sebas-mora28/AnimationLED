@@ -5,6 +5,8 @@ from Semantic.IndexType import *
 from Semantic.Common import *
 from Semantic.ListFunctions import *
 
+
+
 class value(Instruction):
 
     def __init__(self, value):
