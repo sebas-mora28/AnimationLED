@@ -3,10 +3,6 @@ sys.path.append("..")
 import lex
 
 
-
-
-
-
 class Lexer(object):
 
     def __init__(self):
