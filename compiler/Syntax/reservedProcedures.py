@@ -2,8 +2,7 @@ import sys
 sys.path.append("..")
 
 from Semantic.ListFunctions import *
-
-
+from Semantic.ReservedProcedures import *
 
 
 
@@ -24,7 +23,7 @@ def p_reserved_procedures(p):
 def p_delay(p):
     '''delay : DELAY LPAREN INTEGER COMMA TIMERANGE RPAREN SEMICOLON'''
     print("delay %d %s" % (p[3], p[5]))
-    p[0] = p[1]
+    p[0] = Delay(p[3], p[5])
 
 
 def p_blink(p):
@@ -33,19 +32,20 @@ def p_blink(p):
 
 
 def p_printLed(p):
-    '''printLed : PRINTLED LPAREN INTEGER COMMA INTEGER COMMA BOOLEAN RPAREN'''
+    '''printLed : PRINTLED LPAREN INTEGER COMMA INTEGER COMMA BOOLEAN RPAREN SEMICOLON'''
     print("printLED")
+    p[0] = PrintLed(p[3], p[5],p[7])
 
 
 def p_printLed_value(p):
     '''printLed_value : ID
-                      | INTEGER
-                      | index_access'''
+                      | list'''
+    p[0] = p[1]
 
 def p_printLedX(p):
     '''printLedX : PRINTLEDX LPAREN OBJECTTYPE COMMA INTEGER COMMA printLed_value RPAREN SEMICOLON'''
     print("printLEDX")
-
+    p[0] = PrintLedX(p[3], p[5], p[7])
 
 #list functions
 

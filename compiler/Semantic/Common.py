@@ -1,3 +1,6 @@
+import sys
+sys.path.append("..")
+from Semantic.IndexType import *
 
 
 class Instruction:
@@ -20,31 +23,41 @@ def verifyListBoundaries_2(index1, index2, listSymbol):
         return False
 
 
-def getIndexByID(program, symbolTable, ID):
 
+def getColumn(index, matrix):
+    res = []
+    for i in range(len(matrix)):
+        res += matrix[i][index]
     
-    if(symbolTable.exist(ID)):
+    return res
 
-        symbol = symbolTable.getSymbolByID(ID)
 
-        if(symbol.scope == "local"):
-            return symbol.value
+def getIndex(ID, index, program, symbolTable):
 
-        else:
-            if program.symbolTable.exist(ID):
-                return program.symbolTable.getSymbolByID(ID).value
+        symbol = searchSymbolByID(ID, program, symbolTable)
+        if symbol != None:
+            if isinstance(index, IndexOne):
+                if isList(symbol.value):
+                    if verifyListBoundariesOne(index.indexValue, symbol):
+                        return symbol.value[index.index.Value]
 
-            else:
-                program.symbol_variable_not_found(ID)
-                return None
-    else:
+            if isinstance(index, IndexPair):
+                if isMatrix(symbol.value):
+                    if verifyListBoundaries_2(index.indexValue1, index.indexValue2, symbol):
+                        return symbol.value[index.indexValue1][index.indexValue2] 
+            
+            if isinstance(index, IndexRange):
+                if isList(symbol.value):
+                    if verifyListBoundaries_2(index.fromIndex, index.toIndex, symbol):
+                        return symbol.value[index.fromIndex:index.toIndex]
+            
+            if isinstance(index, IndexColumn):
+                if isMatrix(symbol.value):
+                    if verifyListBoundariesOne(index.column, symbol.value[0]):
+                        return getColumn(index.column, symbol)
 
-        if program.symbolTable.exist(ID):
-                return program.symbolTable.getSymbolByID(ID).value
 
-        else:
-                program.symbol_variable_not_found(ID)
-                return None
+
 
 
 
@@ -90,3 +103,6 @@ def searchSymbolByID(ID, program, symbolTable):
 
     else:
         return None
+
+
+    

@@ -1,7 +1,12 @@
 import sys 
 sys.path.append("..")
-from Semantic.SemanticAnalysis import *
 from Semantic.Common import *
+
+
+class Index:
+
+    pass 
+
 
 class indexAccess:
 
@@ -10,16 +15,14 @@ class indexAccess:
         self.index = index
 
 
-
-
-class IndexPair:
+class IndexPair(Index):
 
     def __init__(self, index1, index2):
-        self.index1 = index1
-        self.index2 = index2
+        self.indexValue1 = index1
+        self.indexValue2 = index2
 
 
-class IndexRange:
+class IndexRange(Index):
 
     def __init__(self, fromIndex , toIndex):
         self.fromIndex = fromIndex 
@@ -31,13 +34,13 @@ class IndexRange:
             return [self.fromIndex, self.toIndex]
 
 
-class IndexColumn:
+class IndexColumn(Index):
 
     def __init__(self, column):
         self.column = column
 
 
-class IndexOne:
+class IndexOne(Index):
         def __init__(self, index):
             self.indexValue = index
 

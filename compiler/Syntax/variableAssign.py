@@ -12,7 +12,8 @@ def p_value(p):
               | len
               | range
               | matrix_dimensions 
-              | arithmetic'''
+              | arithmetic
+              | '''
     
     
     p[0] = value(p[1])

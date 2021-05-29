@@ -61,11 +61,12 @@ class MainProcedure(Instruction):
 
         for expression in self.expressions:
             if expression:
+
                 if isinstance(expression, VariableAssign) or isinstance(expression, MultipleAssign) or isinstance(expression, IndexAssign):
                     expression.scope = "global"
                 
                 expression.eval(program, symbolTable)
-        pass
+    
 
 
 

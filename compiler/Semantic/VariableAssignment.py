@@ -20,16 +20,11 @@ class value(Instruction):
             self.assignment(ID, program, symbolTable, scope)
  
         if(isinstance(self.value, str)):
-            if symbolTable.exist(self.value):    
-                    self.value = symbolTable.getSymbolByID(self.value).value
-                    self.assignment(ID, program, symbolTable, scope)
-            else:
-                if program.symbolTable.exist(self.value):
-                    self.value = program.symbolTable.getSymbolByID(self.value).value
-                    self.assignment(ID, program, symbolTable, scope)
-                else:
-                    program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
-        
+            symbol = searchSymbolByID(self.value, program, symbolTable)
+            if symbol != None:
+                self.value = symbol.value
+                self.assignment(ID, program, symbolTable, scope)
+
         if isinstance(self.value, MatrixDimension):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
@@ -42,6 +37,11 @@ class value(Instruction):
         
         if isinstance(self.value, Range):
             self.value = self.value.eval(program, symbolTable)
+            if self.value != None:
+                self.assignment(ID, program, symbolTable, scope)
+
+        if isinstance(self.value, Index):
+            self.value = getIndex(ID, self.value, program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
             
@@ -103,6 +103,46 @@ class  MultipleAssign(Instruction):
 
 
 
+
+class IndexValue:
+
+    def __init__(self, value):
+        self.value = value
+
+    
+    def eval(self, ID, program, symbolTable, scope):
+
+        pass
+
+
+
+
+
+
+
+class IndexAssign(Instruction):
+
+    def __init__(self, ID, index, value):
+        self.ID = ID    
+        self.index = index
+        self.value = value
+        self.scope = "local"
+
+
+    def eval(self, program, symbolTable):
+
+        if(self.scope == "global"):
+            self.assigment(program, program.symbolTable)
+        
+        else:
+            self.assigment(program, symbolTable)
+
+
+
+    def assignmnet(self, program, symbolTable):
+
+        pass
+'''
 class IndexAssign(Instruction):
 
     def __init__(self, ID, index, value):
@@ -181,7 +221,7 @@ class IndexAssign(Instruction):
                     program.semanticError.addError(f"Semantic error: Invalid index argument in {self.ID}")
         else:
             program.semanticError.addError(f"Semantic error: Variable {self.ID} not found")
-
+'''
 
                 
             
