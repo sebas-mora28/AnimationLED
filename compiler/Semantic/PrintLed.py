@@ -10,13 +10,17 @@ class PrintLed(Instruction):
         self.value = value
     
     def eval(self,program):
-        if not (isinstance(self.col, int)):
-            print("Semantic error: Invalid data for col, an int is expected")
-        if not (isinstance(self.row, int)):
-            print("Semantic error: Invalid data for row, an int is expected")
-        if not (isinstance(self.value, int)):
-            print("Semantic error: Invalid data for value, an int is expected")
-    
+        if (isinstance(self.col, int)):
+            if (isinstance(self.row, int)):
+                if(isinstance(self.value, int)):
+                    self.printLed(program)
+                else:
+                    program.semanticError.addError("Semantic error: Invalid data for value, an int is expected")
+            else:
+                program.semanticError.addError("Semantic error: Invalid data for row, an int is expected")
+        
+        else:
+            program.semanticError.addError("Semantic error: Invalid data for col, an int is expected")
+        
     def printLed(self, program):
-        #funcionalidad del la función
-        pass
+        output = "PrintLed{\n col: " + self.col + "\n row: " + self.row + "\n value: " + self.value + "\n}"

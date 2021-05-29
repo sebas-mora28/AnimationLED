@@ -14,19 +14,33 @@ class Blink(Instruction):
         self.state = state
 
     def eval(self, program):
-        if not (isinstance(self.col, int)):
-            print("Semantic error: Invalid data for col, an int is expected")
-        if not (isinstance(self.row, int)):
-            print("Semantic error: Invalid data for row, an int is expected")
-        if not (isinstance(self.value, int)):
-            print("Semantic error: Invalid data for value, an int is expected")
-        if not (isinstance(self.time, int)):
-            print("Semantic error: Invalid data for time, an int is expected")
-        if not (self.timeRange == "seg" or self.timeRange == "mil" or self.timeRange == "min"):
-            print("Semantic error: Invalid argument for timeRange. Mil, seg, min, is expected")
-        if not(isinstance(self.state,bool)):
-            print("Semantic error: Invalid data for sate, a bool is expected")
-    #Funcionamiento del blink
-    def blink(self, program):
-        pass
+        if (isinstance(self.col, int)):
+            if (isinstance(self.row, int)):
+                if (isinstance(self.value, int)):
+                    if (isinstance(self.time, int)):
+                        if (self.timeRange == "seg" or self.timeRange == "mil" or self.timeRange == "min"):
+                            if (isinstance(self.state,bool)):
+                                self.blink(program)
+                            else:
+                                program.semanticError.addError("Semantic error: Invalid data for sate, a bool is expected")
+                        
+                        else:
+                             program.semanticError.addError("Semantic error: Invalid argument for timeRange. Mil, seg, min, is expected")
+                    
+                    else:
+                         program.semanticError.addError("Semantic error: Invalid data for time, an int is expected")
+                
+                else:
+                     program.semanticError.addError("Semantic error: Invalid data for value, an int is expected")
 
+            else:
+                program.semanticError.addError("Semantic error: Invalid data for row, an int is expected") 
+
+        else:
+            program.semanticError.addError("Semantic error: Invalid data for col, an int is expected")  
+        
+        
+    #Funcionamiento del blink
+    def blink(self, program, col, row,time,timeRange, state):
+        string = "Blink {\n col :"+col +"\n"+ "row: " + row +"\n"+ "time: " +time+"\n"+"timeRange: " + timeRange +"\n"+ "state: " +state + "\n}"
+        #Añadir al output
