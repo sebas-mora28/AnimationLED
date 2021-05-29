@@ -8,10 +8,10 @@ class Index:
     pass 
 
 
-class indexAccess:
+class IndexAccess:
 
     def __init__(self, ID, index):
-        self.ID = index
+        self.ID = ID
         self.index = index
 
 
@@ -45,15 +45,9 @@ class IndexOne(Index):
             self.indexValue = index
 
 
-        def eval(self, program, symbolTable):
-            if isinstance(self.indexValue, int):
-                return self.indexValue
-            if isinstance(self.indexValue, str):
-                symbolValue = searchSymbolByID(self.indexValue, program, symbolTable)
-                if symbolValue:
-                    return symbolValue.value
-                return None
-            return None
+        def eval(self, valueToAssign, program, symbolTable):
+
+            pass 
 
 
 

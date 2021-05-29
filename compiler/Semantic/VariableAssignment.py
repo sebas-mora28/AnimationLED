@@ -15,7 +15,6 @@ class value(Instruction):
 
     def eval(self, ID, program, symbolTable, scope):
 
-
         if isinstance(self.value, int) or isinstance(self.value, bool) or isinstance(self.value, list):
             self.assignment(ID, program, symbolTable, scope)
  
@@ -40,8 +39,9 @@ class value(Instruction):
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
 
-        if isinstance(self.value, Index):
-            self.value = getIndex(ID, self.value, program, symbolTable)
+        if isinstance(self.value, IndexAccess):
+            print(self.value)
+            self.value = getValuesFromIndex(self.value.ID, self.value.index, program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
             
@@ -132,102 +132,42 @@ class IndexAssign(Instruction):
     def eval(self, program, symbolTable):
 
         if(self.scope == "global"):
-            self.assigment(program, program.symbolTable)
+            self.assignment(program, program.symbolTable)
         
         else:
-            self.assigment(program, symbolTable)
+            self.assignment(program, symbolTable)
 
 
 
-    def assignmnet(self, program, symbolTable):
 
-        pass
-'''
-class IndexAssign(Instruction):
+    def evalValue(self):
 
-    def __init__(self, ID, index, value):
-        self.ID = ID
-        self.index = index
-        self.value = value
-        self.scope = "local"
-
-
-
-    def eval(self,program, symbolTable):
-
-        if(self.scope == "global"):
-            self.assigment(program, program.symbolTable)
-        
+        if isinstance(self.value, Index):
+            return getValuesFromIndex(self.value)
+        if isinstance(self.value, str):
+            symbol = searchSymbolByID(self.value)
+            if symbol != None:
+                return symbol.value 
+            return None
         else:
-            self.assigment(program, symbolTable)
-
-        
-
-    def assigment(self, program, symbolTable):
-        symbolVariable = searchSymbolByID(self.ID, program, symbolTable)
-        if symbolVariable:
-            if isinstance(self.index, IndexOne):
-                i = self.index.eval(program, symbolTable)
-                if i != None:
-                    if isList(symbolVariable.value):
-                        if verifyListBoundariesOne(i, symbolVariable):
-                            self.value = self.value.eval(program, symbolTable)
-                            if isinstance(self.value, bool):
-                                symbolVariable.value[i] = self.value
-                            else:
-                                program.semanticError.addError(f"Semantic error: Invalid index assignment in {self.ID}, is not a bool")
-                        else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
-                    
-                    elif isMatrix(symbolVariable.value):
-                        if verifyListBoundariesOne(i, symbolVariable):
-                            self.value = self.value.eval(program, symbolTable)
-                            if isinstance(self.value, list):
-                                symbolVariable.value[i] = self.value 
-                            else:
-                                program.semanticError.addError(f"Semantic error: Invalid index assignment in {self.ID}, is not a list")
-                        else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
-                    else:
-                        program.semanticError.addError(f"Semantic error: {self.ID} is not a list or matrix")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index argument in {self.ID}")
+            return self.value
 
 
-            
-            elif isinstance(self.index, IndexRange):
-                i = self.index.eval(program, symbolTable)
-                if i != None:
-                    if isList(symbolVariable.value):
-                        if verifyListBoundaries_2(i[0], i[1], symbolVariable):
-                            self.value = self.value.eval(program, symbolTable)
-                            if isinstance(self.value, list):
-                                tem_len = i[1] - i[0]
-                                if tem_len == len(self.value):
-                                    symbolVariable.value[i[0]:i[1]] = self.value
-                                
-                                else:
-                                    program.semanticError.addError(f"Semantic error: Invalid assigment in {self.ID}")
+    def assignment(self, program, symbolTable):
 
-                            else:
-                                program.semanticError.addError(f"Semantic error: Invalid index assignment in {self.ID}, is not a list")
+    
+       symbol = searchSymbolByID(self.ID, program, symbolTable)
 
-                        else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+       print(symbol.value)
 
-                    else:
-                        program.semanticError.addError(f"Semantic error: {self.ID} is not a list")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index argument in {self.ID}")
-        else:
-            program.semanticError.addError(f"Semantic error: Variable {self.ID} not found")
-'''
+       if symbol != None:
+           if isinstance(self.value, IndexOne):
+               if isList(symbol.value):
+                   self.value = self.evalValue()
+                   if isinstance(self.value, bool):
+                       symbol.value[self.index.IndexValue] = self.value 
 
-                
-            
 
-            
-        
-
+ 
 
 

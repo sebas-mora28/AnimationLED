@@ -13,13 +13,11 @@ def p_procedureCall_with_arguments(p):
     p[0] = CallProcedure(p[2], p[4])
 
 
-
-
-
 def p_argument(p):
     '''argument : ID
                 | INTEGER
-                | BOOLEAN'''
+                | BOOLEAN
+                | list'''
     p[0] = p[1]
 
 

@@ -11,36 +11,38 @@ Procedure funcion(arg1)
 Procedure Main()
 {
 
-    var1 = 12;
+    #var1 = 12;
 
-    var2 = 156; 
-
-    lista = [False, False, False];
+    #var2 = 156; 
 
 
-    Delay(4, "Mil");
 
-    PrintLed(1,1, True);
+    #Delay(4, "Mil");
 
-    PrintLedX("C", 1, [True, False, True, False]);
+    #PrintLed(1,1, True);
+
+    #PrintLedX("C", 1, [True, False, True, False]);
 
 
     matrix = [[False, False, False, False, False, False, False],[False, False, False, False, False, False, False],[False, False, False, False, False, False, False]];
 
-    matrix.insert([[True], [True], [True]], 1,0);
+    #matrix.insert([[True], [True], [True]], 1,0);
 
+    lista = [False, False, False, True, True, True, False];
 
-    #xd = lista[1];
+    listica = [False, False, False];
+
+    lista[0] = True;
 
     #lista.insert(2, True);
     #lista.del(2);
 
-    listica = lista;
+    #listica = lista;
 
-    listica.insert(3,True);
+    #listica.insert(3,True);
 
 
-    Call funcion(lista);
+    #Call funcion(lista);
 
 
 

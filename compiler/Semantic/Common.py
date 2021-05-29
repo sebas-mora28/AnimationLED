@@ -11,14 +11,14 @@ class Instruction:
 
 def verifyListBoundariesOne(index, listSymbol):
         print(index)
-        if index < len(listSymbol.value):
+        if index < len(listSymbol):
             return True
         return False
 
     
 def verifyListBoundaries_2(index1, index2, listSymbol):
         print(index2)
-        if(index1 >= 0 and index2 < len(listSymbol.value)):
+        if index1 >= 0 and index2 < len(listSymbol):
             return True  
         return False
 
@@ -27,34 +27,54 @@ def verifyListBoundaries_2(index1, index2, listSymbol):
 def getColumn(index, matrix):
     res = []
     for i in range(len(matrix)):
-        res += matrix[i][index]
+        res += [matrix[i][index]]
     
     return res
 
 
-def getIndex(ID, index, program, symbolTable):
+def getValuesFromIndex(ID, indexType, program, symbolTable):
 
+        
         symbol = searchSymbolByID(ID, program, symbolTable)
         if symbol != None:
-            if isinstance(index, IndexOne):
-                if isList(symbol.value):
-                    if verifyListBoundariesOne(index.indexValue, symbol):
-                        return symbol.value[index.index.Value]
+            if isinstance(indexType, IndexOne):
+                if isList(symbol.value) or isMatrix(symbol.value):
+                    if verifyListBoundariesOne(indexType.indexValue, symbol.value):
+                        return symbol.value[indexType.indexValue]
+                    else:
+                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                else:
+                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix or list")
 
-            if isinstance(index, IndexPair):
+
+            if isinstance(indexType, IndexPair):
                 if isMatrix(symbol.value):
-                    if verifyListBoundaries_2(index.indexValue1, index.indexValue2, symbol):
-                        return symbol.value[index.indexValue1][index.indexValue2] 
+                    if verifyListBoundaries_2(indexType.indexValue1, indexType.indexValue2, symbol.value):
+                        return symbol.value[indexType.indexValue1][indexType.indexValue2]
+                    else:
+                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                else:
+                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
             
-            if isinstance(index, IndexRange):
+            if isinstance(indexType, IndexRange):
                 if isList(symbol.value):
-                    if verifyListBoundaries_2(index.fromIndex, index.toIndex, symbol):
-                        return symbol.value[index.fromIndex:index.toIndex]
+                    if verifyListBoundaries_2(indexType.fromIndex, indexType.toIndex, symbol.value):
+                        return symbol.value[indexType.fromIndex:indexType.toIndex]
+                    else:
+                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                else:
+                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list")
             
-            if isinstance(index, IndexColumn):
+            if isinstance(indexType, IndexColumn):
                 if isMatrix(symbol.value):
-                    if verifyListBoundariesOne(index.column, symbol.value[0]):
-                        return getColumn(index.column, symbol)
+                    if verifyListBoundariesOne(indexType.column, symbol.value[0]):
+                        return getColumn(indexType.column, symbol.value)
+                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                else:
+                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
+        else:
+            program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+            
 
 
 

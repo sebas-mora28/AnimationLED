@@ -95,31 +95,11 @@ class MatrixInsert(Instruction):
                 if self.insertionType == 1 or self.insertionType == 0:
                     if isinstance(self.value, list):
                             if self.insertionType == 0:
-                                if len(self.value[0]) == len(symbol.value[0]):
-                                    if self.index == None:
-                                            symbol.value.append(self.value[0])
-                                    else:
-                                        if self.index <= len(symbol.value):
-                                            symbol.value.insert(self.index, self.value[0])
-                                        else:
-                                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
-                                else:
-                                    program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
+                                self.insertRow(symbol, program)
+        
 
                             elif self.insertionType == 1:
-                                if len(self.value) == len(symbol.value):
-                                    if self.index == None:
-                                        for i in range(len(symbol.value)):
-                                            symbol.value[i].append(self.value[i][0])
-                                    else:
-                                        if self.index <= len(symbol.value[0]):
-                                            for i in range(len(symbol.value)):
-                                                symbol.value[i].insert(self.index, self.value[i][0])
-                                        else:
-                                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
-                                else:
-
-                                    program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
+                                self.insertColumn(symbol, program)     
                     else:
                         program.semanticError.addError(f"Semantic error: Invalid argument in insert function in {self.ID}")
                 else:
@@ -128,6 +108,39 @@ class MatrixInsert(Instruction):
                 program.semanticError.addError(f"Semantic error: insert procedure only applicable in matrix, {self.ID} is not a matrix")
         else:
             program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
+
+
+
+
+    def insertColumn(self, symbol, program):
+        if len(self.value) == len(symbol.value):
+                if self.index == None:
+                    for i in range(len(symbol.value)):
+                        symbol.value[i].append(self.value[i][0])
+                else:
+                    if self.index <= len(symbol.value[0]):
+                        for i in range(len(symbol.value)):
+                            symbol.value[i].insert(self.index, self.value[i][0])
+                    else:
+                        program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+        else:
+            program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
+
+
+        
+    def insertRow(self, symbol, program):
+            if len(self.value[0]) == len(symbol.value[0]):
+                if self.index == None:
+                    symbol.value.append(self.value[0])
+                else:
+                    if self.index <= len(symbol.value):
+                        symbol.value.insert(self.index, self.value[0])
+                    else:
+                        program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+            else:
+                program.semanticError.addError(f"Semantic error: Trying to insert a list with diferent dimentions in {self.ID}")
+
+
 
 
 class MatrixDelete(Instruction):
@@ -146,25 +159,33 @@ class MatrixDelete(Instruction):
         if symbol != None:
             if isMatrix(symbol.value):
                 if isinstance(self.index, int) and isinstance(self.eliminationType, int):
-                    print("Entraaaa" + str(self.index))
-                    if self.eliminationType == 0:
-                        if self.index < len(symbol.value):
-                            symbol.value.pop(self.index)
-                        else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
-                    elif self.eliminationType == 1:
-                        if self.index < len(symbol.value[0]):
-                            for i in range(len(symbol.value)):
-                                symbol.value[i].pop(self.index)
-                        else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
 
+                    if self.eliminationType == 0:
+                        self.deleteRow(symbol, program)
+
+                    elif self.eliminationType == 1:
+                        self.deletColumn(symbol, program)
                 else:
                     program.semanticError.addError(f"Semantic error: Invalid argument in insert function in {self.ID}")
             else:
                 program.semanticError.addError(f"Semantic error: insert procedure only applicable in matrix, {self.ID} is not a matrix")
         else:
             program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
+
+    
+    def deleteRow(self, symbol, program):
+        if self.index < len(symbol.value):
+                symbol.value.pop(self.index)
+        else:
+            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+
+    def deletColumn(self, symbol, program):
+        if self.index < len(symbol.value[0]):
+            for i in range(len(symbol.value)):
+                symbol.value[i].pop(self.index)
+        else:
+            program.semanticError.addError(f"Semantic error: Index out of range in {self.ID}")
+        
 
 
 
