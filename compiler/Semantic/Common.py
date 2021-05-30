@@ -1,7 +1,5 @@
 import sys
 sys.path.append("..")
-from Semantic.IndexType import *
-
 
 class Instruction:
 
@@ -10,14 +8,12 @@ class Instruction:
 
 
 def verifyListBoundariesOne(index, listSymbol):
-        print(index)
         if index < len(listSymbol):
             return True
         return False
 
     
 def verifyListBoundaries_2(index1, index2, listSymbol):
-        print(index2)
         if index1 >= 0 and index2 < len(listSymbol):
             return True  
         return False
@@ -30,55 +26,6 @@ def getColumn(index, matrix):
         res += [matrix[i][index]]
     
     return res
-
-
-def getValuesFromIndex(ID, indexType, program, symbolTable):
-
-        
-        symbol = searchSymbolByID(ID, program, symbolTable)
-        if symbol != None:
-            if isinstance(indexType, IndexOne):
-                if isList(symbol.value) or isMatrix(symbol.value):
-                    if verifyListBoundariesOne(indexType.indexValue, symbol.value):
-                        return symbol.value[indexType.indexValue]
-                    else:
-                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix or list")
-
-
-            if isinstance(indexType, IndexPair):
-                if isMatrix(symbol.value):
-                    if verifyListBoundaries_2(indexType.indexValue1, indexType.indexValue2, symbol.value):
-                        return symbol.value[indexType.indexValue1][indexType.indexValue2]
-                    else:
-                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
-            
-            if isinstance(indexType, IndexRange):
-                if isList(symbol.value):
-                    if verifyListBoundaries_2(indexType.fromIndex, indexType.toIndex, symbol.value):
-                        return symbol.value[indexType.fromIndex:indexType.toIndex]
-                    else:
-                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list")
-            
-            if isinstance(indexType, IndexColumn):
-                if isMatrix(symbol.value):
-                    if verifyListBoundariesOne(indexType.column, symbol.value[0]):
-                        return getColumn(indexType.column, symbol.value)
-                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
-                else:
-                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
-        else:
-            program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
-            
-
-
-
-
 
 
 def isList(lista):
@@ -109,6 +56,30 @@ def isMatrix(matrix):
             return False
     
     return True
+
+
+
+
+
+
+def checkIndexValue(ID, indexValue, program, symbolTable):
+
+    if isinstance(indexValue, int):
+        return indexValue
+
+    if isinstance(indexValue, str):
+                temp = searchSymbolByID(indexValue, program, symbolTable)
+                if temp != None:
+                    if isinstance(temp.value, int):
+                        return temp.value
+                    else:
+                        program.semanticError.addError(f"Semantic error: Invalid index value in {ID}")
+                        return
+                else:
+                    program.semanticError.addError(f"Semantic error: Symbol {indexValue} not found")
+                    return 
+
+
 
 
 

@@ -41,7 +41,7 @@ class value(Instruction):
 
         if isinstance(self.value, IndexAccess):
             print(self.value)
-            self.value = getValuesFromIndex(self.value.ID, self.value.index, program, symbolTable)
+            self.value = self.value.getValues(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
             
@@ -116,10 +116,6 @@ class IndexValue:
 
 
 
-
-
-
-
 class IndexAssign(Instruction):
 
     def __init__(self, ID, index, value):
@@ -138,34 +134,8 @@ class IndexAssign(Instruction):
             self.assignment(program, symbolTable)
 
 
-
-
-    def evalValue(self):
-
-        if isinstance(self.value, Index):
-            return getValuesFromIndex(self.value)
-        if isinstance(self.value, str):
-            symbol = searchSymbolByID(self.value)
-            if symbol != None:
-                return symbol.value 
-            return None
-        else:
-            return self.value
-
-
     def assignment(self, program, symbolTable):
-
-    
-       symbol = searchSymbolByID(self.ID, program, symbolTable)
-
-       print(symbol.value)
-
-       if symbol != None:
-           if isinstance(self.value, IndexOne):
-               if isList(symbol.value):
-                   self.value = self.evalValue()
-                   if isinstance(self.value, bool):
-                       symbol.value[self.index.IndexValue] = self.value 
+        pass
 
 
  

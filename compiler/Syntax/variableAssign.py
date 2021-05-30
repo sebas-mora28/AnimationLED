@@ -74,8 +74,9 @@ def p_index_access(p):
 
 
 def p_index_assign(p):
-    '''index_assign : ID index ASSIGN value SEMICOLON'''
+    '''index_assign : ID index ASSIGN index_assign_value SEMICOLON'''
     print("INDEX ASSIGN")
+    print(p[4])
     p[0] = IndexAssign(p[1],p[2],p[4])
 
 
@@ -104,7 +105,7 @@ def p_index_range(p):
 
 def p_index_pair(p):
     '''index_pair : index_value COMMA index_value'''
-    p[0] = IndexPair(p[1], p[2])
+    p[0] = IndexPair(p[1], p[3])
 
 def p_index_column(p):
     '''index_column : COLON COMMA index_value'''
@@ -115,4 +116,10 @@ def p_index_value(p):
     '''index_value : ID 
                    | INTEGER'''
 
+    p[0] = p[1]
+
+def p_index_assign_value(p):
+    '''index_assign_value : ID
+                          | BOOLEAN 
+                          | index_access'''
     p[0] = p[1]

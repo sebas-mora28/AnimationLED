@@ -11,7 +11,7 @@ Procedure funcion(arg1)
 Procedure Main()
 {
 
-    #var1 = 12;
+    var1 = 12;
 
     #var2 = 156; 
 
@@ -32,7 +32,10 @@ Procedure Main()
 
     listica = [False, False, False];
 
-    lista[0] = True;
+    i = 1;
+    j = 2;
+
+    var1 = lista[i:j];
 
     #lista.insert(2, True);
     #lista.del(2);
