@@ -140,17 +140,16 @@ class IndexAssign(Instruction):
 
 
     def assignment(self, program, symbolTable):
-        
 
-        self.valueFromID = searchSymbolByID(self.ID, program, symbolTable)
+
 
         self.value = self.value.eval(program, symbolTable)
-        if isinstance(self.index, IndexOne):
-            if isList(self.valueFromID.value) or isMatrix(self.valueFromID.value):
+        symbol = searchSymbolByID(self.ID, program, symbolTable)
+        if symbol != None:
+            self.index.assignValue(self.ID, symbol, self.value, program, symbolTable)
 
-                pass
-                
- 
+        else:
+            program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
 
 
  

@@ -119,7 +119,13 @@ def p_index_value(p):
     p[0] = p[1]
 
 def p_index_assign_value(p):
-    '''index_assign_value : ID
-                          | BOOLEAN 
-                          | index_access'''
+    '''index_assign_value : INTEGER 
+                            | BOOLEAN 
+                            | ID
+                            | list
+                            | len
+                            | range
+                            | matrix_dimensions 
+                            | arithmetic
+                            | index_access'''
     p[0] = IndexValue(p[1])
