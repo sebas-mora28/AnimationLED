@@ -20,7 +20,8 @@ const int L=0;
 
 //constante para pruebas
 int cont;
-int incomingByte = 0;
+
+String input;
 
 void setup() {
   cont=0;
@@ -46,92 +47,61 @@ void setup() {
 //Ciclo principal de ejecución
 void loop() {
   if (Serial.available() > 0){
-    prenderPunto(0,0);
-    String input= Serial.readString();
+    
+    input= Serial.readString();
     }
-  //serialRead();
-  if (cont<3000){
-  
-    //cuadro
-    /*
-    apagarColumna(7) ;
-    apagarColumna(0) ;
-    apagarFila(0);
-    apagarFila(7);
-    */
-    //apagarMatriz();
-
-    //ojo der
-    prenderPunto(1,2);
-    prenderPunto(2,2);
-    prenderPunto(3,2);
-
-    //ojo izq
-    prenderPunto(1,5);
-    prenderPunto(2,5);
-    prenderPunto(3,5);
-
-    //boca
-    prenderPunto(4,1);
-    prenderPunto(4,6);
-    prenderPunto(5,5);
-    prenderPunto(5,4);
-    prenderPunto(5,3);
-    prenderPunto(5,2);
+  if (input.substring(0,1)=="1"){
+     if (input.substring(1,2)=="1"){
+        prenderColumna(input.substring(2,3).toInt());        
+      }
+      if (input.substring(1,2)=="0"){
+        apagarColumna(input.substring(2,3).toInt());        
+      }      
     }
-
-   if (cont>3000){
-    //cambio del ojo izq
-    apagarPunto(1,2);
-    apagarPunto(3,2);
-   
-    prenderPunto(2,1);
-    //prenderPunto(3,1);
-   }
-  if (cont>6000){
-    //cuadro
-    //prenderMatriz();
-
-     //ojo izq
-    apagarPunto(2,1);
-    apagarPunto(2,2);
-    //apagarPunto(3,1);
-
-    //ojo izq
-    apagarPunto(1,5);
-    apagarPunto(2,5);
-    apagarPunto(3,5);
-
-    //boca
-    apagarPunto(4,1);
-    apagarPunto(4,6);
-    apagarPunto(5,5);
-    apagarPunto(5,4);
-    apagarPunto(5,3);
-    apagarPunto(5,2);
+   if (input.substring(0,1)=="2"){
+     if (input.substring(1,2)=="1"){
+        prenderFila(input.substring(2,3).toInt());        
+      }
+      if (input.substring(1,2)=="0"){
+        apagarFila(input.substring(2,3).toInt());        
+      }      
+    }
+    if (input.substring(0,1)=="3"){
+     if (input.substring(1,2)=="1"){
+        prenderPunto(input.substring(2,3).toInt(),input.substring(3,4).toInt());        
+      }
+      if (input.substring(1,2)=="0"){
+        apagarPunto(input.substring(2,3).toInt(),input.substring(3,4).toInt());            
+      }      
+    }
+    if (input.substring(0,1)=="4"){
+     if (input.substring(1,2)=="1"){
+        prenderMatriz();        
+      }
+      if (input.substring(1,2)=="0"){
+        apagarMatriz();            
+      }      
+    }
+    if (input.substring(0,1)=="5"){
+      int y=input.substring(1,2).toInt();
+      for (int i=0;i<8;i++){
+        int valor=input.substring(i+2,i+3).toInt();
+        leds[y][i]=valor;
+        } 
+    }
+    if (input.substring(0,1)=="6"){
+      int x=input.substring(1,2).toInt();
+      for (int i=0;i<8;i++){
+        int valor=input.substring(i+2,i+3).toInt();
+        leds[i][x]=valor;
+        } 
     }
   refreshScreen();
   
-  //delay(1000);
-  if (cont>7000){
-    cont=0;
-  }
-  cont++;
+  
   
 }
 
-void serialRead(){
-  
-  if (Serial.available() > 0) {
-    // read the incoming byte:
-    incomingByte = Serial.read();
-    prenderPunto(0,0);
-
-    // say what you got:
-    Serial.print("I received: ");
-    Serial.println(incomingByte, DEC);
-  }
-  }
 
 //Función que llama a prenderfila() para poder cambiar toda la matriz de leds a H
 //Entradas: NONE
