@@ -11,7 +11,18 @@ Procedure funcion(arg1)
 Procedure Main()
 {
 
-    var1 = 12;
+
+    var1 = 5;
+
+    xd = [True];
+
+    if xd[76] == True
+    {
+        Call funcion(4);
+        var1 = 1234;
+    
+    };
+
 
     #var2 = 156; 
 
@@ -24,18 +35,18 @@ Procedure Main()
     #PrintLedX("C", 1, [True, False, True, False]);
 
 
-    matrix = [[False, False, False, False, False, False, False],[False, False, False, False, False, False, False],[False, False, False, False, False, False, False]];
+    #matrix = [[False, False, False, False, False, False, False],[False, False, False, False, False, False, False],[False, False, False, False, False, False, False]];
 
     #matrix.insert([[True], [True], [True]], 1,0);
 
     lista = [False, False, False, True, True, True, False];
 
-    listica = [False, False, False];
+    #listica = [False, False, False];
 
-    i = 1;
-    j = 2;
+    #i = 1;
+    #j = 2;
 
-    var1 = lista[i:j];
+    lista[0] = True;
 
     #lista.insert(2, True);
     #lista.del(2);

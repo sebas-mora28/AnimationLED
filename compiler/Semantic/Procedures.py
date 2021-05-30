@@ -36,7 +36,7 @@ class CallProcedure(Instruction):
     
     def eval(self, program, symbolTable):
 
-        symbolProcedure = symbolTable.getProcedureByID(self.ID)
+        symbolProcedure = program.symbolTable.getProcedureByID(self.ID)
 
         if symbolProcedure:
             procedure = symbolProcedure.procedure

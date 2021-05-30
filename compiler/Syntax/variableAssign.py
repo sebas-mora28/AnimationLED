@@ -122,4 +122,4 @@ def p_index_assign_value(p):
     '''index_assign_value : ID
                           | BOOLEAN 
                           | index_access'''
-    p[0] = p[1]
+    p[0] = IndexValue(p[1])

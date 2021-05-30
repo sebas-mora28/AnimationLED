@@ -110,10 +110,15 @@ class IndexValue:
         self.value = value
 
     
-    def eval(self, ID, program, symbolTable, scope):
+    def eval(self, program, symbolTable):
 
-        pass
+        if isinstance(self.value, bool) or isinstance(self.value, list):
+            return self.value
 
+        if isinstance(self.value, IndexAccess):
+            return self.value.getValues(program, symbolTable)
+        
+        return None 
 
 
 class IndexAssign(Instruction):
@@ -135,7 +140,17 @@ class IndexAssign(Instruction):
 
 
     def assignment(self, program, symbolTable):
-        pass
+        
+
+        self.valueFromID = searchSymbolByID(self.ID, program, symbolTable)
+
+        self.value = self.value.eval(program, symbolTable)
+        if isinstance(self.index, IndexOne):
+            if isList(self.valueFromID.value) or isMatrix(self.valueFromID.value):
+
+                pass
+                
+ 
 
 
  

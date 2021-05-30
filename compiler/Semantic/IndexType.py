@@ -114,8 +114,7 @@ class IndexOne(Index):
         def getValuesFromIndex(self, ID,  program, symbolTable):
 
             self.indexValue = checkIndexValue(ID, self.indexValue, program, symbolTable)
-        
-
+    
             symbol = searchSymbolByID(ID, program, symbolTable)
             if symbol != None:
                 if isList(symbol.value) or isMatrix(symbol.value):
@@ -129,6 +128,25 @@ class IndexOne(Index):
             else:
                 program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
 
+
+        def assignValue(self, ID, value, program, symbolTable):
+
+            symbol = searchSymbolByID(ID, program, symbolTable)
+            self.indexValue = checkIndexValue(ID, self.indexValue, program, symbolTable)
+
+            if symbol != None:
+                if isList(symbol.value):
+                    if isinstance(self.indexValue, int):
+                        if verifyListBoundariesOne(self.indexValue, symbolTable.value):
+                            if isinstance(value, bool):
+                                symbol.value[0] = value
+            
+            else:
+                program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+
+
+        
+            
 
 
 
