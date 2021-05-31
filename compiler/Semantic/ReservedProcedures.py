@@ -10,7 +10,7 @@ class Delay(Instruction):
         self.timeRange = timeRange
     
     def eval(self,program, SymbolTable):
-        if (isinstance(self.time, int)):
+        if (verifyType(self.time, int)):
             if (self.timeRange == "Seg" or self.timeRange == "Mil" or self.timeRange == "Min"):
                 self.delay(program)
             else:
@@ -35,12 +35,12 @@ class Blink(Instruction):
         self.state = state
 
     def eval(self, program, SymbolTable):
-        if (isinstance(self.col, int)):
-            if (isinstance(self.row, int)):
-                if (isinstance(self.value, int)):
-                    if (isinstance(self.time, int)):
+        if (verifyType(self.col, int)):
+            if (verifyType(self.row, int)):
+                if (verifyType(self.value, int)):
+                    if (verifyType(self.time, int)):
                         if (self.timeRange == "seg" or self.timeRange == "mil" or self.timeRange == "min"):
-                            if (isinstance(self.state,bool)):
+                            if (verifyType(self.state,bool)):
                                 self.blink(program)
                             else:
                                 program.semanticError.blinkInvalidArgumentState()
@@ -71,9 +71,9 @@ class PrintLed(Instruction):
         self.value = value
     
     def eval(self,program, SymbolTable):
-        if (isinstance(self.col, int)):
-            if (isinstance(self.row, int)):
-                if(isinstance(self.value, int)):
+        if (verifyType(self.col, int)):
+            if (verifyType(self.row, int)):
+                if(verifyType(self.value, int)):
                     self.printLed(program)
                 else:
                     program.semanticError.printLedInvalidArgumentValue()
@@ -97,7 +97,7 @@ class PrintLedX(Instruction):
     
     def eval(self,program, SymbolTable):
         if(self.objectType == "F" or self.objectType == "C"):
-            if (isinstance(self.index, int)):
+            if (verifyType(self.index, int)):
                 if (isList(self.list)):
                     self.printLedX(program)
                 else:
@@ -105,7 +105,7 @@ class PrintLedX(Instruction):
             else:
                 program.semanticError.printLedXInvalidArgumentIndex()
         elif self.objectType =="M":
-            if (isinstance(self.index, int)):
+            if (verifyType(self.index, int)):
                 if (isMatrix(self.list)):
                     self.printLedX(program)
                 else:

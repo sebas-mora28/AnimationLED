@@ -50,20 +50,16 @@ def p_printLedX(p):
 #list functions
 
 
+
+
 #len 
 def p_len(p):
     '''len : LEN LPAREN ID RPAREN'''
     print("leeeen")
     p[0] = Len(p[3])
 
-def p_len_index(p):
-    '''len : LEN LPAREN ID index RPAREN'''
-    print("LEN")
-
 
 #range
-
-
 def p_range(p):
     'range : RANGE LPAREN INTEGER COMMA BOOLEAN RPAREN'
     p[0] = Range(p[3], p[5])
@@ -114,12 +110,14 @@ def p_matrix_dimension(p):
     print(p[2])
     p[0] = MatrixDimension(p[1], p[2])
  
-# list boolean operation 
 
+
+
+# list boolean operation 
 def p_list_boolean_operation(p):
     '''list_boolean_operation : ID LISTOPERATOR SEMICOLON '''
     print("LIST BOOLEAN OPERATION")
 
 def p_list_boolean_operation_index(p):
-    '''list_boolean_operation : ID index LISTOPERATOR SEMICOLON''' 
+    '''list_boolean_operation : ID index_type LISTOPERATOR SEMICOLON''' 
     print("LIST BOOLEAN OPERATION INDEX")

@@ -58,74 +58,74 @@ def p_values_single(p):
 
 #Manejo de indices
 
-def p_index_type(p):
-    '''index_type : index_range
-                  | index_pair
-                  | index_column
-                  | index_one'''
 
-    p[0] = p[1]
+def p_index_assign(p):
+     '''index_assign : index_type ASSIGN index_assign_value SEMICOLON'''
+     print("INDEX ASSIGN")
+     p[0] = IndexAssign(p[1],p[3])
 
 
 def p_index_access(p):
-    '''index_access : ID index'''
-    print("INDEX ACCESS")
-    p[0] = IndexAccess(p[1], p[2])
+     '''index_access : index_type'''
+     print("INDEX ACCESS")
+     p[0] = IndexAccess(p[1])
 
 
-def p_index_assign(p):
-    '''index_assign : ID index ASSIGN index_assign_value SEMICOLON'''
-    print("INDEX ASSIGN")
-    print(p[4])
-    p[0] = IndexAssign(p[1],p[2],p[4])
+def p_index_one(p):
+    '''index_one : ID LSBRACKET index_value RSBRACKET'''
+    print("INDEX ONE")
+    p[0] = IndexOne(p[1], p[3])
 
-
-
-def p_index_list(p):
-    '''index : LSBRACKET index_type RSBRACKET'''
-    print("LIST INDEX")
-    p[0] = p[2]
 
 def p_index_matrix(p):
-    '''index : LSBRACKET index_value RSBRACKET LSBRACKET index_value RSBRACKET'''
-    print("MATRIX INDEX")
-    p[0] = IndexPair(p[2], p[5])
+     '''index_matrix : ID LSBRACKET index_value RSBRACKET LSBRACKET index_value RSBRACKET'''
+     print("MATRIX INDEX")
+     p[0] = IndexPair(p[1], p[3],p[6])
 
-
-def p_index_one(p):  
-    '''index_one : INTEGER 
-                 | ID'''
-    p[0] = IndexOne(p[1])
-    
 
 def p_index_range(p):
-    '''index_range : index_value COLON index_value'''
+    '''index_range : ID LSBRACKET index_value COLON index_value RSBRACKET'''
     print("INDEX RANGE")
-    p[0] = IndexRange(p[1], p[3])
+    p[0] = IndexRange(p[1],p[3],p[5])
+
 
 def p_index_pair(p):
-    '''index_pair : index_value COMMA index_value'''
-    p[0] = IndexPair(p[1], p[3])
+    '''index_pair : ID LSBRACKET index_value COMMA index_value RSBRACKET'''
+    print("INDEX PAIR")
+    p[0] = IndexPair(p[1],p[3],p[5])
+
 
 def p_index_column(p):
-    '''index_column : COLON COMMA index_value'''
-    p[0] = IndexColumn(p[3])
+    '''index_column : ID LSBRACKET COLON COMMA index_value RSBRACKET '''
+    print("INDEX COLUMN")
+    p[0] = IndexColumn(p[1], p[5])
 
+
+def p_index_type(p):
+     '''index_type : index_matrix
+                   | index_one
+                   | index_pair
+                   | index_range
+                   | index_column'''
+
+     p[0] = p[1]
 
 def p_index_value(p):
-    '''index_value : ID 
-                   | INTEGER'''
+     '''index_value : ID 
+                    | INTEGER'''
 
-    p[0] = p[1]
+     p[0] = p[1]
+
+
 
 def p_index_assign_value(p):
-    '''index_assign_value : INTEGER 
-                            | BOOLEAN 
-                            | ID
-                            | list
-                            | len
-                            | range
-                            | matrix_dimensions 
-                            | arithmetic
-                            | index_access'''
-    p[0] = IndexValue(p[1])
+     '''index_assign_value : INTEGER 
+                             | BOOLEAN 
+                             | ID
+                             | list
+                             | len
+                             | range
+                             | matrix_dimensions 
+                             | arithmetic
+                             | index_access'''
+     p[0] = IndexValue(p[1])

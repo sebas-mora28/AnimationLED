@@ -41,7 +41,7 @@ class CallProcedure(Instruction):
         if symbolProcedure:
             procedure = symbolProcedure.procedure
 
-            if(isinstance(procedure, Procedure)):
+            if(verifyType(procedure, Procedure)):
             
                 parameters = procedure.getParameters()
 
@@ -70,7 +70,7 @@ class CallProcedure(Instruction):
 
         for i in range(len(parameters)):
 
-            if not isinstance(arguments[i], str):
+            if not verifyType(arguments[i], str):
                 self.localsymbolTable.addSymbol(parameters[i], arguments[i], type(arguments[i]), "local")
 
             else:

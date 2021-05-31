@@ -6,9 +6,7 @@ from Semantic.SemanticAnalysis import *
 
 
 def p_procedure(p):
-    '''procedure : PROCEDURE ID LPAREN RPAREN LCBRACKET expressions_set RCBRACKET SEMICOLON'''
-    print(p.lineno)
-    
+    '''procedure : PROCEDURE ID LPAREN RPAREN LCBRACKET expressions_set RCBRACKET SEMICOLON'''    
     if(p[2] == "Main"):
         p[0] = MainProcedure(p[2], [], p[6])
     else:

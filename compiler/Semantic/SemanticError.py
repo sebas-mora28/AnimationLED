@@ -10,7 +10,6 @@ class SemanticError:
         self.errors = []
 
     def printErrors(self):
-
         for i in range(len(self.errors)):
             print(self.errors[i])
 
@@ -95,6 +94,11 @@ class SemanticError:
 
     def invalidIterable(self):
         self.errors.append(f"Semantic error: Invalid iterable in if statement")
+
+    def rangeInvalidListLength(self, ID):
+        self.errors.append(f"Semantic error: length list does not match with range values in {ID}")
+
+
 
 
     #Reserved procedures

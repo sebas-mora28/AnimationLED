@@ -9,7 +9,7 @@ class Instruction:
 
 
 def verifyListBoundariesOne(index, listSymbol):
-        if index < len(listSymbol):
+        if index < len(listSymbol) and index >= 0:
             return True
         return False
 
@@ -19,7 +19,8 @@ def verifyListBoundaries_2(index1, index2, listSymbol):
             return True  
         return False
 
-
+def verifyType(value1, instance):
+    return type(value1) == instance
 
 def getColumn(index, matrix):
     res = []
@@ -29,16 +30,23 @@ def getColumn(index, matrix):
     return res
 
 
+def setColumn(index, matrix, column):
+    for i in range(len(matrix)):
+        matrix[i][index] = column[i]
+    
+    return matrix
+
+
 def isList(lista):
 
-    if not isinstance(lista, list):
+    if not verifyType(lista, list):
         return False
 
     if(lista == []):
         return True
 
     for i in range(len(lista)):
-        if isinstance(lista[i], list):
+        if verifyType(lista[i], list):
             return False
     
     return True
@@ -46,14 +54,14 @@ def isList(lista):
 
 def isMatrix(matrix):
 
-    if not isinstance(matrix, list):
+    if not verifyType(matrix, list):
         return False
 
     if(matrix == []):
         return True
 
     for i in range(len(matrix)):
-        if not isinstance(matrix[i], list):
+        if not verifyType(matrix[i], list):
             return False
     
     return True
@@ -65,20 +73,18 @@ def isMatrix(matrix):
 
 def checkIndexValue(ID, indexValue, program, symbolTable):
 
-    if isinstance(indexValue, int):
+    if verifyType(indexValue, int):
         return indexValue
 
-    if isinstance(indexValue, str):
+    if verifyType(indexValue, str):
                 temp = searchSymbolByID(indexValue, program, symbolTable)
                 if temp != None:
-                    if isinstance(temp.value, int):
+                    if verifyType(temp.value, int):
                         return temp.value
                     else:
                         program.semanticError.invalidIndexArguments(ID)
                         return
-                else:
-                    program.semanticError.symbolNotFound(indexValue)
-                    return 
+                 
 
 
 
@@ -94,6 +100,7 @@ def searchSymbolByID(ID, program, symbolTable):
         return program.symbolTable.getSymbolByID(ID)
 
     else:
+        program.semanticError.symbolNotFound(ID)
         return None
 
 

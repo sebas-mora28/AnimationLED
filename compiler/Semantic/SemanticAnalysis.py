@@ -61,8 +61,8 @@ class MainProcedure(Instruction):
 
         for expression in self.expressions:
             if expression:
-
-                if isinstance(expression, VariableAssign) or isinstance(expression, MultipleAssign) or isinstance(expression, IndexAssign):
+            
+                if verifyType(expression, VariableAssign) or verifyType(expression, MultipleAssign) or verifyType(expression, IndexAssign):
                     expression.scope = "global"
                 
                 expression.eval(program, symbolTable)

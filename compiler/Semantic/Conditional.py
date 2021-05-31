@@ -19,10 +19,10 @@ class If(Instruction):
 
     def comparation(self, program, symbolTable):
         
-        if isinstance(self.iterable, str):
+        if verifyType(self.iterable, str):
             self.iterable = searchSymbolByID(self.iterable, program, symbolTable).value
         
-        elif isinstance(self.iterable, IndexAccess):
+        elif verifyType(self.iterable, IndexAccess):
             self.iterable = self.iterable.getValues(program, symbolTable)
 
         else:
@@ -40,7 +40,7 @@ class If(Instruction):
 
         
         print(self.iterable)
-        if isinstance(self.iterable, list):
+        if verifyType(self.iterable, list):
 
             for element in self.iterable:
                 if self.evalComparation(element):

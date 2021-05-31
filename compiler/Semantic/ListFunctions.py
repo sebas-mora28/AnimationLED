@@ -10,7 +10,7 @@ class MatrixDimension(Instruction):
         self.dimension = dimension
 
     
-    def getDimensions(self, program, symbolTable):
+    def eval(self, program, symbolTable):
 
         symbol = searchSymbolByID(self.ID, program, symbolTable)
 
@@ -45,12 +45,12 @@ class ListInsert(Instruction):
         if symbol != None:
             if isList(symbol.value):
                 if self.index <= len(symbol.value):
-                    if isinstance(self.value, bool):
+                    if verifyType(self.value, bool):
                         symbol.value.insert(self.index, self.value)
                     else:
                         program.semanticError.incompatibleType(self.ID)
                 else:
-                    program.semanticError.indexOutOfRange(self.ID)
+                    program.semanticError.indexOutRange(self.ID)
             else:
                 program.semanticError.insertListProcedureError(self.ID)
         else:
@@ -71,7 +71,7 @@ class ListDelete(Instruction):
                 if self.index < len(symbol.value):
                     symbol.value.pop(self.index)
                 else:
-                    program.semanticError.indexOutOfRange(self.ID)
+                    program.semanticError.indexOutRange(self.ID)
             else:
                 program.semanticError.deleteListProcedureError(self.ID)
         else:
@@ -93,7 +93,7 @@ class MatrixInsert(Instruction):
         if symbol != None:
             if isMatrix(symbol.value):
                 if self.insertionType == 1 or self.insertionType == 0:
-                    if isinstance(self.value, list):
+                    if verifyType(self.value, list):
                             if self.insertionType == 0:
                                 self.insertRow(symbol, program)
         
@@ -122,7 +122,7 @@ class MatrixInsert(Instruction):
                         for i in range(len(symbol.value)):
                             symbol.value[i].insert(self.index, self.value[i][0])
                     else:
-                        program.semanticError.indexOutOfRange(self.ID)
+                        program.semanticError.indexOutRange(self.ID)
         else:
             program.semanticError.invalidDimensions(self.ID)
 
@@ -136,7 +136,7 @@ class MatrixInsert(Instruction):
                     if self.index <= len(symbol.value):
                         symbol.value.insert(self.index, self.value[0])
                     else:
-                        program.semanticError.indexOutOfRange(self.ID)
+                        program.semanticError.indexOutRange(self.ID)
             else:
                 program.semanticError.invalidDimensions(self.ID)
 
@@ -158,7 +158,7 @@ class MatrixDelete(Instruction):
 
         if symbol != None:
             if isMatrix(symbol.value):
-                if isinstance(self.index, int) and isinstance(self.eliminationType, int):
+                if verifyType(self.index, int) and verifyType(self.eliminationType, int):
 
                     if self.eliminationType == 0:
                         self.deleteRow(symbol, program)
@@ -177,14 +177,14 @@ class MatrixDelete(Instruction):
         if self.index < len(symbol.value):
                 symbol.value.pop(self.index)
         else:
-            program.semanticError.indexOutOfRange(self.ID)
+            program.semanticError.indexOutRange(self.ID)
 
     def deletColumn(self, symbol, program):
         if self.index < len(symbol.value[0]):
             for i in range(len(symbol.value)):
                 symbol.value[i].pop(self.index)
         else:
-            program.semanticError.indexOutOfRange(self.ID)
+            program.semanticError.indexOutRange(self.ID)
         
 
 
@@ -213,7 +213,7 @@ class Range(Instruction):
         self.value = value
 
     def eval(self, program, symbolTable):
-        if isinstance(self.list_size, int) or isinstance(self.value, bool):
+        if verifyType(self.list_size, int) or verifyType(self.value, bool):
                 return [self.value] * self.list_size
         else:
             program.semanticError.rangeInvalidArguments()

@@ -1,20 +1,18 @@
 Procedure Main()
 {
-    var = 1;
-
-    #i = 0;
-
     var = True;
 
-
- 
-
-    #lista = [False, False, False, False, False];
-
-    #listica = [True, True, True];
+    lista = [True, True , True, False];
 
 
-    #lista[35] = listica[1];
+    i = 0;
+    j = 3;
+
+    matrix = [[False, False, False, False],[True, True, True, True]];
 
 
+    lista[0:3] = True;
+
+
+    
 };

@@ -15,31 +15,31 @@ class value(Instruction):
 
     def eval(self, ID, program, symbolTable, scope):
 
-        if isinstance(self.value, int) or isinstance(self.value, bool) or isinstance(self.value, list):
+        if verifyType(self.value, int) or verifyType(self.value, bool) or verifyType(self.value, list):
             self.assignment(ID, program, symbolTable, scope)
  
-        if(isinstance(self.value, str)):
+        if(verifyType(self.value, str)):
             symbol = searchSymbolByID(self.value, program, symbolTable)
             if symbol != None:
                 self.value = symbol.value
                 self.assignment(ID, program, symbolTable, scope)
-
-        if isinstance(self.value, MatrixDimension):
+          
+        if verifyType(self.value, MatrixDimension):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
     
-        if isinstance(self.value, Len):
+        if verifyType(self.value, Len):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
         
-        if isinstance(self.value, Range):
+        if verifyType(self.value, Range):
             self.value = self.value.eval(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
 
-        if isinstance(self.value, IndexAccess):
+        if verifyType(self.value, IndexAccess):
             self.value = self.value.getValues(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
@@ -48,7 +48,7 @@ class value(Instruction):
     def assignment(self, ID, program, symbolTable, scope):
         if(symbolTable.exist(ID)):
                 old_value = symbolTable.getSymbolByID(ID)
-                if isinstance(old_value.value, type(self.value)):
+                if verifyType(old_value.value, type(self.value)):
                     symbolTable.changeSymbolValue(ID, self.value)
                 else:
                     program.semanticError.invalidSymbolType(ID)        
@@ -67,7 +67,6 @@ class VariableAssign(Instruction):
         self.scope = "local"
 
     def eval(self, program, symbolTable):
-    
         if(self.scope == "global"):
             self.value.eval(self.ID, program, program.symbolTable, "global")
 
@@ -111,25 +110,21 @@ class IndexValue:
     
     def eval(self, program, symbolTable):
 
-        if isinstance(self.value, str):
+        if verifyType(self.value, str):
             symbol = searchSymbolByID(self.value, program, symbolTable)
             if symbol:
                 return symbol.value
-
-
-        if isinstance(self.value, bool) or isinstance(self.value, list):
-            return self.value
-
-        if isinstance(self.value, IndexAccess):
+        elif verifyType(self.value, IndexAccess):
             return self.value.getValues(program, symbolTable)
         
-        return None 
+        else:
+            return self.value 
 
 
 class IndexAssign(Instruction):
 
-    def __init__(self, ID, index, value):
-        self.ID = ID    
+    def __init__(self, index, value):
+        self.ID = index.ID 
         self.index = index
         self.value = value
         self.scope = "local"
@@ -146,16 +141,10 @@ class IndexAssign(Instruction):
 
     def assignment(self, program, symbolTable):
 
-
-
         self.value = self.value.eval(program, symbolTable)
   
-        symbol = searchSymbolByID(self.ID, program, symbolTable)
-        if symbol != None:
-            self.index.assignValue(self.ID, symbol, self.value, program, symbolTable)
-
-        else:
-            program.semanticError.symbolNotFound(self.ID)
+    
+        self.index.assignValue(self.value, program, symbolTable)
 
 
  

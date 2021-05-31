@@ -71,10 +71,11 @@ class SymbolTable:
 
 
     def print(self):
+        print(f" ID \t\t value \t\t\t\t scope")
         for key in self.variableTable:
             var = self.variableTable[key]
 
-            print(f"ID : {var.ID} value : {var.value} scope : {var.scope}")
+            print(f"{var.ID} \t\t {var.value} \t\t\t\t {var.scope}")
 
     
      
