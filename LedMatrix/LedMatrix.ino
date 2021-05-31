@@ -96,6 +96,15 @@ void loop() {
         leds[i][x]=valor;
         } 
     }
+    if (input.substring(0,1)=="7"){
+        int cont=1;
+        for (int y=0;y<8;y++){
+          for (int x=0;x<8;x++){
+              leds[y][x]=input.substring(cont,cont+1).toInt();
+              cont++;
+            }
+          }
+      }
   refreshScreen();
   
   
