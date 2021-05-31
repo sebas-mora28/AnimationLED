@@ -58,13 +58,12 @@ class CallProcedure(Instruction):
                     self.localsymbolTable.print()
 
                 else:
-                    program.semanticError.addError(f"Semantic error: Expect { len(procedure.getParameters())} arguments given {len(self.arguments)}")
-
+                    program.semanticError.invalidAmountOfParameters(len(procedure.getParameters()), len(self.arguments))
             else:
-                program.semanticError.addError(f"Semantic error: {self.ID} is not a procedure")
+                program.semanticError.isNotAProcedure(self.ID)
 
         else:
-            program.semanticError.addError(f"Semantic error: Procedure {self.ID} not found")
+            program.semanticError.procedureNotFound(self.ID)
 
     
     def set_arguments(self, program, symbolTable,  arguments, parameters):
@@ -82,4 +81,4 @@ class CallProcedure(Instruction):
                     self.localsymbolTable.addSymbol(parameters[i], symbol.value, symbol.type, "local")
 
                 else:
-                    program.semanticError.addError(f"Semantic error: Symbol {arguments[i]} not found")
+                    program.semanticError.symbolNotFound(self.ID)

@@ -40,7 +40,6 @@ class value(Instruction):
                 self.assignment(ID, program, symbolTable, scope)
 
         if isinstance(self.value, IndexAccess):
-            print(self.value)
             self.value = self.value.getValues(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
@@ -49,10 +48,10 @@ class value(Instruction):
     def assignment(self, ID, program, symbolTable, scope):
         if(symbolTable.exist(ID)):
                 old_value = symbolTable.getSymbolByID(ID)
-                if(isinstance(old_value.value, type(self.value))):
+                if isinstance(old_value.value, type(self.value)):
                     symbolTable.changeSymbolValue(ID, self.value)
                 else:
-                    program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}")          
+                    program.semanticError.invalidSymbolType(ID)        
         else:
             symbolTable.addSymbol(ID, self.value, type(self.value), scope)
 
@@ -97,7 +96,7 @@ class  MultipleAssign(Instruction):
                     self.values[i].eval(self.IDs[i], program, symbolTable, "local")
 
         else:
-            program.semanticError.addError(f"Semantic error: Invalid multiple variable assigment")
+            program.semanticError.invalidMultipleAssignment()
 
 
 
@@ -111,6 +110,12 @@ class IndexValue:
 
     
     def eval(self, program, symbolTable):
+
+        if isinstance(self.value, str):
+            symbol = searchSymbolByID(self.value, program, symbolTable)
+            if symbol:
+                return symbol.value
+
 
         if isinstance(self.value, bool) or isinstance(self.value, list):
             return self.value
@@ -144,12 +149,13 @@ class IndexAssign(Instruction):
 
 
         self.value = self.value.eval(program, symbolTable)
+  
         symbol = searchSymbolByID(self.ID, program, symbolTable)
         if symbol != None:
             self.index.assignValue(self.ID, symbol, self.value, program, symbolTable)
 
         else:
-            program.semanticError.addError(f"Semantic error: Symbol {self.ID} not found")
+            program.semanticError.symbolNotFound(self.ID)
 
 
  

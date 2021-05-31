@@ -5,7 +5,7 @@ from Semantic.Common import *
 
 class Index:
 
-    def checkValues(self, ID, program, symbolTable):
+    def checkIndexValues(self, ID, program, symbolTable):
          pass
     
     def getValuesFromIndex(self, ID, program, symbolTable):
@@ -13,6 +13,13 @@ class Index:
 
     def assignValue(self, ID, symbol, value, program, symbolTable):
         pass
+
+    def isOutOfRange(self, index, symbolList, program, ID):
+        if verifyListBoundariesOne(index, symbolList):
+            return False 
+        
+        program.semanticError.indexOutOfRange(self.ID)
+        return False
 
 
 
@@ -35,15 +42,15 @@ class IndexPair(Index):
         self.indexValue2 = index2
 
 
-    def checkValues(self, ID, program, symbolTable):
+    def checkIndexValues(self, ID, program, symbolTable):
         self.indexValue1 = checkIndexValue(ID, self.indexValue1, program, symbolTable)
         self.indexValue2 = checkIndexValue(ID, self.indexValue2, program, symbolTable)
 
     
     def getValuesFromIndex(self, ID, program, symbolTable):
 
-        self.indexValue1 = checkIndexValue(ID, self.indexValue1, program, symbolTable)
-        self.indexValue2 = checkIndexValue(ID, self.indexValue2, program, symbolTable)
+
+        self.checkIndexValues(ID, program, symbolTable)
         symbol = searchSymbolByID(ID, program, symbolTable)
 
         if symbol != None:
@@ -52,31 +59,30 @@ class IndexPair(Index):
                     if verifyListBoundaries_2(self.indexValue1, self.indexValue2, symbol.value):
                         return symbol.value[self.indexValue1][self.indexValue2]
                     else:
-                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                        program.semanticError.indexOutOfRange(self.ID)
             else:
-                program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
+                program.semanticError.invalidIndexAccessMatrix(self.ID)
         else:
-            program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+            program.semanticError.symbolNotFound(self.ID)
 
         
-    def assignValue(self, ID, symbol, value, program, symbolTable):
-
-            
-            self.checkValues(ID, program, symbolTable)
+    def assignValue(self, ID, symbol, value, program, symbolTable):  
+           
+            self.checkIndexValues(ID, program, symbolTable)
 
             if self.indexValue1 != None and self.indexValue2 != None:
-                if verifyListBoundaries_2(self.fromIndex, self.toIndex, symbol.value):
-                    if isList(symbol.value):
-                        if isinstance(value, list):
-                            symbol.value[self.fromIndex:self.toIndex] = value
+                if verifyListBoundaries_2(self.indexValue1, self.indexValue2, symbol.value):
+                    if isMatrix(symbol.value):
+                        if isinstance(value, bool):
+                            symbol.value[self.indexValue1][self.indexValue2] = value
                         else:
-                            program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}") 
+                            program.semanticError.incompatibleType(ID)
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list")
+                        program.semanticError.invalidIndexAccessList(ID)
                 else:
-                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                    program.semanticError.indexOutOfRange(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+                program.semanticError.symbolNotFound(ID)
 
 
 
@@ -91,7 +97,7 @@ class IndexRange(Index):
    
 
 
-    def checkValues(self, ID, program, symbolTable):
+    def checkIndexValues(self, ID, program, symbolTable):
         self.fromIndex = checkIndexValue(ID, self.fromIndex, program, symbolTable)
         self.toIndex = checkIndexValue(ID, self.toIndex, program, symbolTable)
 
@@ -108,18 +114,17 @@ class IndexRange(Index):
                     if verifyListBoundaries_2(self.fromIndex, self.toIndex, symbol.value):
                             return symbol.value[self.fromIndex:self.toIndex]
                     else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                        program.semanticError.indexOutOfRange(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list")
-
+                program.semanticError.invalidIndexAccessList(ID)
         else:
-            program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+            program.semanticError.symbolNotFound(ID)
 
 
     def assignValue(self, ID, symbol, value, program, symbolTable):
 
             
-            self.checkValues(ID, program, symbolTable)
+            self.checkIndexValues(ID, program, symbolTable)
 
             if self.fromIndex != None and self.toIndex != None:
                 if verifyListBoundaries_2(self.fromIndex, self.toIndex, symbol.value):
@@ -127,13 +132,13 @@ class IndexRange(Index):
                         if isinstance(value, list):
                             symbol.value[self.fromIndex:self.toIndex] = value
                         else:
-                            program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}") 
+                            program.semanticError.incompatibleType(ID)
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list")
+                        program.semanticError.invalidIndexAccessList(ID)
                 else:
-                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                    program.semanticError.indexOutOfRange(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+                program.semanticError.symbolNotFound(ID)
 
 
 class IndexColumn(Index):
@@ -142,14 +147,14 @@ class IndexColumn(Index):
         self.column = column
  
 
-    def checkValues(self, ID, program, symbolTable):
+    def checkIndexValues(self, ID, program, symbolTable):
             self.column = checkIndexValue(ID, self.indexValue, program, symbolTable)
 
     def getValuesFromIndex(self, ID, program, symbolTable):
 
         symbol = searchSymbolByID(ID, program, symbolTable)
 
-        self.checkValues(ID, program, symbolTable)
+        self.checkIndexValues(ID, program, symbolTable)
 
         if symbol != None:
             if isMatrix(symbol.value):
@@ -157,11 +162,11 @@ class IndexColumn(Index):
                     if verifyListBoundariesOne(self.column, symbol.value[0]):
                             return getColumn(self.column, symbol.value)
                     else:
-                        program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                        program.semanticError.indexOutOfRange(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix")
+                program.semanticError.invalidIndexAccessMatrix(ID)
         else:
-            program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+            program.semanticError.symbolNotFound(ID)
             
 
     def assignValue(self, ID, symbol, value, program, symbolTable):
@@ -174,26 +179,28 @@ class IndexColumn(Index):
                             print(value)
                             symbol.value[self.column] = value
                         else:
-                            program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}") 
+                            program.semanticError.incompatibleType(ID)
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list or matrix")
+                        program.semanticError.invalidIndexAccessMatrix(ID)
                 else:
-                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                    program.semanticError.indexOutOfRange(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+                program.semanticError.symbolNotFound(ID)
 
+
+
+ 
 class IndexOne(Index):
         def __init__(self, index):
             self.indexValue = index
 
-
-        def checkValues(self, ID, program, symbolTable):
+        def checkIndexValues(self, ID, program, symbolTable):
             self.indexValue = checkIndexValue(ID, self.indexValue, program, symbolTable)
 
 
         def getValuesFromIndex(self, ID,  program, symbolTable):
 
-            self.checkIndexValue(ID, program, symbolTable)
+            self.checkIndexValues(ID, program, symbolTable)
 
 
             symbol = searchSymbolByID(ID, program, symbolTable)
@@ -203,18 +210,18 @@ class IndexOne(Index):
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
                             return symbol.value[self.indexValue]
                         else:
-                            program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                            program.semanticError.indexOutOfRange(ID)
                 else:
-                    program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a matrix or list")
+                    program.semanticError.invalidIndexAccess(ID)
             else:
-                program.semanticError.addError(f"Semantic error: Symbol {ID} not found")
+                program.semanticError.symbolNotFound(ID)
 
 
 
 
         def assignValue(self, ID, symbol, value, program, symbolTable):
 
-            self.checkIndexValue(ID, program, symbolTable)
+            self.checkIndexValues(ID, program, symbolTable)
 
             print(self.indexValue)
             if self.indexValue != None:
@@ -223,17 +230,16 @@ class IndexOne(Index):
                         if isinstance(value, bool):
                             symbol.value[self.indexValue] = value
                         else:
-                            program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}") 
+                            program.semanticError.incompatibleType(self.ID)
                     elif isMatrix(symbol.value):
                         if isinstance(value, list):
                             symbol.value[self.indexValue] = value
                         else:
-                            program.semanticError.addError(f"Semantic error: Incompatible type in symbol {ID}") 
+                            program.semanticError.incompatibleType(self.ID)
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid index access, {ID} is not a list or matrix")
-
+                        program.semanticError.invalidIndexAccess(ID)
                 else:
-                    program.semanticError.addError(f"Semantic error: Index out of range in {ID}")
+                    program.semanticError.indexOutRange(ID)
             
                     
 

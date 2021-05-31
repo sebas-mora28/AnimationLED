@@ -74,10 +74,10 @@ def checkIndexValue(ID, indexValue, program, symbolTable):
                     if isinstance(temp.value, int):
                         return temp.value
                     else:
-                        program.semanticError.addError(f"Semantic error: Invalid index value in {ID}")
+                        program.semanticError.invalidIndexArguments(ID)
                         return
                 else:
-                    program.semanticError.addError(f"Semantic error: Symbol {indexValue} not found")
+                    program.semanticError.symbolNotFound(indexValue)
                     return 
 
 

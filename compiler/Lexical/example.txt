@@ -1,66 +1,20 @@
-
-
-
-Procedure funcion(arg1)
-{
-    caca = arg1;
-
-};
-
-
 Procedure Main()
 {
+    var = 1;
+
+    #i = 0;
+
+    var = True;
 
 
-    var1 = 0;
+ 
 
-    xd = [True];
+    #lista = [False, False, False, False, False];
 
-
-
-
-    #var2 = 156; 
+    #listica = [True, True, True];
 
 
-
-    #Delay(4, "Mil");
-
-    #PrintLed(1,1, True);
-
-    #PrintLedX("C", 1, [True, False, True, False]);
-
-
-    matrix = [[False, False, False, False, False, False, False],[False, False, False, False, False, False, False],[False, False, False, False, False, False, False]];
-
-    #matrix.insert([[True], [True], [True]], 1,0);
-
-    lista = [False, False, False, False, True, False];
-
-    #listica = [False, False, False];
-
-    #i = 1;
-    #j = 2;
-
-    #matrix[:,1] = [False, False, False];
-
-    #lista[1:5] = [True, True, True, True];
-
-    lista = [];
-
-    lista.insert(0,True);
-
-    #lista.insert(2, True);
-    #lista.del(2);
-
-    #listica = lista;
-
-    #listica.insert(3,True);
-
-
-    #Call funcion(lista);
-
+    #lista[35] = listica[1];
 
 
 };
-
-    

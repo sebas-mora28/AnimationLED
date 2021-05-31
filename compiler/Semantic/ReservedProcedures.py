@@ -14,9 +14,9 @@ class Delay(Instruction):
             if (self.timeRange == "Seg" or self.timeRange == "Mil" or self.timeRange == "Min"):
                 self.delay(program)
             else:
-                program.semanticError.addError("Semantic error: Invalid argument for timeRange. Mil, seg, min, is expected")
+                program.semanticError.delayInvalidArgumentTimeRange()
         else:
-            program.semanticError.addError("Semantic error: Invalid argument for time, an int is expected")
+            program.semanticError.delayInvalidArgumentTime()
 
     #Ejemplo de ejecución
     def delay(self, program):
@@ -43,17 +43,17 @@ class Blink(Instruction):
                             if (isinstance(self.state,bool)):
                                 self.blink(program)
                             else:
-                                program.semanticError.addError("Semantic error: Invalid data for sate, a bool is expected")
+                                program.semanticError.blinkInvalidArgumentState()
                         else:
-                             program.semanticError.addError("Semantic error: Invalid argument for timeRange. Mil, seg, min, is expected") 
+                             program.semanticError.blinkInvalidArgumentTimeRange() 
                     else:
-                         program.semanticError.addError("Semantic error: Invalid data for time, an int is expected")
+                         program.semanticError.blinkInvalidArgumentTime()
                 else:
-                     program.semanticError.addError("Semantic error: Invalid data for value, an int is expected")
+                     program.semanticError.blinkInvalidArgumentValue()
             else:
-                program.semanticError.addError("Semantic error: Invalid data for row, an int is expected") 
+                program.semanticError.blinkInvalidArgumentRow() 
         else:
-            program.semanticError.addError("Semantic error: Invalid data for col, an int is expected")  
+            program.semanticError.blinkInvalidArgumentCol()
         
         
     #Funcionamiento del blink
@@ -76,12 +76,12 @@ class PrintLed(Instruction):
                 if(isinstance(self.value, int)):
                     self.printLed(program)
                 else:
-                    program.semanticError.addError("Semantic error: Invalid data for value, an int is expected")
+                    program.semanticError.printLedInvalidArgumentValue()
             else:
-                program.semanticError.addError("Semantic error: Invalid data for row, an int is expected")
+                program.semanticError.printLedInvalidArgumentRow()
         
         else:
-            program.semanticError.addError("Semantic error: Invalid data for col, an int is expected")
+            program.semanticError.printLedInvalidArgumentCol()
         
     def printLed(self, program):
         output = "PrintLed{\n col: " + str(self.col) + "\n row: " + str(self.row) + "\n value: " + str(self.value) + "\n}"
@@ -101,21 +101,21 @@ class PrintLedX(Instruction):
                 if (isList(self.list)):
                     self.printLedX(program)
                 else:
-                       program.semanticError.addError("Semantic error: Invalid argument for list, expected list") 
+                       program.semanticError.printLedXInvalidArgumentList() 
             else:
-                program.semanticError.addError("Semantic error: Invalid index, an int is expected")
+                program.semanticError.printLedXInvalidArgumentIndex()
         elif self.objectType =="M":
             if (isinstance(self.index, int)):
                 if (isMatrix(self.list)):
                     self.printLedX(program)
                 else:
-                    program.semanticError.addError("Semantic error: Invalid argument for list, expected Matrix")
+                    program.semanticError.printLedXInvalidArgumentList()
                 
             else:
-                program.semanticError.addError("Semantic error: Invalid index, an int is expected")
+                program.semanticError.printLedXInvalidArgumentIndex()
 
         else:
-             program.semanticError.addError("Semantic error: invalid object type. expected F,C or M")
+             program.semanticError.printLedXInvalidArgumentObjectType()
             
         
     def printLedX(self, program):

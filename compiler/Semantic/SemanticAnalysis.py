@@ -29,16 +29,16 @@ class Program:
                     self.main = expression
                     continue
                 else:
-                    self.semanticError.main_cannot_receive_parameters()
+                    self.semanticError.mainCannotReceiveParameter()
                     return
             expression.eval(self, self.symbolTable)
 
         if(main_count == 0):
-            self.semanticError.main_not_found()
-            return self.progrmaOutput
+            self.semanticError.mainNotFound()
+            return 
         if(main_count > 1):
-            self.semanticError.main_multiple_definitions()
-            return self.progrmaOutput
+            self.semanticError.mainMultipleDefinition()
+            return 
 
         else:
             self.main.eval(self, self.symbolTable)

@@ -26,7 +26,7 @@ class If(Instruction):
             self.iterable = self.iterable.getValues(program, symbolTable)
 
         else:
-            program.semanticError.addError(f"Semantic error: Invalid iterable in if statement")
+            program.semanticError.invalidIterable()
 
 
     def evalComparation(self, element):

@@ -20,7 +20,6 @@ syntaxErorrs = []
 
 def p_program(p):
     '''program : expressions_set'''
-    print(p[1])
     p[0] = Program(p[1])
 
 
@@ -30,6 +29,8 @@ def p_error(p):
         syntaxErorrs.append(f"Syntax error in input: line {p.lineno} before {p.value} token")
     else:
        syntaxErorrs.append(f"Syntax error at EOF")
+
+       
 
 
 
