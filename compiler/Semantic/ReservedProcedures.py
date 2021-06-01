@@ -1,3 +1,5 @@
+from compiler.Semantic.ListFunctions import MatrixDimension
+from compiler.Semantic.Common import isList, isMatrix, searchSymbolByID, verifyType
 import sys
 sys.path.append("..")
 from Semantic.SemanticError import*
@@ -98,16 +100,30 @@ class PrintLedX(Instruction):
     def eval(self,program, SymbolTable):
         if(self.objectType == "F" or self.objectType == "C"):
             if (verifyType(self.index, int)):
-                if (isList(self.list)):
+                if (isList(self.list)and len(self.list.value)<= 8):
                     self.printLedX(program)
+                if verifyType(self.list, str):
+                    temp = searchSymbolByID(self.list,program,SymbolTable)
+                    if temp != None:
+                        if isList(temp.value) and len(temp.value)<= 8:
+                            self.printLedX(program)
+                        else:
+                            program.semanticError.printLedXInvalidArgumentList()
                 else:
                        program.semanticError.printLedXInvalidArgumentList() 
             else:
                 program.semanticError.printLedXInvalidArgumentIndex()
         elif self.objectType =="M":
             if (verifyType(self.index, int)):
-                if (isMatrix(self.list)):
+                if (isMatrix(self.list)and len(self.list.value) <= 8 and len(self.list.value[0]) <= 8):
                     self.printLedX(program)
+                if verifyType(self.list, str):
+                    temp = searchSymbolByID(self.list,program,SymbolTable)
+                    if temp !=None:
+                        if isMatrix(temp.value) and len(temp.value) <= 8 and len(temp.value[0]) <= 8:
+                            self.printLedX(program)
+                        else:
+                            program.semanticError.printLedXInvalidArgumentList()
                 else:
                     program.semanticError.printLedXInvalidArgumentList()
                 
@@ -117,7 +133,7 @@ class PrintLedX(Instruction):
         else:
              program.semanticError.printLedXInvalidArgumentObjectType()
             
-        
+   
     def printLedX(self, program):
         output = "PrintLedX{\n objectType: " + str(self.objectType) + "\n index: " + str(self.index) +"\n list:  "+ str(self.list)+ "\n }"
     
