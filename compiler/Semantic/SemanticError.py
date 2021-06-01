@@ -99,6 +99,10 @@ class SemanticError:
         self.errors.append(f"Semantic error: length list does not match with range values in {ID}")
 
 
+    def booleanOperatorError(self, ID):
+        self.errors.append(f"Semantic error : Invalid symbol, {ID} is not a list or matrix")
+
+
 
 
     #Reserved procedures

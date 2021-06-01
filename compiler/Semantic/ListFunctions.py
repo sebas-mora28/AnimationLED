@@ -1,7 +1,7 @@
 import sys 
 sys.path.append("..")
 from Semantic.Common import * 
-
+from Semantic.IndexType import *
 
 class MatrixDimension(Instruction):
 
@@ -217,3 +217,112 @@ class Range(Instruction):
                 return [self.value] * self.list_size
         else:
             program.semanticError.rangeInvalidArguments()
+
+
+
+class BooleanOperationIndex(Instruction):
+
+    def __init__(self, index_type, operation):
+        
+      
+        self.ID = index_type.ID
+        self.index_type = index_type
+        self.operation = operation
+    
+    def eval(self, program, symbolTable):
+          
+        
+            if self.operation == "T":
+                value = self.booleanOperator(True, program, symbolTable)
+                self.index_type.assignValue(value, program, symbolTable)
+
+            if self.operation == "F":
+                value = self.booleanOperator(False, program, symbolTable)
+                self.index_type.assignValue(value, program, symbolTable)
+                
+            if self.operation == "Neg":
+                value = self.notOperator(program, symbolTable)
+                if value != None:
+                    self.index_type.assignValue(self.notOperator(program, symbolTable), program, symbolTable)
+
+
+    def booleanOperator(self, boolValue, program, symbolTable):
+
+        if isinstance(self.index_type, IndexOne) or isinstance(self.index_type, IndexPair):
+            return boolValue 
+        
+        if isinstance(self.index_type, IndexRange):
+            range = self.index_type.toIndex - self.index_type.fromIndex
+            return [boolValue]*range 
+        
+        if isinstance(self.index_type, IndexColumn):
+            value = self.index_type.getValuesFromIndex(program, symbolTable)
+            if value != None:
+                return [boolValue]*len(value)
+
+    def notOperator(self, program, symbolTable):
+
+        value = self.index_type.getValuesFromIndex(program, symbolTable)
+        if value != None:
+            if isinstance(self.index_type, IndexOne) or isinstance(self.index_type, IndexPair):
+                return not(value)
+        
+            if isinstance(self.index_type, IndexRange) or isinstance(self.index_type, IndexColumn):
+                res = []
+                for i in range(len(value)):
+                    res.insert(i, not(value[i]))
+                return res
+            
+    
+
+class BooleanOperation(Instruction):
+
+    def __init__(self, ID, operation):
+        
+        self.ID = ID
+        self.operation = operation
+
+    
+
+    def eval(self, program, symbolTable):
+
+        symbol = searchSymbolByID(self.ID, program, symbolTable)
+
+
+        if self.operation == "T":
+            self.booleanOperator(True, symbol, program)
+    
+        if self.operation == "F":
+            self.boolOperator(False, symbol, program)
+
+        if self.operation == "Neg":
+            self.notOperator(symbol, program)
+
+    def boolOperator(self, boolValue, symbol, program):
+
+        if isList(symbol.value):
+            for i in range(len(symbol.value)):
+                symbol.value[i] = boolValue
+
+        if isMatrix(symbol.value):
+
+            for i in range(len(symbol.value)):
+                for j in range(len(symbol.value[i])):
+                    symbol.value[i][j] = boolValue
+
+        else:
+            program.semanticError.booleanOperatorError(self.ID)
+
+    def notOperator(self, symbol, program):
+
+        if isList(symbol.value):
+            for i in range(len(symbol.value)):
+                symbol.value[i] = not(symbol.value[i])
+
+        if isMatrix(symbol.value):
+
+            for i in range(len(symbol.value)):
+                for j in range(len(symbol.value[i])):
+                    symbol.value[i][j] = not(symbol.value[i][j])
+        else:
+            program.semanticError.booleanOperatorError(self.ID)

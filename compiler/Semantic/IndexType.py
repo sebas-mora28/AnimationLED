@@ -53,7 +53,7 @@ class IndexPair(Index):
     def getValuesFromIndex(self, program, symbolTable):
 
 
-        self.checkIndexValues(self.ID, program, symbolTable)
+        self.checkIndexValues(program, symbolTable)
         symbol = searchSymbolByID(self.ID, program, symbolTable)
 
         if symbol != None:

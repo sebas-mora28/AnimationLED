@@ -124,7 +124,7 @@ class Lexer(object):
         return t
 
     def t_LISTOPERATOR(self , t):
-        r'\.(Neg|N|T)'
+        r'\.(Neg|F|T)'
         t.value = t.value[1:]
         return t 
 

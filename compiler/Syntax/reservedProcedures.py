@@ -117,7 +117,9 @@ def p_matrix_dimension(p):
 def p_list_boolean_operation(p):
     '''list_boolean_operation : ID LISTOPERATOR SEMICOLON '''
     print("LIST BOOLEAN OPERATION")
+    p[0] = BooleanOperation(p[1], p[2])
 
 def p_list_boolean_operation_index(p):
-    '''list_boolean_operation : ID index_type LISTOPERATOR SEMICOLON''' 
+    '''list_boolean_operation : index_type LISTOPERATOR SEMICOLON''' 
     print("LIST BOOLEAN OPERATION INDEX")
+    p[0] = BooleanOperationIndex(p[1], p[2])
