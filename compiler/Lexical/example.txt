@@ -1,17 +1,9 @@
 Procedure Main()
 {
-    var = True;
-
-    lista = [True, True , True, False];
-
-
-    i = 0;
-    j = 3;
-
-    matrix = [[False, False, False, False],[True, True, True, True]];
-
-
-    lista[0:3] = True;
+    x, y = 7, 8;
+    lista = [True, False, True];
+    matrix = [[True, True, True],[False,False,False],[False, False, False]];
+    temp = lista [0:2];
 
 
     

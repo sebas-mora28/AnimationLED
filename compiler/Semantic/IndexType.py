@@ -109,7 +109,7 @@ class IndexRange(Index):
 
     def getValuesFromIndex(self, program, symbolTable):
 
-        self.checkIndexValue(self.ID, program, symbolTable)
+        self.checkIndexValues(program, symbolTable)
 
         symbol = searchSymbolByID(self.ID, program, symbolTable)
         if symbol != None:

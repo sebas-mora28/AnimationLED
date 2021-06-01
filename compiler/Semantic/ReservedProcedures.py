@@ -1,5 +1,4 @@
-from compiler.Semantic.ListFunctions import MatrixDimension
-from compiler.Semantic.Common import isList, isMatrix, searchSymbolByID, verifyType
+from Semantic.Common import isList, isMatrix, searchSymbolByID, verifyType
 import sys
 sys.path.append("..")
 from Semantic.SemanticError import*
