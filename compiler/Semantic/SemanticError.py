@@ -151,7 +151,7 @@ class SemanticError:
     def printLedXInvalidArgumentList(self):
         self.errors.append("Semantic error: Invalid argument for list, expected list")
 
-    def printLedXInvalidArgumentList(self):
+    def printLedXInvalidArgumentMatrix(self):
         self.errors.append("Semantic error: Invalid argument for list, expected Matrix")
 
     def printLedXInvalidArgumentIndex(self):

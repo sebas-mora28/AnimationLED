@@ -74,7 +74,7 @@ class PrintLed(Instruction):
     def eval(self,program, SymbolTable):
         if (verifyType(self.col, int)):
             if (verifyType(self.row, int)):
-                if(verifyType(self.value, int)):
+                if(verifyType(self.value, bool)):
                     self.printLed(program)
                 else:
                     program.semanticError.printLedInvalidArgumentValue()
@@ -99,9 +99,9 @@ class PrintLedX(Instruction):
     def eval(self,program, SymbolTable):
         if(self.objectType == "F" or self.objectType == "C"):
             if (verifyType(self.index, int)):
-                if (isList(self.list)and len(self.list.value)<= 8):
+                if (isList(self.list)and len(self.list)<= 8):
                     self.printLedX(program)
-                if verifyType(self.list, str):
+                elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,SymbolTable)
                     if temp != None:
                         if isList(temp.value) and len(temp.value)<= 8:
@@ -114,17 +114,17 @@ class PrintLedX(Instruction):
                 program.semanticError.printLedXInvalidArgumentIndex()
         elif self.objectType =="M":
             if (verifyType(self.index, int)):
-                if (isMatrix(self.list)and len(self.list.value) <= 8 and len(self.list.value[0]) <= 8):
+                if (isMatrix(self.list)and len(self.list) <= 8 and len(self.list[0]) <= 8):
                     self.printLedX(program)
-                if verifyType(self.list, str):
+                elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,SymbolTable)
                     if temp !=None:
                         if isMatrix(temp.value) and len(temp.value) <= 8 and len(temp.value[0]) <= 8:
                             self.printLedX(program)
                         else:
-                            program.semanticError.printLedXInvalidArgumentList()
+                            program.semanticError.printLedXInvalidArgumentMatrix()
                 else:
-                    program.semanticError.printLedXInvalidArgumentList()
+                    program.semanticError.printLedXInvalidArgumentMatrix()
                 
             else:
                 program.semanticError.printLedXInvalidArgumentIndex()
