@@ -15,6 +15,7 @@ def compile(code):
     if(lexer.errors == []): #Erorres en el analisis de lexico 
         res = systaxAnalysis(code, lexer)
         if syntaxErorrs == []:
+            
             program = semantic_analysis(res)
             if program.getErrors() != []:
                 program.semanticError.printErrors()

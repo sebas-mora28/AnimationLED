@@ -4,7 +4,7 @@ sys.path.append("..")
 from Semantic.IndexType import *
 from Semantic.Common import *
 from Semantic.ListFunctions import *
-
+from Semantic.ArithmeticOperation import *
 
 
 class value(Instruction):
@@ -43,7 +43,13 @@ class value(Instruction):
             self.value = self.value.getValues(program, symbolTable)
             if self.value != None:
                 self.assignment(ID, program, symbolTable, scope)
-            
+        
+        if verifyType(self.value, ArithmeticOperation):
+            self.value = self.value.eval(program, symbolTable)
+
+            if self.value != None:
+                self.assignment(ID, program, symbolTable, scope)
+
 
     def assignment(self, ID, program, symbolTable, scope):
         if(symbolTable.exist(ID)):
