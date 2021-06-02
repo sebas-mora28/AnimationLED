@@ -3,10 +3,11 @@ Procedure Main()
     x, y = 7, 8;
     lista = [True, False, True,False];
     matrix = [[True, True, True,False],[False,False,False,True],[False, False, False,True]];
+    matrix.insert([[True, False, True,False]],0);
     j=0;
-    Call Asignar(j,y);
+    Call Asignar(j);
 };
 Procedure Asignar(j)
 {
     j = y;
-}
+};

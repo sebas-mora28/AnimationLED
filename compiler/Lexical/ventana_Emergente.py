@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\sebas\Desktop\TEC\Semestre 1 2021\Compiladores\AnimationLED\compiler\Lexical\ventana_Emergente.ui'
+# Form implementation generated from reading ui file 'ventana_Emergente.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Ui_VentanaEmergente(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
@@ -66,4 +66,20 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Compiler Output"))
+        MainWindow.setWindowTitle(_translate("MainWindow", u"Compiler Output", None))
+    
+    def mostrarErrores(self, lista):
+        errores =""
+        for error in lista:
+            errores += error + "\n"
+        self.textEdit.setText(errores)
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_VentanaEmergente()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
