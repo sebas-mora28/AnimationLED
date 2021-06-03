@@ -27,10 +27,9 @@ class Delay(Instruction):
 
 
 class Blink(Instruction):
-    def __init__(self,col, row,value, time, timeRange, state):
+    def __init__(self,col, row, time, timeRange, state):
         self.col = col
         self.row = row
-        self.value = value
         self.time = time
         self.timeRange = timeRange
         self.state = state
@@ -38,19 +37,16 @@ class Blink(Instruction):
     def eval(self, program, SymbolTable):
         if (verifyType(self.col, int)):
             if (verifyType(self.row, int)):
-                if (verifyType(self.value, int)):
-                    if (verifyType(self.time, int)):
-                        if (self.timeRange == "seg" or self.timeRange == "mil" or self.timeRange == "min"):
-                            if (verifyType(self.state,bool)):
+                if (verifyType(self.time, int)):
+                    if (self.timeRange == "Seg" or self.timeRange == "Mil" or self.timeRange == "Min"):
+                        if (verifyType(self.state,bool)):
                                 self.blink(program)
-                            else:
-                                program.semanticError.blinkInvalidArgumentState()
                         else:
-                             program.semanticError.blinkInvalidArgumentTimeRange() 
+                            program.semanticError.blinkInvalidArgumentState()
                     else:
-                         program.semanticError.blinkInvalidArgumentTime()
+                        program.semanticError.blinkInvalidArgumentTimeRange() 
                 else:
-                     program.semanticError.blinkInvalidArgumentValue()
+                    program.semanticError.blinkInvalidArgumentTime()
             else:
                 program.semanticError.blinkInvalidArgumentRow() 
         else:
@@ -58,8 +54,8 @@ class Blink(Instruction):
         
         
     #Funcionamiento del blink
-    def blink(self, program, col, row,time,timeRange, state):
-        string = "Blink {\n col :"+col +"\n"+ "row: " + row +"\n"+ "time: " +time+"\n"+"timeRange: " + timeRange +"\n"+ "state: " +state + "\n}"
+    def blink(self, program):
+        string = "Blink {\n col :"+str(self.col) +"\n"+ "row: " + str(self.row) +"\n"+ "time: " +str(self.time)+"\n"+"timeRange: " + self.timeRange +"\n"+ "state: " +str(self.state )+ "\n}"
         #Añadir al output
 
 

@@ -106,9 +106,9 @@ class Ui_MainWindow(QMainWindow):
     def nuevoProyecto(self):
         self.plainTextEdit.clear()
     def compilar(self):
-        compile(self.plainTextEdit.toPlainText())
-        errores = ["Semantic error: Invalid data for time, an int is expected","Semantic error: Invalid data for sate, a bool is expected"]
+        errores = compile(self.plainTextEdit.toPlainText())
         self.abrir_Ventana(errores)
+        reset()#RESETEA LA LISTA DE ERRORES
     def abrir_Ventana(self, errores):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_VentanaEmergente()

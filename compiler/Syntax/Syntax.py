@@ -16,6 +16,7 @@ from Semantic.SemanticAnalysis import *
 
 parsed = None
 
+
 syntaxErorrs = []
 
 def p_program(p):
@@ -29,10 +30,6 @@ def p_error(p):
         syntaxErorrs.append(f"Syntax error in input: line {p.lineno} before {p.value} token")
     else:
        syntaxErorrs.append(f"Syntax error at EOF")
-
-       
-
-
 
 
 def systaxAnalysis(sourceCode, lexer):

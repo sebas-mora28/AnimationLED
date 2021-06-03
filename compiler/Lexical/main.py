@@ -4,7 +4,9 @@ from Lexical.Lexer import *
 from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
 
-
+def reset():
+    global syntaxErorrs
+    syntaxErorrs = []
 
 
 def compile(code):
@@ -18,14 +20,19 @@ def compile(code):
             
             program = semantic_analysis(res)
             if program.getErrors() != []:
-                program.semanticError.printErrors()
+                #return program.getErrors()
+                program.semanticError.printErrors() #comentar
+            #else:
+                #return ["Archivo compilado con exito!!"]
 
         else:
-            for i in range(len(syntaxErorrs)):
+            #return syntaxErorrs
+            for i in range(len(syntaxErorrs)): # comentar
                 print(syntaxErorrs[i])
 
     else:
-        for i in range(len(lexer.errors)):
+        #return lexer.errors
+        for i in range(len(lexer.errors)): #comentar
                 print(lexer.errors[i])
 
 

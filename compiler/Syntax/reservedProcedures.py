@@ -27,8 +27,8 @@ def p_delay(p):
 
 
 def p_blink(p):
-    '''blink : BLINK LPAREN OBJECTTYPE COMMA INTEGER COMMA TIMERANGE COMMA BOOLEAN RPAREN SEMICOLON'''
-    print("blink")
+    '''blink : BLINK LPAREN INTEGER COMMA INTEGER COMMA INTEGER COMMA TIMERANGE COMMA BOOLEAN RPAREN SEMICOLON'''
+    p[0] = Blink(p[3],p[5],p[7],p[9],p[11])
 
 
 def p_printLed(p):
