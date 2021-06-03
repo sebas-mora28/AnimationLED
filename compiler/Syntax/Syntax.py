@@ -14,25 +14,38 @@ from Syntax.arithmeticOperation import *
 from Semantic.SemanticAnalysis import *
 
 
-parsed = None
+class SyntaxError:
 
+    def __init__(self):
+        self.errors = []
 
-syntaxErorrs = []
+    def addError(self, error):
+        self.errors.append(error)
+    
+    def clean(self):
+        self.errors = []
+    
+    def getErrors(self):
+        return self.errors
+
+syntaxError = SyntaxError()
+
 
 def p_program(p):
-    '''program : expressions_set'''
+    '''program : expressions_set''' 
     p[0] = Program(p[1])
 
 
 
 def p_error(p):
     if p:
-        syntaxErorrs.append(f"Syntax error in input: line {p.lineno} before {p.value} token")
+        syntaxError.addError(f"Syntax error in input: line {p.lineno} before {p.value} token")
     else:
-       syntaxErorrs.append(f"Syntax error at EOF")
+       syntaxError.addError(f"Syntax error at EOF")
 
 
 def systaxAnalysis(sourceCode, lexer):
+    syntaxError.clean()
     tokens = lexer.tokens
     parser = yacc.yacc(start="program")
     result = parser.parse(sourceCode, lexer)

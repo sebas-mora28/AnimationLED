@@ -107,8 +107,7 @@ class Ui_MainWindow(QMainWindow):
         self.plainTextEdit.clear()
     def compilar(self):
         errores = compile(self.plainTextEdit.toPlainText())
-        self.abrir_Ventana(errores)
-        reset()#RESETEA LA LISTA DE ERRORES
+        self.abrir_Ventana(errores) #RESETEA LA LISTA DE ERRORES
     def abrir_Ventana(self, errores):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_VentanaEmergente()

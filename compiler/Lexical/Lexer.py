@@ -22,7 +22,7 @@ class Lexer(object):
         'while': 'WHILE',
         'for': 'FOR',
         'in': 'IN',
-        'step': 'STEP',
+        'Step': 'STEP',
         'range':'RANGE',
         'len':'LEN',
         'Call':'CALL',
