@@ -30,7 +30,7 @@ class SymbolProcedure:
         self.ID = ID
 
     def getID(self):
-        return ID
+        return self.ID
     
     def getProcedure(self):
         return self.procedure
@@ -57,6 +57,24 @@ class SymbolTable:
     def changeSymbolValue(self, ID, value):
         temp = self.variableTable[ID]
         temp.value = copy.deepcopy(value)
+
+    def getVariableTable(self):
+        return self.variableTable
+    
+    def getProcedureTable(self):
+        return self.procedureTable
+
+
+    def attachSymboltable(self, symboltable):
+
+        symbols = symboltable.getVariableTable()
+
+        for symbol in symbols:
+            self.variableTable[symbol] = symboltable.getSymbolByID(symbol)
+    
+    def clean(self):
+        self.variableTable = {}
+        self.procedureTable = {}
 
 
     def getProcedureByID(self, ID):

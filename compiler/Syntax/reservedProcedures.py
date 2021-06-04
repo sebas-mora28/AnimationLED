@@ -15,7 +15,8 @@ def p_reserved_procedures(p):
                           | list_delete 
                           | matrix_insert
                           | matrix_delete
-                          | list_boolean_operation'''
+                          | list_boolean_operation
+                          | type'''
     p[0] = p[1]
 
 
@@ -49,7 +50,13 @@ def p_printLedX(p):
 
 #list functions
 
+def p_type(p):
+    '''type : TYPE LPAREN ID RPAREN SEMICOLON
+            | TYPE LPAREN BOOLEAN RPAREN SEMICOLON
+            | TYPE LPAREN INTEGER RPAREN SEMICOLON 
+            | TYPE LPAREN list RPAREN SEMICOLON'''
 
+    p[0] = Type(p[3])
 
 
 #len 

@@ -1,6 +1,39 @@
 Procedure Main()
 {
-    r = 8;
-    j = 7;
+
+
+    lista = [True, False, True, False];
+    #var = True;
+
+
+
+    matrix = [[True, True, True], [False, False, False]];
+
+    filas = 2;
+    columnas = 3;
+
+    x = 4; 
+
+  
+    for i in filas {
+
+        matrix = [True];
+
+        for j in columnas{
+
+            matrix[i,j].Neg;
+        };
+    };
+
 
 };
+
+
+Procedure mecago(){
+
+    matrix[0,0] = False;
+
+    var = 1;
+
+};
+

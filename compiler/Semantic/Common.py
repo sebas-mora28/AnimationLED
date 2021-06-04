@@ -9,15 +9,16 @@ class Instruction:
 
 
 def verifyListBoundariesOne(index, listSymbol):
-        if index < len(listSymbol) and index >= 0:
-            return True
-        return False
+        return index < len(listSymbol) and index >= 0
+         
 
     
 def verifyListBoundaries_2(index1, index2, listSymbol):
-        if index1 >= 0 and index2 < len(listSymbol):
-            return True  
-        return False
+        return index1 >= 0 and index2 < len(listSymbol)
+        
+
+def verifyBoundariesMatrix(index1, index2, matrixSymbol):
+    return index1 >= 0 and index1 < len(matrixSymbol) and index2 < len(matrixSymbol[index1])
 
 def verifyType(value1, instance):
     return type(value1) == instance

@@ -16,50 +16,47 @@ class value(Instruction):
     def eval(self, ID, program, symbolTable, scope):
 
         if verifyType(self.value, int) or verifyType(self.value, bool) or verifyType(self.value, list):
-            self.assignment(ID, program, symbolTable, scope)
+            self.assignment(ID, self.value, program, symbolTable, scope)
  
-        if(verifyType(self.value, str)):
+        elif(verifyType(self.value, str)):
             symbol = searchSymbolByID(self.value, program, symbolTable)
             if symbol != None:
-                self.value = symbol.value
-                self.assignment(ID, program, symbolTable, scope)
+                self.assignment(ID, symbol.value, program, symbolTable, scope)
           
-        if verifyType(self.value, MatrixDimension):
-            self.value = self.value.eval(program, symbolTable)
-            if self.value != None:
-                self.assignment(ID, program, symbolTable, scope)
+        elif verifyType(self.value, MatrixDimension):
+            value = self.value.eval(program, symbolTable)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
     
-        if verifyType(self.value, Len):
-            self.value = self.value.eval(program, symbolTable)
-            if self.value != None:
-                self.assignment(ID, program, symbolTable, scope)
+        elif verifyType(self.value, Len):
+            value = self.value.eval(program, symbolTable)
+            if value != None:
+                self.assignment(ID, value,program, symbolTable, scope)
         
-        if verifyType(self.value, Range):
-            self.value = self.value.eval(program, symbolTable)
-            if self.value != None:
-                self.assignment(ID, program, symbolTable, scope)
+        elif verifyType(self.value, Range):
+            value = self.value.eval(program, symbolTable)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
 
-        if verifyType(self.value, IndexAccess):
-            self.value = self.value.getValues(program, symbolTable)
-            if self.value != None:
-                self.assignment(ID, program, symbolTable, scope)
+        elif verifyType(self.value, IndexAccess):
+            value = self.value.getValues(program, symbolTable)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
         
-        if verifyType(self.value, ArithmeticOperation):
-            self.value = self.value.eval(program, symbolTable)
-
-            if self.value != None:
-                self.assignment(ID, program, symbolTable, scope)
-
-
-    def assignment(self, ID, program, symbolTable, scope):
+        elif verifyType(self.value, ArithmeticOperation):
+            value = self.value.eval(program, symbolTable)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
+        
+    def assignment(self, ID, value, program, symbolTable, scope):
         if(symbolTable.exist(ID)):
                 old_value = symbolTable.getSymbolByID(ID)
-                if verifyType(old_value.value, type(self.value)):
-                    symbolTable.changeSymbolValue(ID, self.value)
+                if verifyType(old_value.value, type(value)):
+                    symbolTable.changeSymbolValue(ID, value)
                 else:
                     program.semanticError.invalidSymbolType(ID)        
         else:
-            symbolTable.addSymbol(ID, self.value, type(self.value), scope)
+            symbolTable.addSymbol(ID, value, type(value), scope)
 
 
 
@@ -134,7 +131,7 @@ class IndexAssign(Instruction):
         self.index = index
         self.value = value
         self.scope = "local"
-
+      
 
     def eval(self, program, symbolTable):
 
@@ -146,11 +143,10 @@ class IndexAssign(Instruction):
 
 
     def assignment(self, program, symbolTable):
-
-        self.value = self.value.eval(program, symbolTable)
+        self.valueEvaluated = self.value.eval(program, symbolTable)
   
     
-        self.index.assignValue(self.value, program, symbolTable)
+        self.index.assignValue(self.valueEvaluated, program, symbolTable)
 
 
  

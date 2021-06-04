@@ -44,7 +44,7 @@ class CallProcedure(Instruction):
             if(verifyType(procedure, Procedure)):
             
                 parameters = procedure.getParameters()
-
+                print(parameters)
                 if len(self.arguments) == len(parameters):
 
                     expressions = procedure.getExpressions()

@@ -132,3 +132,26 @@ class PrintLedX(Instruction):
     def printLedX(self, program):
         output = "PrintLedX{\n objectType: " + str(self.objectType) + "\n index: " + str(self.index) +"\n list:  "+ str(self.list)+ "\n }"
     
+
+
+class Type:
+
+    def __init__(self, value):
+        self.value = value
+    
+
+    def eval(self, program, symbolTable):
+
+        if verifyType(self.value, str):
+            symbol = searchSymbolByID(self.value, program, symbolTable)
+            if symbol != None and (verifyType(symbol.value, int) or verifyType(symbol.value, bool)):
+                return type(symbol)
+        
+        elif verifyType(self.value, bool):
+            return bool
+
+        elif verifyType(self.value, int):
+            return int
+        
+        else:
+            program.semanticError.incompatibleError(self.value)

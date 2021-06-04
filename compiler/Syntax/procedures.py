@@ -10,7 +10,7 @@ def p_procedure(p):
     if(p[2] == "Main"):
         p[0] = MainProcedure(p[2], [], p[6])
     else:
-        p[0] = Procedure(p[2],p[4],p[6])
+        p[0] = Procedure(p[2],[],p[6])
 
 
 

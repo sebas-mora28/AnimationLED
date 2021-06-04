@@ -9,7 +9,7 @@
 
 import sys
 sys.path.append("..")
-from compiler.Lexical.main import *
+from Lexical.main import *
 from ventana_Emergente import Ui_VentanaEmergente
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *

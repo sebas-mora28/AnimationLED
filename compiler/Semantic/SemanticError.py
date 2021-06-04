@@ -160,4 +160,14 @@ class SemanticError:
     def printLedXInvalidArgumentObjectType(self):
         self.errors.append("Semantic error: invalid object type. expected F,C or M")
 
+
+
+
+    # Loop errors 
+
+    def invalidIterable(self):
+        self.errors.append("Semantic error: Invalid iterable in foor loop")
+
+    def invalidValueLoop(self):
+        self.errors.append("Semantic error: Invalid value in for loop")
     

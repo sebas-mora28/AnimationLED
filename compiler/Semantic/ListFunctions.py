@@ -202,7 +202,7 @@ class Len(Instruction):
             else:
                 program.semanticError.lenInvalidArgument(self.ID)
         else:
-            program.semanticeError.symbolNotFound(self.ID)
+            program.semanticError.symbolNotFound(self.ID)
 
 
 

@@ -42,6 +42,7 @@ class Program:
 
         else:
             self.main.eval(self, self.symbolTable)
+            print("\n----- GLOBAL ----------\n")
             self.symbolTable.print()
             
     

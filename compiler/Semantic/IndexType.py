@@ -39,17 +39,19 @@ class IndexAccess:
 
 class IndexPair(Index):
 
-    def __init__(self, ID, index1, index2):
+    def __init__(self, ID, index1Type, index2Type):
         self.ID = ID
-        self.indexValue1 = index1
-        self.indexValue2 = index2
+        self.indexValue1Type = index1Type
+        self.indexValue2Type = index2Type
+
+
 
 
     def checkIndexValues(self, program, symbolTable):
-        self.indexValue1 = checkIndexValue(self.ID, self.indexValue1, program, symbolTable)
-        self.indexValue2 = checkIndexValue(self.ID, self.indexValue2, program, symbolTable)
+        self.indexValue1 = checkIndexValue(self.ID, self.indexValue1Type, program, symbolTable)
+        self.indexValue2 = checkIndexValue(self.ID, self.indexValue2Type, program, symbolTable)
 
-    
+
     def getValuesFromIndex(self, program, symbolTable):
 
 
@@ -59,7 +61,7 @@ class IndexPair(Index):
         if symbol != None:
             if isMatrix(symbol.value):
                 if self.indexValue1 != None and self.indexValue2 != None:
-                    if verifyListBoundaries_2(self.indexValue1, self.indexValue2, symbol.value):
+                    if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
                         return symbol.value[self.indexValue1][self.indexValue2]
                     else:
                         program.semanticError.indexOutRange(self.ID)
@@ -73,9 +75,8 @@ class IndexPair(Index):
             self.checkIndexValues(program, symbolTable)
             symbol = searchSymbolByID(self.ID, program, symbolTable)
 
-
             if self.indexValue1 != None and self.indexValue2 != None and symbol != None:
-                if verifyListBoundaries_2(self.indexValue1, self.indexValue2, symbol.value):
+                if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
                     if isMatrix(symbol.value):
                         if verifyType(value, bool):
                             symbol.value[self.indexValue1][self.indexValue2] = value
@@ -95,16 +96,16 @@ class IndexPair(Index):
 
 class IndexRange(Index):
 
-    def __init__(self, ID, fromIndex , toIndex):
+    def __init__(self, ID, fromIndexType , toIndexType):
         self.ID = ID
-        self.fromIndex = fromIndex 
-        self.toIndex = toIndex
+        self.fromIndexType = fromIndexType 
+        self.toIndexType = toIndexType
    
 
 
     def checkIndexValues(self, program, symbolTable):
-        self.fromIndex = checkIndexValue(self.ID, self.fromIndex, program, symbolTable)
-        self.toIndex = checkIndexValue(self.ID, self.toIndex, program, symbolTable)
+        self.fromIndex = checkIndexValue(self.ID, self.fromIndexType, program, symbolTable)
+        self.toIndex = checkIndexValue(self.ID, self.toIndexType, program, symbolTable)
 
 
     def getValuesFromIndex(self, program, symbolTable):
@@ -148,13 +149,13 @@ class IndexRange(Index):
 
 class IndexColumn(Index):
 
-    def __init__(self, ID, columnIndex):
+    def __init__(self, ID, indexType):
         self.ID = ID
-        self.columnIndex = columnIndex
+        self.indexType = indexType
  
 
     def checkIndexValues(self, program, symbolTable):
-            self.columnIndex = checkIndexValue(self.ID, self.columnIndex, program, symbolTable)
+            self.columnIndex = checkIndexValue(self.ID, self.indexType, program, symbolTable)
 
     def getValuesFromIndex(self, program, symbolTable):
 
@@ -181,8 +182,6 @@ class IndexColumn(Index):
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program,symbolTable)
 
-            print(self.columnIndex and symbol)
-
             if self.columnIndex != None and symbol != None:
                 if isMatrix(symbol.value):
                     if verifyListBoundariesOne(self.columnIndex, symbol.value[0]):
@@ -201,10 +200,11 @@ class IndexColumn(Index):
 class IndexOne(Index):
         def __init__(self, ID, index):
             self.ID = ID
-            self.indexValue = index
+            self.indexType = index
+
 
         def checkIndexValues(self, program, symbolTable):
-            self.indexValue = checkIndexValue(self.ID, self.indexValue, program, symbolTable)
+            self.indexValue = checkIndexValue(self.ID, self.indexType, program, symbolTable)
 
 
         def getValuesFromIndex(self,  program, symbolTable):
@@ -232,21 +232,26 @@ class IndexOne(Index):
             self.checkIndexValues(program, symbolTable)
     
             if self.indexValue != None and symbol != None:
-                if verifyListBoundariesOne(self.indexValue, symbol.value):
                     if isList(symbol.value):
-                        if verifyType(value, bool):
+                        if verifyListBoundariesOne(self.indexValue, symbol.value):
+                            if verifyType(value, bool):
                                 symbol.value[self.indexValue] = value
+                            else:
+                                program.semanticError.incompatibleType(self.ID)
                         else:
-                            program.semanticError.incompatibleType(self.ID)
+                                program.semanticError.indexOutRange(self.ID)
                     elif isMatrix(symbol.value):
-                        if verifyType(value, list):
-                            symbol.value[self.indexValue] = value
+                        if verifyListBoundariesOne(self.indexValue, symbol.value):
+                            if verifyType(value, list):
+                                symbol.value[self.indexValue] = value
+                            else:
+                                program.semanticError.incompatibleType(self.ID)
                         else:
-                            program.semanticError.incompatibleType(self.ID)
+                            program.semanticError.indexOutRange(self.ID)
+
                     else:
                         program.semanticError.invalidIndexAccess(self.ID)
-                else:
-                    program.semanticError.indexOutRange(self.ID)
+               
             
                     
 
