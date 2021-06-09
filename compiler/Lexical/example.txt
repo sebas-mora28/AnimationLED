@@ -2,38 +2,30 @@ Procedure Main()
 {
 
 
-    lista = [True, False, True, False];
-    #var = True;
+    xd = 4;
 
 
+    matrix  = [[True, True], [False, False]];
 
-    matrix = [[True, True, True], [False, False, False]];
+    matrix[0][0] = matrix[1][1];
+    
 
-    filas = 2;
-    columnas = 3;
-
-    x = 4; 
-
-  
-    for i in filas {
-
-        matrix = [True];
-
-        for j in columnas{
-
-            matrix[i,j].Neg;
-        };
-    };
-
+    Call caca();
 
 };
 
+Procedure caca()
+{
+    v = 5;
 
-Procedure mecago(){
+    if v == 5{
 
-    matrix[0,0] = False;
+        v = 6;
+    };
+};
 
-    var = 1;
-
+Procedure caca(arg1, arg2)
+{
+    v = arg1;
 };
 

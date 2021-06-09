@@ -41,4 +41,11 @@ class ArithmeticOperation(Instruction):
         return int(eval(operation))
 
 
-            
+
+
+
+class MathOperation:
+
+    def __init__(self, left, operator, right):
+
+        pass

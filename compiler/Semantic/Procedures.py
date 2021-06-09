@@ -22,10 +22,25 @@ class Procedure(Instruction):
         return self.expressions
 
     def eval(self, program, symbolTable):
-        symbolTable.addProcedureSymbol(self.ID, self)
+        if program.symbolTable.existProcedure(self.ID):
+            procedureSymbol = program.symbolTable.getProcedureByID(self.ID)
+
+            if not self.existProcedureSign(procedureSymbol):
+                program.symbolTable.addProcedureSymbol(self.ID, self)
+            else:
+                program.semanticError.sameProcedureSign(self.ID)
+        else:
+            program.symbolTable.addProcedureSymbol(self.ID, self)
+
+
+
+    def existProcedureSign(self, procedureSymbol):
+
+        for procedure in procedureSymbol.getProcedures():
+                if len(self.parameters) == len(procedure.getParameters()):
+                    return True
         
-
-
+        return False
 
 class CallProcedure(Instruction):
 
@@ -36,34 +51,38 @@ class CallProcedure(Instruction):
     
     def eval(self, program, symbolTable):
 
+        self.localsymbolTable.clean()
         symbolProcedure = program.symbolTable.getProcedureByID(self.ID)
 
         if symbolProcedure:
-            procedure = symbolProcedure.procedure
 
-            if(verifyType(procedure, Procedure)):
-            
+            procedure =  self.verifyProcedure(program, symbolProcedure.getProcedures())
+            if procedure:
+
                 parameters = procedure.getParameters()
-                print(parameters)
-                if len(self.arguments) == len(parameters):
+                expressions = procedure.getExpressions()
+                self.set_arguments(program, symbolTable, self.arguments, parameters)
+                for expression in expressions:
+                    expression.eval(program, self.localsymbolTable)
+                self.localsymbolTable.print()
 
-                    expressions = procedure.getExpressions()
-
-                    self.set_arguments(program, symbolTable, self.arguments, parameters)
-
-                    for expression in expressions:
-
-                        expression.eval(program, self.localsymbolTable)
-
-                    self.localsymbolTable.print()
-
-                else:
-                    program.semanticError.invalidAmountOfParameters(len(procedure.getParameters()), len(self.arguments))
             else:
-                program.semanticError.isNotAProcedure(self.ID)
-
+                program.semanticError.procedureSignNotFound(self.ID, len(self.arguments))
+                
         else:
             program.semanticError.procedureNotFound(self.ID)
+
+
+    def verifyProcedure(self, program, procedureSymbol):
+
+        for procedure in procedureSymbol:
+
+            if len(self.arguments) == len(procedure.getParameters()):
+                return procedure
+        
+        return None
+
+
 
     
     def set_arguments(self, program, symbolTable,  arguments, parameters):

@@ -48,9 +48,14 @@ class SemanticError:
     def procedureNotFound(self, ID):
         self.errors.append(f"Semantic error: Procedure {ID} not found")
     
+    def procedureSignNotFound(self, ID, numParameters):
+        self.errors.append(f"Semantic error: Procedure {ID} with {numParameters} parameters not found")
+
     def incompatibleType(self, ID):
         self.errors.append(f"Semantic error: Incompatible type in variable {ID}")
 
+    def sameProcedureSign(self, ID):
+        self.errors.append(f"Semantic error: Same procedure sign in {ID} procedure")
     
     # List functions
     def isNotAMatrix(self, ID):

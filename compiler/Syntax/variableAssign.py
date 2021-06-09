@@ -12,7 +12,7 @@ def p_value(p):
               | len
               | range
               | matrix_dimensions 
-              | arithmetic
+              | math_operation
               | index_access '''
     
     
@@ -126,6 +126,6 @@ def p_index_assign_value(p):
                              | len
                              | range
                              | matrix_dimensions 
-                             | arithmetic
+                             | math_operation
                              | index_access'''
      p[0] = IndexValue(p[1])

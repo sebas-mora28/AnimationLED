@@ -25,15 +25,18 @@ class SymbolVariable:
 
 class SymbolProcedure:
 
-    def __init__(self, ID, procedure):
-        self.procedure = procedure
+    def __init__(self, ID):
+        self.procedures = []
         self.ID = ID
 
+
+    def addProcedure(self, procedure):
+        self.procedures.append(procedure)
     def getID(self):
         return self.ID
     
-    def getProcedure(self):
-        return self.procedure
+    def getProcedures(self):
+        return self.procedures
 
 
 class SymbolTable:
@@ -50,10 +53,18 @@ class SymbolTable:
     def getSymbolByID(self , ID):
         return self.variableTable[ID]
 
-    def addProcedureSymbol(self, ID, procedure):
-        new_procedure = SymbolProcedure(ID, procedure)
-        self.procedureTable[ID] = new_procedure
+    def getProcedureByID(self, ID):
+        return self.procedureTable[ID]
 
+    def addProcedureSymbol(self, ID, procedure):
+
+        if ID in self.procedureTable:
+            self.procedureTable[ID].addProcedure(procedure)
+        else:
+            new_procedure = SymbolProcedure(ID)
+            new_procedure.addProcedure(procedure)
+            self.procedureTable[ID] = new_procedure
+       
     def changeSymbolValue(self, ID, value):
         temp = self.variableTable[ID]
         temp.value = copy.deepcopy(value)
@@ -86,6 +97,9 @@ class SymbolTable:
     def exist(self, ID):
         return ID in self.variableTable
 
+
+    def existProcedure(self, ID):
+        return ID in self.procedureTable
 
 
     def print(self):

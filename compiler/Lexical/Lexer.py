@@ -162,18 +162,18 @@ class Lexer(object):
     def t_ID(self, t):
         r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
         current = self.reserved.get(t.value, 'ID')
-        #if len(current) > 10:
-        #    self.t_error(t)
-        #    return 
-        #if current == 'ID' and not t.value == "Main":
-        #    if t.value[0].isupper():
-        #        self.t_error(t)
+        if len(t.value) > 10:
+            self.t_error(t)
+            return 
+        if current == 'ID' and not t.value == "Main":
+            if t.value[0].isupper():
+                self.t_error(t)
         t.type = current
         return t
     
 
     def t_error(self, t):
-        self.errors.append(f"Lexical error: Illegal character {t.value[0]} in line {t.lineno}")
+        self.errors.append(f"Lexical error: Illegal character {t.value} in line {t.lineno}")
 
 
     def input(self, sourceCode):
