@@ -21,6 +21,8 @@ def compile(code):
                 return program.getErrors()
                 #program.semanticError.printErrors() #comentar
             else:
+                #trad = Traductor(program.programOutPut)
+                #print(trad.Traducir())
                 return ["Archivo compilado con exito!!"]
 
         else:
