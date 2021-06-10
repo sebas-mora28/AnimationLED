@@ -3,6 +3,7 @@ sys.path.append("..")
 from Lexical.Lexer import *
 from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
+from Lexical.Traductor import*
 
 
 
@@ -21,8 +22,8 @@ def compile(code):
                 return program.getErrors()
                 #program.semanticError.printErrors() #comentar
             else:
-                #trad = Traductor(program.programOutPut)
-                #print(trad.Traducir())
+                trad = Traductor(program.programOutput)
+                print("\n output: "+ trad.Traducir())
                 return ["Archivo compilado con exito!!"]
 
         else:

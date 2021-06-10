@@ -16,7 +16,10 @@ class Traductor():
         temp = generado.split(",")
         generado = ""
         for t in temp:
-            generado += t
+            if t == "True" or t == " True":
+                generado += "1"
+            else:
+                generado += "0"
         return generado
         
 
@@ -25,7 +28,10 @@ class Traductor():
         valores = temp.split(",")
         output = ""
         for v in valores:
-            output += v
+            if v == "True" or v == " True":
+                output += "1"
+            else:
+                output += "0"
         return output
     def codeBlink(self, datos):
         self.code += "8" + datos[5]+ datos[2]+datos[1]+ datos[3]
@@ -35,11 +41,11 @@ class Traductor():
         self.code +="3" + datos[3] + datos[2] + datos[1]
     def codePrintLedX(self,datos):
         if datos[1]=="C":
-            self.code += "6" + datos[2] + self.getValues(datos[4])
+            self.code += "6" + datos[2] + self.getValues(datos[3])
         elif datos[1] == "F":
-            self.code += "5" + datos[2] + self.getValues(datos[4])
+            self.code += "5" + datos[2] + self.getValues(datos[3])
         else:
-            self.code += "7" + self.getValuesM(datos[4])
+            self.code += "7" + self.getValuesM(datos[3])
 
     def Traducir(self):
         for instruct in self.output:

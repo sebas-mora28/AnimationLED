@@ -1,6 +1,8 @@
 Procedure Main()
 {
-    r = 8;
-    j = 7;
+    Delay(5,"Seg");
+    Blink(1,2,70,"Mil",True);
+    PrintLed(2,3,True);
+    PrintLedX("F", 2, [True,True,True]);
 
 };
