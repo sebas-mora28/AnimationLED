@@ -3,7 +3,7 @@ sys.path.append("..")
 from Lexical.Lexer import *
 from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
-from Lexical.Traductor import*
+from Traductor import *
 
 
 
