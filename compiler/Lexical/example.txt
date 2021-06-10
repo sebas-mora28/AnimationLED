@@ -1,18 +1,9 @@
+
 Procedure Main()
 {
-
-
-    lista[0].Neg;
-};
-
-Procedure caca()
-{
-    v = 5;
+    Delay(5,"Seg");
+    Blink(1,2,70,"Mil",True);
+    PrintLed(2,3,True);
+    PrintLedX("F", 2, [True,True,True]);
 
 };
-
-Procedure caca(arg1, arg2)
-{
-    v = arg1;
-};
-

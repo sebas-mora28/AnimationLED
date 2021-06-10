@@ -12,7 +12,13 @@ class Delay(Instruction):
     
     def eval(self,program, SymbolTable):
         if (verifyType(self.time, int)):
-            if (self.timeRange == "Seg" or self.timeRange == "Mil" or self.timeRange == "Min"):
+            if (self.timeRange == "Seg"):
+                self.delay(program)
+            elif self.timeRange == "Mil":
+                self.time = self.time / 1000
+                self.delay(program)
+            elif self.timeRange == "Min":
+                self.time = self.time *60
                 self.delay(program)
             else:
                 program.semanticError.delayInvalidArgumentTimeRange()
@@ -21,7 +27,8 @@ class Delay(Instruction):
 
     #Ejemplo de ejecución
     def delay(self, program):
-       output= "Delay{\n time: " + str(self.time) +"\n"+ "timeRange:" + self.timeRange+ "\n}"
+       output= "Delay;"+ str(self.time) + ";" + self.timeRange
+       program.programOutput.append(output)
 
 
 
@@ -38,7 +45,19 @@ class Blink(Instruction):
         if (verifyType(self.col, int)):
             if (verifyType(self.row, int)):
                 if (verifyType(self.time, int)):
-                    if (self.timeRange == "Seg" or self.timeRange == "Mil" or self.timeRange == "Min"):
+                    if (self.timeRange == "Seg"):
+                        if (verifyType(self.state,bool)):
+                                self.blink(program)
+                        else:
+                            program.semanticError.blinkInvalidArgumentState()
+                    elif self.timeRange == "Mil":
+                        self.time = self.time / 1000
+                        if (verifyType(self.state,bool)):
+                                self.blink(program)
+                        else:
+                            program.semanticError.blinkInvalidArgumentState()
+                    elif self.timeRange == "Min":
+                        self.time = self.time *60
                         if (verifyType(self.state,bool)):
                                 self.blink(program)
                         else:
@@ -55,8 +74,8 @@ class Blink(Instruction):
         
     #Funcionamiento del blink
     def blink(self, program):
-        string = "Blink {\n col :"+str(self.col) +"\n"+ "row: " + str(self.row) +"\n"+ "time: " +str(self.time)+"\n"+"timeRange: " + self.timeRange +"\n"+ "state: " +str(self.state )+ "\n}"
-        #Añadir al output
+        output = "Blink;"+str(self.col) +";"+ str(self.row) +";" +str(self.time)+";" + self.timeRange +";" +str(int(self.state))
+        program.programOutput.append(output)
 
 
 
@@ -81,7 +100,8 @@ class PrintLed(Instruction):
             program.semanticError.printLedInvalidArgumentCol()
         
     def printLed(self, program):
-        output = "PrintLed{\n col: " + str(self.col) + "\n row: " + str(self.row) + "\n value: " + str(self.value) + "\n}"
+        output = "PrintLed;" + str(self.col) + ";" + str(self.row) + ";" + str(int(self.value))
+        program.programOutput.append(output)
 
 
 
@@ -130,7 +150,8 @@ class PrintLedX(Instruction):
             
    
     def printLedX(self, program):
-        output = "PrintLedX{\n objectType: " + str(self.objectType) + "\n index: " + str(self.index) +"\n list:  "+ str(self.list)+ "\n }"
+        output = "PrintLedX;" + str(self.objectType) + ";" + str(self.index) +";"+ str(self.list)
+        program.programOutput.append(output)
     
 
 

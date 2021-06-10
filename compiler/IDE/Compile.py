@@ -3,11 +3,14 @@ sys.path.append("..")
 from Lexical.Lexer import *
 from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
+from Lexical.Traductor import*
+
 
 
 
 
 def compile(code):
+    print(code)
     lexer = Lexer()
     lexer.lexicalAnalysis(code)
 
@@ -20,14 +23,14 @@ def compile(code):
                 return program.getErrors()
                 #program.semanticError.printErrors() #comentar
             else:
-                #pass
+                trad = Traductor(program.programOutput)
+                print("\n output: "+ trad.Traducir())
                 return ["Archivo compilado con exito!!"]
 
         else:
             return syntaxError.getErrors()
-            #lista = syntaxError.getErrors()
-            #for i in range(len(lista)): # comentar
-            #    print(lista[i])
+            #for i in range(len(syntaxErorrs)): # comentar
+            #    print(syntaxErorrs[i])
 
     else:
         return lexer.errors
