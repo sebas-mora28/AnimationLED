@@ -18,13 +18,18 @@ int leds[8][8];
 const int H=1;
 const int L=0;
 
-//constante para pruebas
-int cont;
-
+//variables para la lactura del puerto serial
 String input;
+String inpuTotal;
+int indiceInicial;
+int indiceFinal;
+
+//variable para el delay 
+int dela=0;
+float dela2;
 
 void setup() {
-  cont=0;
+  
   Serial.begin(9600); 
   //Se inicializan los pines como OUTPUT
   for (int pin=0;pin<8;pin++){
@@ -34,7 +39,9 @@ void setup() {
     //Se ponen las filas en HIGH para apagar todos los leds
     digitalWrite(filas[pin],H);
     }
-
+  dela2=0;
+  indiceFinal=0;
+  inpuTotal="";
    //Se inicializa la matriz leds con todas sus posiciones en L
    //para que todos los leds esten apagados al inicio.
    for (int x = 0; x < 8; x++) {
@@ -46,11 +53,27 @@ void setup() {
 
 //Ciclo principal de ejecución
 void loop() {
-  if (Serial.available() > 0){
-    
-    input= Serial.readString();
+  
+  if (Serial.available() > 0){    
+    inpuTotal= Serial.readString(); 
+    indiceFinal=0;    
     }
-  if (input.substring(0,1)=="1"){
+   if (dela2>0)  
+      dela2--;    
+   if (dela2<0)
+      dela2==0;
+  if (inpuTotal!="" and indiceFinal!=-1 and dela2==0){    
+    indiceLectura();  
+    input=inpuTotal.substring(indiceInicial,indiceFinal);
+    Serial.println(input);
+    Serial.println(dela2);
+    Serial.println(indiceInicial);
+    Serial.println(indiceFinal);
+    if (input.substring(0,1)=="0"){
+      Serial.println(input.substring(1).toFloat());
+      dela2=input.substring(1).toFloat()*1800;
+      }
+    if (input.substring(0,1)=="1"){
      if (input.substring(1,2)=="1"){
         prenderColumna(input.substring(2,3).toInt());        
       }
@@ -58,30 +81,36 @@ void loop() {
         apagarColumna(input.substring(2,3).toInt());        
       }      
     }
-   if (input.substring(0,1)=="2"){
-     if (input.substring(1,2)=="1"){
-        prenderFila(input.substring(2,3).toInt());        
+    
+    if (input.substring(0,1)=="2"){
+      if (input.substring(1,2)=="1"){
+        prenderFila(input.substring(2,3).toInt()); 
+               
       }
       if (input.substring(1,2)=="0"){
-        apagarFila(input.substring(2,3).toInt());        
+        apagarFila(input.substring(2,3).toInt()); 
+               
       }      
     }
+    
     if (input.substring(0,1)=="3"){
-     if (input.substring(1,2)=="1"){
+      if (input.substring(1,2)=="1"){
         prenderPunto(input.substring(2,3).toInt(),input.substring(3,4).toInt());        
       }
       if (input.substring(1,2)=="0"){
         apagarPunto(input.substring(2,3).toInt(),input.substring(3,4).toInt());            
       }      
     }
+    
     if (input.substring(0,1)=="4"){
-     if (input.substring(1,2)=="1"){
+      if (input.substring(1,2)=="1"){
         prenderMatriz();        
       }
       if (input.substring(1,2)=="0"){
         apagarMatriz();            
       }      
     }
+    
     if (input.substring(0,1)=="5"){
       int y=input.substring(1,2).toInt();
       for (int i=0;i<8;i++){
@@ -89,6 +118,7 @@ void loop() {
         leds[y][i]=valor;
         } 
     }
+    
     if (input.substring(0,1)=="6"){
       int x=input.substring(1,2).toInt();
       for (int i=0;i<8;i++){
@@ -96,6 +126,7 @@ void loop() {
         leds[i][x]=valor;
         } 
     }
+    
     if (input.substring(0,1)=="7"){
         int cont=1;
         for (int y=0;y<8;y++){
@@ -105,12 +136,20 @@ void loop() {
             }
           }
       }
+    }
   refreshScreen();
   
   
   
 }
 
+void indiceLectura(){
+  indiceInicial=indiceFinal;
+  if(indiceInicial!=0)
+    indiceInicial++;    
+  indiceFinal=inpuTotal.indexOf("9",indiceFinal+1);
+  
+  }
 
 //Función que llama a prenderfila() para poder cambiar toda la matriz de leds a H
 //Entradas: NONE
