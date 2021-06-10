@@ -25,5 +25,6 @@ def cerrar():
 #6411001110 prende la columna 4 con los respectivos valores
 #71010110101011010110100101010010100111001100111011111111110010100
     #manda cada valor de led a la matriz
-#833 hace que el led 3,3 este en blink
+#81332 hace que el led 3,3 este en blink el segundo digito indica si esta on o off
+    #del 4 digito en adelante es el tiempo de activación 
 #9 esto es un separador, va desopues de cada indicación
