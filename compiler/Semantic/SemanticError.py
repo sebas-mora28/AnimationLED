@@ -70,6 +70,12 @@ class SemanticError:
     def insertListProcedureError(self, ID):
         self.errors.append(f"Semantic error: insert procedure only applicable in list, {ID} is not a list")
 
+    def insertIndexOutRange(self, ID):
+        self.errors.append(f"Semantic error: Index out of range in {ID} in insert function")
+
+    def deleteIndexOutRange(self, ID):
+        self.errors.append(f"Semantic error: Index out of range in {ID} in delete function")
+
     def deleteListProcedureError(self, ID):
         self.errors.append(f"Semantic error: delete procedure only applicable in list, {ID} is not a list")
 
@@ -102,7 +108,6 @@ class SemanticError:
 
     def rangeInvalidListLength(self, ID):
         self.errors.append(f"Semantic error: length list does not match with range values in {ID}")
-
 
     def booleanOperatorError(self, ID):
         self.errors.append(f"Semantic error : Invalid symbol, {ID} is not a list or matrix")

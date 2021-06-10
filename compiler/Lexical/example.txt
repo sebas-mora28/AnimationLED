@@ -2,26 +2,13 @@ Procedure Main()
 {
 
 
-    xd = 4;
-
-
-    matrix  = [[True, True], [False, False]];
-
-    matrix[0][0] = matrix[1][1];
-    
-
-    Call caca();
-
+    lista[0].Neg;
 };
 
 Procedure caca()
 {
     v = 5;
 
-    if v == 5{
-
-        v = 6;
-    };
 };
 
 Procedure caca(arg1, arg2)

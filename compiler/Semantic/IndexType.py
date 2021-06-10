@@ -78,10 +78,11 @@ class IndexPair(Index):
             if self.indexValue1 != None and self.indexValue2 != None and symbol != None:
                 if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
                     if isMatrix(symbol.value):
-                        if verifyType(value, bool):
-                            symbol.value[self.indexValue1][self.indexValue2] = value
-                        else:
-                            program.semanticError.incompatibleType(self.ID)
+                        if value != None:
+                            if verifyType(value, bool):
+                                symbol.value[self.indexValue1][self.indexValue2] = value
+                            else:
+                                program.semanticError.incompatibleType(self.ID)
                     else:
                         program.semanticError.invalidIndexAccessMatrix(self.ID)
                 else:

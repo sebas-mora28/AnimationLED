@@ -15,7 +15,6 @@ def p_value(p):
               | math_operation
               | index_access '''
     
-    
     p[0] = value(p[1])
 
 

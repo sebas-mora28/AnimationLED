@@ -143,10 +143,11 @@ class IndexAssign(Instruction):
 
 
     def assignment(self, program, symbolTable):
-        self.valueEvaluated = self.value.eval(program, symbolTable)
-  
+        evaluatedValue = self.value.eval(program, symbolTable)
     
-        self.index.assignValue(self.valueEvaluated, program, symbolTable)
+       
+
+        self.index.assignValue(evaluatedValue, program, symbolTable)
 
 
  

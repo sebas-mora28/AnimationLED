@@ -16,13 +16,11 @@ def p_expression(p):
     '''expression : variable_assign 
                   | reserved_procedures
                   | index_assign
-                  | procedure
                   | procedureCall
                   | conditional
                   | for_loop
                   | empty'''
         
-    print("Linea " + str(p.lineno(1)))
     p[0] = p[1]
 
 def p_empty(p):

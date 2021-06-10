@@ -122,6 +122,11 @@ class Lexer(object):
     def t_DELETE(self, t):
         r'\.del'
         return t
+    
+    def t_LISTSHAPE(self, t):
+        r'\.shape([A-Z])'
+        print(t)
+        return t
 
     def t_LISTOPERATOR(self , t):
         r'\.(Neg|F|T)'
@@ -136,10 +141,6 @@ class Lexer(object):
     def t_OBJECTTYPE(self, t):
         r'\"(C|F|M)\"'
         t.value = t.value[1:-1]
-        return t
-
-    def t_LISTSHAPE(self, t):
-        r'\.shape(F|C)'
         return t
 
     def t_COMMENT(self, t):

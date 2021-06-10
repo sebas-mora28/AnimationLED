@@ -16,6 +16,7 @@ def p_reserved_procedures(p):
                           | matrix_insert
                           | matrix_delete
                           | list_boolean_operation
+                          | matrix_dimensions
                           | type'''
     p[0] = p[1]
 
@@ -112,7 +113,7 @@ def p_matrix_delete(p):
 
 
 def p_matrix_dimension(p):
-    '''matrix_dimensions : ID LISTSHAPE '''
+    '''matrix_dimensions : ID LISTSHAPE SEMICOLON'''
     print("MATRIX DIMENSIONS")
     print(p[2])
     p[0] = MatrixDimension(p[1], p[2])

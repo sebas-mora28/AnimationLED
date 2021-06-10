@@ -9,7 +9,7 @@
 
 import sys
 sys.path.append("..")
-from Lexical.main import *
+from Compile import *
 from ventana_Emergente import Ui_VentanaEmergente
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import *
@@ -51,6 +51,8 @@ class Ui_MainWindow(QMainWindow):
         self.actionCargar.setObjectName("actionCargar")
         self.actionGuardar = QtWidgets.QAction(MainWindow)
         self.actionGuardar.setObjectName("actionGuardar")
+        self.actionEjecutar = QtWidgets.QAction(MainWindow)
+        self.actionEjecutar.setObjectName("actionEjecutar")
         self.actionNuevo = QtWidgets.QAction(MainWindow)
         self.actionNuevo.setObjectName("actionNuevo")
         self.actionCompilar = QtWidgets.QAction(MainWindow)
@@ -59,6 +61,7 @@ class Ui_MainWindow(QMainWindow):
         self.menufile.addAction(self.actionCargar)
         self.menufile.addAction(self.actionGuardar)
         self.menuConstruir.addAction(self.actionCompilar)
+        self.menuConstruir.addAction(self.actionEjecutar)
         self.menubar.addAction(self.menufile.menuAction())
         self.menubar.addAction(self.menuConstruir.menuAction())
         self.actionCargar.triggered.connect(self.cargarArchivo)
@@ -86,6 +89,9 @@ class Ui_MainWindow(QMainWindow):
         self.actionCompilar.setText(_translate("MainWindow", "Compilar"))
         self.actionCompilar.setStatusTip(_translate("MainWindow", "Compilar Programa"))
         self.actionCompilar.setShortcut(_translate("MainWindow", "Ctrl+R"))
+        self.actionEjecutar.setText(_translate("MainWindow", "Ejecutar"))
+        self.actionEjecutar.setStatusTip(_translate("MainWindow", "Ejecutar Programa"))
+        self.actionEjecutar.setShortcut(_translate("MainWindow", "Ctrl+E"))
     def cargarArchivo(self):
         archivo = QFileDialog.getOpenFileName(self,'Cargar Archivo','c:\\','Text files (*.txt)')
         if archivo[0]:
@@ -100,9 +106,8 @@ class Ui_MainWindow(QMainWindow):
     def nuevoProyecto(self):
         self.plainTextEdit.clear()
     def compilar(self):
-        compile(self.plainTextEdit.toPlainText())
-        errores = ["Semantic error: Invalid data for time, an int is expected","Semantic error: Invalid data for sate, a bool is expected"]
-        self.abrir_Ventana(errores)
+        errores = compile(self.plainTextEdit.toPlainText())
+        self.abrir_Ventana(errores) #RESETEA LA LISTA DE ERRORES
     def abrir_Ventana(self, errores):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_VentanaEmergente()

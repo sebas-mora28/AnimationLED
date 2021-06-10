@@ -35,5 +35,5 @@ def compile(code):
         #        print(lexer.errors[i])
 
 
-file = open('example.txt', 'r')
-compile(file.read())
+#file = open('example.txt', 'r')
+#compile(file.read())

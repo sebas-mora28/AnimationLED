@@ -32,9 +32,19 @@ syntaxError = SyntaxError()
 
 
 def p_program(p):
-    '''program : expressions_set''' 
+    '''program : procedure_set''' 
+    print(p[1])
     p[0] = Program(p[1])
 
+
+def p_procedure_set(p):
+   '''procedure_set : procedure procedure_set'''
+   p[0] = [p[1]] + p[2]
+ 
+def p_procedure_set_2(p):
+   '''procedure_set : procedure
+                    | empty'''
+   p[0] = [p[1]]
 
 
 def p_error(p):

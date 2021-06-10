@@ -18,6 +18,7 @@ def p_for_loop(p):
 
 def p_iterable(p):
     '''iterable : ID
-                 | INTEGER'''
+                 | INTEGER
+                 | index_access'''
     p[0] = p[1]
 

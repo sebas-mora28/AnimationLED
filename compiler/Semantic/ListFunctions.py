@@ -27,8 +27,7 @@ class MatrixDimension(Instruction):
             else:
                 program.semanticError.isNotAMatrix(self.ID)
     
-        else:
-            program.semanticError.symbolNotFound(self.ID)
+
 
 
 
@@ -50,11 +49,9 @@ class ListInsert(Instruction):
                     else:
                         program.semanticError.incompatibleType(self.ID)
                 else:
-                    program.semanticError.indexOutRange(self.ID)
+                    program.semanticError.insertIndexOutRange(self.ID)
             else:
                 program.semanticError.insertListProcedureError(self.ID)
-        else:
-            program.semanticError.symbolNotFound(self.ID)
 
 
 class ListDelete(Instruction):
@@ -71,11 +68,10 @@ class ListDelete(Instruction):
                 if self.index < len(symbol.value):
                     symbol.value.pop(self.index)
                 else:
-                    program.semanticError.indexOutRange(self.ID)
+                    program.semanticError.deleteIndexOutRange(self.ID)
             else:
                 program.semanticError.deleteListProcedureError(self.ID)
-        else:
-            program.semanticError.symbolNotFound(self.ID)
+    
 
 
 
@@ -106,8 +102,7 @@ class MatrixInsert(Instruction):
                     program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
             else:
                 program.semanticError.insertMatrixProcedureError(self.ID)
-        else:
-            program.semanticError.symbolNotFound(self.ID)
+
 
 
 
@@ -122,13 +117,15 @@ class MatrixInsert(Instruction):
                         for i in range(len(symbol.value)):
                             symbol.value[i].insert(self.index, self.value[i][0])
                     else:
-                        program.semanticError.indexOutRange(self.ID)
+                        program.semanticError.insertIndexOutRange(self.ID)
         else:
             program.semanticError.invalidDimensions(self.ID)
 
 
         
     def insertRow(self, symbol, program):
+
+
             if len(self.value[0]) == len(symbol.value[0]):
                 if self.index == None:
                     symbol.value.append(self.value[0])
@@ -136,7 +133,7 @@ class MatrixInsert(Instruction):
                     if self.index <= len(symbol.value):
                         symbol.value.insert(self.index, self.value[0])
                     else:
-                        program.semanticError.indexOutRange(self.ID)
+                        program.semanticError.insertIndexOutRange(self.ID)
             else:
                 program.semanticError.invalidDimensions(self.ID)
 
@@ -169,22 +166,21 @@ class MatrixDelete(Instruction):
                     program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
             else:
                 program.semanticError.deleteMatrixProcedureError(self.ID)
-        else:
-            program.semanticError.symbolNotFound(self.ID) 
+   
 
     
     def deleteRow(self, symbol, program):
         if self.index < len(symbol.value):
                 symbol.value.pop(self.index)
         else:
-            program.semanticError.indexOutRange(self.ID)
+            program.semanticError.deleteIndexOutRange(self.ID)
 
     def deletColumn(self, symbol, program):
         if self.index < len(symbol.value[0]):
             for i in range(len(symbol.value)):
                 symbol.value[i].pop(self.index)
         else:
-            program.semanticError.indexOutRange(self.ID)
+            program.semanticError.deleteIndexOutRange(self.ID)
         
 
 
@@ -201,8 +197,7 @@ class Len(Instruction):
                 return len(symbol.value) 
             else:
                 program.semanticError.lenInvalidArgument(self.ID)
-        else:
-            program.semanticError.symbolNotFound(self.ID)
+       
 
 
 

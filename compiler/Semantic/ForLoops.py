@@ -6,7 +6,7 @@ sys.path.append("..")
 
 from Semantic.Common import * 
 from Semantic.SymbolTable.SymbolTable import *
-
+from Semantic.IndexType import *
 
 class ForLoop(Instruction):
 
@@ -21,7 +21,6 @@ class ForLoop(Instruction):
     
 
     def eval(self, program, symbolTable):
-
         self.localSymbolTable.addSymbol(self.changingValue, 0, int, "local")
         if verifyType(self.changingValue, str):
             if verifyType(self.iterable, str):
@@ -35,8 +34,8 @@ class ForLoop(Instruction):
                         self.startLoop(program, symbolTable)
                     else:
                         program.semanticError.invalidIterable()
-            elif verifyType(self.iterable, Index):
-                iterable = self.iterable.getValuesFromIndex(program, symbolTable)
+            elif verifyType(self.iterable, IndexAccess):
+                iterable = self.iterable.getValues(program, symbolTable)
                 if iterable != None:
                     self.end = len(iterable)
                     self.startLoop(program, symbolTable)
