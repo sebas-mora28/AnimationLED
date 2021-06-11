@@ -1,6 +1,5 @@
 from Semantic.SemanticError import SemanticError
 from ast import Index
-from os import EX_CANTCREAT, execl, symlink
 import sys
 sys.path.append("..")
 

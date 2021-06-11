@@ -68,6 +68,7 @@ class Ui_MainWindow(QMainWindow):
         self.actionGuardar.triggered.connect(self.guardarArchivo)
         self.actionNuevo.triggered.connect(self.nuevoProyecto)
         self.actionCompilar.triggered.connect(self.compilar)
+        self.actionEjecutar.triggered.connect(self.ejecutar)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -92,22 +93,36 @@ class Ui_MainWindow(QMainWindow):
         self.actionEjecutar.setText(_translate("MainWindow", "Ejecutar"))
         self.actionEjecutar.setStatusTip(_translate("MainWindow", "Ejecutar Programa"))
         self.actionEjecutar.setShortcut(_translate("MainWindow", "Ctrl+E"))
+    # Funcion que carga un archivo desde el computador
     def cargarArchivo(self):
         archivo = QFileDialog.getOpenFileName(self,'Cargar Archivo','c:\\','Text files (*.txt)')
         if archivo[0]:
             with open(archivo[0], "rt") as buff:
                 texto = buff.read()
                 self.plainTextEdit.insertPlainText(texto)
+    # Funcion que guarda el archivo que se esta editando
     def guardarArchivo(self):
         opciones = QFileDialog.Options()
         archivo, _ = QFileDialog.getSaveFileName(self,'Guardar Archivo...','c:\\','Text files (*.txt)', options=opciones)
         with open(archivo, 'wt') as buff:
             buff.write(self.plainTextEdit.toPlainText())
+    # Crea un nuevo archivo para editar el codigo
     def nuevoProyecto(self):
         self.plainTextEdit.clear()
+    # Funcion encargada del compilado
+    # Asociada al boton compilar
+    # Toma el codigo del textEdit y lo envia al compilador
     def compilar(self):
-        errores = compile(self.plainTextEdit.toPlainText())
-        self.abrir_Ventana(errores) #RESETEA LA LISTA DE ERRORES
+        errores = compile(self.plainTextEdit.toPlainText()) #Llamada al compilador
+        self.abrir_Ventana(errores)
+    # Funcion encargada de la compilacion y ejecucion
+    # Asociada al boton Ejecutar
+    # Toma el codigo del textEdit, lo envia al compilador y lo ejecuta
+    def ejecutar(self):
+        errores = run(self.plainTextEdit.toPlainText()) #Llamada al compilador y ejecuta
+        self.abrir_Ventana(errores) 
+
+    #Función que crea una ventana con los errores del compilador
     def abrir_Ventana(self, errores):
         self.window = QtWidgets.QMainWindow()
         self.ui = Ui_VentanaEmergente()

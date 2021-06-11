@@ -7,10 +7,8 @@ from Traductor import *
 
 
 
-
-
-def compile(code):
-    print(code)
+#Funcion que compila y ejecuta el codigo
+def run(code):
     lexer = Lexer()
     lexer.lexicalAnalysis(code)
 
@@ -21,22 +19,33 @@ def compile(code):
             program = semantic_analysis(res)
             if program.getErrors() != []:
                 return program.getErrors()
-                #program.semanticError.printErrors() #comentar
             else:
-                trad = Traductor(program.programOutput)
-                print("\n output: "+ trad.Traducir())
+                trad = Traductor(program.programOutput) #Hace la traduccion del codigo
+                print("\n output: "+ trad.Traducir()) # agregar la funcion de envio
                 return ["Archivo compilado con exito!!"]
 
         else:
             return syntaxError.getErrors()
-            #for i in range(len(syntaxErorrs)): # comentar
-            #    print(syntaxErorrs[i])
 
     else:
         return lexer.errors
-        #for i in range(len(lexer.errors)): #comentar
-        #        print(lexer.errors[i])
+#Funcion que compila el programa pero no lo ejecuta    
+def compile(code):
+    lexer = Lexer()
+    lexer.lexicalAnalysis(code)
 
 
-#file = open('example.txt', 'r')
-#compile(file.read())
+    if(lexer.errors == []): #Erorres en el analisis de lexico 
+        res = systaxAnalysis(code, lexer)
+        if syntaxError.getErrors()== []:
+            program = semantic_analysis(res)
+            if program.getErrors() != []:
+                return program.getErrors()
+            else:
+                return ["Archivo compilado con exito!!"]
+
+        else:
+            return syntaxError.getErrors()
+
+    else:
+        return lexer.errors
