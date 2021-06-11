@@ -25,8 +25,9 @@ int indiceInicial;
 int indiceFinal;
 
 //variable para el delay 
-int dela=0;
 float dela2;
+float blinkTime;
+int blinkdela;
 
 void setup() {
   
@@ -39,6 +40,7 @@ void setup() {
     //Se ponen las filas en HIGH para apagar todos los leds
     digitalWrite(filas[pin],H);
     }
+  blinkdela=3600;
   dela2=0;
   indiceFinal=0;
   inpuTotal="";
@@ -49,6 +51,7 @@ void setup() {
       leds[x][y] = L;
     }
   }
+  
 }
 
 //Ciclo principal de ejecución
@@ -58,6 +61,13 @@ void loop() {
     inpuTotal= Serial.readString(); 
     indiceFinal=0;    
     }
+
+   if (blinkdela>0)
+      blinkdela--;
+   if (blinkdela<=0){
+      blinkdela=0;
+      apagarBlinks();
+    }
    if (dela2>0)  
       dela2--;    
    if (dela2<0)
@@ -65,10 +75,6 @@ void loop() {
   if (inpuTotal!="" and indiceFinal!=-1 and dela2==0){    
     indiceLectura();  
     input=inpuTotal.substring(indiceInicial,indiceFinal);
-    Serial.println(input);
-    Serial.println(dela2);
-    Serial.println(indiceInicial);
-    Serial.println(indiceFinal);
     if (input.substring(0,1)=="0"){
       Serial.println(input.substring(1).toFloat());
       dela2=input.substring(1).toFloat()*1800;
@@ -136,6 +142,15 @@ void loop() {
             }
           }
       }
+    if (input.substring(0,1)=="8"){
+      if (input.substring(1,2)=="1"){
+        Serial.println("hola");
+        prenderBlink(input.substring(3,4).toInt(),input.substring(4,5).toInt(),input.substring(5).toFloat());
+        }
+      if (input.substring(1,2)=="0"){
+        apagarBlink(input.substring(3,4).toInt(),input.substring(4,5).toInt());
+        }
+      }
     }
   refreshScreen();
   
@@ -147,10 +162,28 @@ void indiceLectura(){
   indiceInicial=indiceFinal;
   if(indiceInicial!=0)
     indiceInicial++;    
-  indiceFinal=inpuTotal.indexOf("9",indiceFinal+1);
+  indiceFinal=inpuTotal.indexOf(" ",indiceFinal+1);
   
   }
 
+void prenderBlink(int fila, int col,float tiempo){
+    leds[fila][col]=3;
+    blinkdela=tiempo*1800;
+  }
+
+void apagarBlink(int fila, int col){
+  leds[fila][col]=0;
+  }
+
+void apagarBlinks(){
+  for (int x = 0; x < 8; x++) {
+    for (int y = 0; y < 8; y++) {
+      if (leds[x][y]==3){
+          leds[x][y] = L;
+        }      
+    }
+  }
+  }
 //Función que llama a prenderfila() para poder cambiar toda la matriz de leds a H
 //Entradas: NONE
 //Salidas: NONE
@@ -250,13 +283,25 @@ void refreshScreen() {
     for (int thisCol = 0; thisCol < 8; thisCol++) {
       // get the state of the current pixel;
       int thisPixel = leds[thisRow][thisCol];
-      // when the row is LOW and the col is HIGH,
-      // the LED where they meet turns on:
-      digitalWrite(columnas[thisCol], thisPixel);
-      // turn the pixel off:
-      if (thisPixel == H) {
-        digitalWrite(columnas[thisCol], L);
+      if (thisPixel != 3){
+        // when the row is LOW and the col is HIGH,
+        // the LED where they meet turns on:
+        digitalWrite(columnas[thisCol], thisPixel);
+        // turn the pixel off:
+        if (thisPixel == H) {
+          digitalWrite(columnas[thisCol], L);
+        }
       }
+      if(thisPixel == 3){
+        if(blinkTime<=7200){
+          digitalWrite(columnas[thisCol], H);
+          digitalWrite(columnas[thisCol], L);
+        }
+        }
+      blinkTime++;
+      if (blinkTime==14400){
+        blinkTime=0;
+        }
     }
     // take the row pin low to turn off the whole row:
     digitalWrite(filas[thisRow], H);
