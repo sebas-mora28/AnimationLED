@@ -144,8 +144,10 @@ void loop() {
       }
     if (input.substring(0,1)=="8"){
       if (input.substring(1,2)=="1"){
-        Serial.println("hola");
-        prenderBlink(input.substring(3,4).toInt(),input.substring(4,5).toInt(),input.substring(5).toFloat());
+        Serial.println(input.substring(2,3));
+        Serial.println(input.substring(3,4));
+        Serial.println(input.substring(4));        
+        prenderBlink(input.substring(2,3).toInt(),input.substring(3,4).toInt(),input.substring(4).toFloat());
         }
       if (input.substring(1,2)=="0"){
         apagarBlink(input.substring(3,4).toInt(),input.substring(4,5).toInt());
