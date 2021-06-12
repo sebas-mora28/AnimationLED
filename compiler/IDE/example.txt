@@ -1,0 +1,11 @@
+Procedure Main()
+{
+    caca = 3;
+    caca =  -caca;
+
+
+    lista = [True, False, caca];
+
+    matrix = [[False, False, False], [True, False, True]];
+
+};

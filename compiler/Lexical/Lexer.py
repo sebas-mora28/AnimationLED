@@ -3,10 +3,15 @@ sys.path.append("..")
 import lex
 
 
+
+
+
+
 class Lexer(object):
 
     def __init__(self):
         self.lexer = lex.lex(object=self)
+        self.errors = []
 
 
     reserved = {
@@ -16,12 +21,8 @@ class Lexer(object):
         'else': 'ELSE',
         'while': 'WHILE',
         'for': 'FOR',
-        'begin':'BEGIN',
-        'end': 'END',
         'in': 'IN',
-        'step': 'STEP',
-
-        'list':'LIST',
+        'Step': 'STEP',
         'range':'RANGE',
         'len':'LEN',
         'Call':'CALL',
@@ -39,6 +40,7 @@ class Lexer(object):
         'ID',
 
         'TIMERANGE',
+        'OBJECTTYPE',
 
 
         # Data types 
@@ -105,42 +107,40 @@ class Lexer(object):
         t.value = int(t.value)
         return t
 
-    
+    def t_SPACETAB(self,t):
+        r'[ \t]+'
+
     def t_newline(self, t):
-        r'\n+'
-        t.lexer.lineno += len(t.value)
-
-
+        r"""[\n]"""
+        t.lexer.lineno += 1
+        pass
 
     def t_INSERT(self , t):
         r'\.insert'
         return t 
 
-
     def t_DELETE(self, t):
         r'\.del'
         return t
-
-
+    
+    def t_LISTSHAPE(self, t):
+        r'\.shape([A-Z])'
+        print(t)
+        return t
 
     def t_LISTOPERATOR(self , t):
-        r'\.(T|F|Neg)'
+        r'\.(Neg|F|T)'
+        t.value = t.value[1:]
         return t 
-
-
 
     def t_TIMERANGE(self, t):
         r'\"(Seg|Min|Mil)\"'
         t.value = t.value[1:-1]
         return t
 
-
-
     def t_OBJECTTYPE(self, t):
-        r'\ "C"|"F"|"M"'
-
-    def t_LISTSHAPE(self, t):
-        r'\.shape( F | C)'
+        r'\"(C|F|M)\"'
+        t.value = t.value[1:-1]
         return t
 
     def t_COMMENT(self, t):
@@ -156,21 +156,27 @@ class Lexer(object):
         return t
 
 
-
     def t_COMPARATOR(self, t):
         r'<\=|>\=|=\=|!\=|<|>'
         return t
 
-
     def t_ID(self, t):
-        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
-        t.type = self.reserved.get(t.value, 'ID')
+        r"""[a-zA-Z][a-zA-Z0-9_@?]*"""
+        current = self.reserved.get(t.value, 'ID')
+        if len(t.value) > 10:
+            self.t_error(t)
+            return 
+        if current == 'ID' and not t.value == "Main":
+            if t.value[0].isupper():
+                self.t_error(t)
+        t.type = current
         return t
+
+    
     
 
     def t_error(self, t):
-        print("Illegal character '%s' in line '%d'" ,t.value[0], t.lineno)
-        t.lexer.skip(1)
+        self.errors.append(f"Lexical error: Illegal character {t.value} in line {t.lineno}")
 
 
     def input(self, sourceCode):
@@ -183,16 +189,15 @@ class Lexer(object):
     
     def lexicalAnalysis(self, data):
         self.lexer.input(data)
+
+
         while True:
             tok = self.lexer.token()
             if not tok:
                 break
-            print(tok)
+            
 
 
 
 
-
-    
-    
     
