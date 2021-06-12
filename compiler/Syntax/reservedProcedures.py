@@ -63,7 +63,7 @@ def p_type(p):
 #len 
 def p_len(p):
     '''len : LEN LPAREN ID RPAREN'''
-    print("leeeen")
+    print("LEN")
     p[0] = Len(p[3])
 
 
