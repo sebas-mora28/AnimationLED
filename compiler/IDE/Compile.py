@@ -18,17 +18,25 @@ def run(code):
         if syntaxError.getErrors()== []:
             program = semantic_analysis(res)
             if program.getErrors() != []:
-                return program.getErrors()
+                #return program.getErrors()
+                program.semanticError.printErrors()
+                
             else:
                 trad = Traductor(program.programOutput) #Hace la traduccion del codigo
+                print(trad.output)
                 print("\n output: "+ trad.Traducir()) # agregar la funcion de envio
-                return ["Archivo compilado con exito!!"]
+                #return ["Archivo compilado con exito!!"]
+                pass
 
         else:
-            return syntaxError.getErrors()
+            for i in range(len(syntaxError.getErrors())):
+                print(syntaxError.getErrors()[i])
+            #return syntaxError.getErrors()
 
     else:
-        return lexer.errors
+        for i in range(lexer.errors):
+                print(lexer.errors[i])
+        #return lexer.errors
 #Funcion que compila el programa pero no lo ejecuta    
 def compile(code):
     lexer = Lexer()
@@ -49,3 +57,7 @@ def compile(code):
 
     else:
         return lexer.errors
+
+
+file = open("example.txt", 'r')
+run(file.read())

@@ -75,7 +75,7 @@ class IndexPair(Index):
             self.checkIndexValues(program, symbolTable)
             symbol = searchSymbolByID(self.ID, program, symbolTable)
 
-            if self.indexValue1 != None and self.indexValue2 != None and symbol != None:
+            if self.indexValue1 != None and self.indexValue2 != None and symbol != None and value !=None  :
                 if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
                     if isMatrix(symbol.value):
                         if value != None:
@@ -132,7 +132,7 @@ class IndexRange(Index):
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program, symbolTable)
 
-            if self.fromIndex != None and self.toIndex != None and symbol != None:
+            if self.fromIndex != None and self.toIndex != None and symbol != None and value != None:
                 if isList(symbol.value):
                     if verifyListBoundaries_2(self.fromIndex, self.toIndex, symbol.value):
                         if verifyType(value, list):
@@ -183,7 +183,7 @@ class IndexColumn(Index):
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program,symbolTable)
 
-            if self.columnIndex != None and symbol != None:
+            if self.columnIndex != None and symbol != None and value != None:
                 if isMatrix(symbol.value):
                     if verifyListBoundariesOne(self.columnIndex, symbol.value[0]):
                             if verifyType(value, list):
@@ -231,8 +231,9 @@ class IndexOne(Index):
 
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program, symbolTable)
-    
-            if self.indexValue != None and symbol != None:
+        
+            print(value)
+            if self.indexValue != None and symbol != None and value != None:
                     if isList(symbol.value):
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
                             if verifyType(value, bool):

@@ -88,10 +88,6 @@ def checkIndexValue(ID, indexValue, program, symbolTable):
                  
 
 
-
-
-
-
 def searchSymbolByID(ID, program, symbolTable):
 
     if symbolTable.exist(ID):
@@ -105,4 +101,42 @@ def searchSymbolByID(ID, program, symbolTable):
         return None
 
 
+
+def verifyListValueList(lista, program, symbolTable):
+
+    for i in range(len(lista)):
+        listValue = lista[i]
+        if verifyType(listValue, bool):
+            continue
+        elif verifyType(listValue, str):
+            symbol = searchSymbolByID(listValue, program, symbolTable)
+            if symbol != None:
+                if verifyType(symbol.value, bool):
+                    lista[i] = symbol.value  
+                else:
+                    program.semanticError.invalidListValue()
+                    return 
+        else:
+            program.semanticError.invalidListValue()   
+    return lista
+
+
+
+def verifyListValueMatrix(matrix, program, symbolTable):
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrixValue = matrix[i][j]
+            if verifyType(matrixValue, bool):
+                continue
+            elif verifyType(matrixValue, str):
+                val = searchSymbolByID(i, program, symbolTable)
+                if val != None:
+                    if verifyType(val, bool):
+                        lista[i] = val  
+                    else:
+                        program.semanticError.invalidListValue()
+                        return 
+            else:
+                program.semanticError.invalidListValue()
     
+    return matrix

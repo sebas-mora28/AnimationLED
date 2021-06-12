@@ -1,4 +1,5 @@
 import sys
+sys.path.append("..")
 #Clase encargada de la traduccion del codigo
 class Traductor():
     # Constructor, recibe la lista de instrucciones generadas por el compilador

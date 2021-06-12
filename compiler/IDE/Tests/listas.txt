@@ -1,0 +1,25 @@
+lista = [True, False, True];
+
+    var = lista[1];
+
+    var1 = lista[1:2];
+    
+
+    lista[0] = var; 
+    lista[0] = mum;
+
+    lista[1:2] = [True];
+
+    lista.insert(0,False);
+    lista.insert(4,False);
+
+    lista.del(4);
+
+    leen = len(lista);
+
+    lista[0].T;
+    lista[1].F;
+    lista[2].Neg;
+
+    value = False;
+    lista[0:1] = [value];

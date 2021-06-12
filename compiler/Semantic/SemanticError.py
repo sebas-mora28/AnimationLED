@@ -29,6 +29,11 @@ class SemanticError:
         self.errors.append(f"Semantic error: Main multiple definition")
   
 
+    #Arithmetic operation errors
+
+    def invalidArithmeticOperationValue(self):
+        self.errors.append(f"Semantic error: Invalid value in arithmetic operation, value is not a integer")
+
     # Variables and procedures errors
     def symbolNotFound(self, ID):
         self.errors.append(f"Semantic error: Symbol {ID} not found")
@@ -56,6 +61,9 @@ class SemanticError:
 
     def sameProcedureSign(self, ID):
         self.errors.append(f"Semantic error: Same procedure sign in {ID} procedure")
+
+    def invalidListValue(self):
+        self.errors.append(f"Semantic error: Invalid list value, it's not a bool")
     
     # List functions
     def isNotAMatrix(self, ID):

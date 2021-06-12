@@ -14,11 +14,20 @@ class value(Instruction):
 
 
     def eval(self, ID, program, symbolTable, scope):
-
-        if verifyType(self.value, int) or verifyType(self.value, bool) or verifyType(self.value, list):
+        if verifyType(self.value, int) or verifyType(self.value, bool):
             self.assignment(ID, self.value, program, symbolTable, scope)
  
-        elif(verifyType(self.value, str)):
+        elif verifyType(self.value, list):
+            if isList(self.value):
+                self.value = verifyListValueList(self.value, program, symbolTable)
+                if self.value != None:
+                    self.assignment(ID, self.value, program, symbolTable, scope)
+            elif isMatrix(self.value):
+                self.value = verifyListValueMatrix(self.value, program, symbolTable)
+                if self.value != None:
+                    self.assignment(ID, self.value, program, symbolTable, scope)
+
+        elif verifyType(self.value, str):
             symbol = searchSymbolByID(self.value, program, symbolTable)
             if symbol != None:
                 self.assignment(ID, symbol.value, program, symbolTable, scope)
@@ -47,6 +56,11 @@ class value(Instruction):
             value = self.value.eval(program, symbolTable)
             if value != None:
                 self.assignment(ID, value, program, symbolTable, scope)
+
+        elif verifyType(self.value, MathValueNegative):
+            value = self.value.eval(program, symbolTable)
+            if value != None:
+                self.assignment(ID, int(value), program, symbolTable, scope)
         
     def assignment(self, ID, value, program, symbolTable, scope):
         if(symbolTable.exist(ID)):

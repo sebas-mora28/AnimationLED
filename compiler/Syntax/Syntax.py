@@ -1,7 +1,6 @@
 import sys
 sys.path.append("..")
 import yacc 
-from Lexical.Lexer import Lexer
 from Syntax.reservedProcedures import * 
 from Syntax.variableAssign import *
 from Syntax.expressions import *
@@ -33,7 +32,6 @@ syntaxError = SyntaxError()
 
 def p_program(p):
     '''program : procedure_set''' 
-    print(p[1])
     p[0] = Program(p[1])
 
 

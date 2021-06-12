@@ -24,6 +24,9 @@ class MatrixDimension(Instruction):
                 if self.dimension == ".shapeC":
                     return len(symbol.value[0])
 
+                else:
+                    program.semanticError.addError()
+
             else:
                 program.semanticError.isNotAMatrix(self.ID)
     
@@ -287,19 +290,18 @@ class BooleanOperation(Instruction):
         if self.operation == "T":
             self.booleanOperator(True, symbol, program)
     
-        if self.operation == "F":
+        elif self.operation == "F":
             self.boolOperator(False, symbol, program)
 
-        if self.operation == "Neg":
+        elif self.operation == "Neg":
             self.notOperator(symbol, program)
 
     def boolOperator(self, boolValue, symbol, program):
-
         if isList(symbol.value):
             for i in range(len(symbol.value)):
                 symbol.value[i] = boolValue
 
-        if isMatrix(symbol.value):
+        elif isMatrix(symbol.value):
 
             for i in range(len(symbol.value)):
                 for j in range(len(symbol.value[i])):
@@ -309,12 +311,12 @@ class BooleanOperation(Instruction):
             program.semanticError.booleanOperatorError(self.ID)
 
     def notOperator(self, symbol, program):
-
+     
         if isList(symbol.value):
             for i in range(len(symbol.value)):
                 symbol.value[i] = not(symbol.value[i])
 
-        if isMatrix(symbol.value):
+        elif isMatrix(symbol.value):
 
             for i in range(len(symbol.value)):
                 for j in range(len(symbol.value[i])):

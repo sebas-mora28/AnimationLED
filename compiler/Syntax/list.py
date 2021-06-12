@@ -11,8 +11,7 @@ def p_init_list(p):
 
 def p_list(p):
     '''list : LSBRACKET element_set RSBRACKET'''
-    var = p[2]
-    p[0] = var
+    p[0] = p[2]
 
 
 
@@ -28,5 +27,6 @@ def p_element_set(p):
 
 def p_element(p):
      '''element : BOOLEAN
-                | list'''
+                | list
+                | ID'''
      p[0] = [p[1]]

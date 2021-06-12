@@ -144,12 +144,12 @@ class PrintLedX(Instruction):
         if(self.objectType == "F" or self.objectType == "C"):
             if (verifyType(self.index, int)):
                 if (isList(self.list)and len(self.list)<= 8):
-                    self.printLedX(program)
+                    self.printLedX(program, temp.value)
                 elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,symbolTable)
                     if temp != None:
                         if isList(temp.value) and len(temp.value)<= 8:
-                            self.printLedX(program)
+                            self.printLedX(program, temp.value)
                         else:
                             program.semanticError.printLedXInvalidArgumentList()
                 else:
@@ -159,12 +159,12 @@ class PrintLedX(Instruction):
         elif self.objectType =="M":
             if (verifyType(self.index, int)):
                 if (isMatrix(self.list)and len(self.list) <= 8 and len(self.list[0]) <= 8):
-                    self.printLedX(program)
+                    self.printLedX(program, temp.value)
                 elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,symbolTable)
                     if temp !=None:
                         if isMatrix(temp.value) and len(temp.value) <= 8 and len(temp.value[0]) <= 8:
-                            self.printLedX(program)
+                            self.printLedX(program, temp.value)
                         else:
                             program.semanticError.printLedXInvalidArgumentMatrix()
                 else:
@@ -178,8 +178,8 @@ class PrintLedX(Instruction):
             
     # Funcion que crea y almacena el output de la instruccion PrintLedX
     # program: programa que maneja la ejecucion del compilador 
-    def printLedX(self, program):
-        output = "PrintLedX;" + str(self.objectType) + ";" + str(self.index) +";"+ str(self.list)
+    def printLedX(self, program, value):
+        output = "PrintLedX;" + str(self.objectType) + ";" + str(self.index) +";"+ str(value)
         program.programOutput.append(output)
     
 

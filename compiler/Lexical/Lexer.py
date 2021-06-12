@@ -161,7 +161,7 @@ class Lexer(object):
         return t
 
     def t_ID(self, t):
-        r"""[a-zA-Z][a-zA-Z0-9_@&?]*"""
+        r"""[a-zA-Z][a-zA-Z0-9_@?]*"""
         current = self.reserved.get(t.value, 'ID')
         if len(t.value) > 10:
             self.t_error(t)
@@ -171,6 +171,8 @@ class Lexer(object):
                 self.t_error(t)
         t.type = current
         return t
+
+    
     
 
     def t_error(self, t):
