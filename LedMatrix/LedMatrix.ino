@@ -76,8 +76,7 @@ void loop() {
     indiceLectura();  
     input=inpuTotal.substring(indiceInicial,indiceFinal);
     if (input.substring(0,1)=="0"){
-      Serial.println(input.substring(1).toFloat());
-      dela2=input.substring(1).toFloat()*1800;
+      dela2=input.substring(1).toFloat()*800;
       }
     if (input.substring(0,1)=="1"){
      if (input.substring(1,2)=="1"){
@@ -170,7 +169,7 @@ void indiceLectura(){
 
 void prenderBlink(int fila, int col,float tiempo){
     leds[fila][col]=3;
-    blinkdela=tiempo*1800;
+    blinkdela=tiempo*800;
   }
 
 void apagarBlink(int fila, int col){
