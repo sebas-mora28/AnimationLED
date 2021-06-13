@@ -26,21 +26,29 @@ class Program:
     def execute(self):
         main_count = 0 
         if not self.isEmpty():
+
             for expression in self.expressions_set:
+
                 if expression != None:
+
                     if(expression.ID == "Main"):
                         main_count += 1
                         if(expression.parameters == []):
+
                             self.main = expression
                             continue
+
                         else:
+
                             self.semanticError.mainCannotReceiveParameter()
                             return
+
                     expression.eval(self, self.symbolTable)
 
         if(main_count == 0):
             self.semanticError.mainNotFound()
             return 
+            
         if(main_count > 1):
             self.semanticError.mainMultipleDefinition()
             return 

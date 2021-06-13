@@ -41,16 +41,27 @@ class ListInsert(Instruction):
     def eval(self, program, symbolTable):
 
         symbol = searchSymbolByID(self.ID, program, symbolTable)
+
         if symbol != None:
+
             if isList(symbol.value):
+
                 if self.index <= len(symbol.value):
+
                     if verifyType(self.value, bool):
+
                         symbol.value.insert(self.index, self.value)
+
                     else:
+
                         program.semanticError.incompatibleType(self.ID)
+
                 else:
+
                     program.semanticError.insertIndexOutRange(self.ID)
+
             else:
+
                 program.semanticError.insertListProcedureError(self.ID)
 
 
@@ -63,13 +74,21 @@ class ListDelete(Instruction):
     def eval(self, program, symbolTable):
 
         symbol = searchSymbolByID(self.ID, program, symbolTable)
+
         if symbol != None:
+
             if isList(symbol.value):
+
                 if self.index < len(symbol.value):
+
                     symbol.value.pop(self.index)
+
                 else:
+
                     program.semanticError.deleteIndexOutRange(self.ID)
+
             else:
+
                 program.semanticError.deleteListProcedureError(self.ID)
     
 
@@ -87,20 +106,31 @@ class MatrixInsert(Instruction):
         symbol = searchSymbolByID(self.ID, program, symbolTable)
 
         if symbol != None:
+
             if isMatrix(symbol.value):
+
                 if self.insertionType == 1 or self.insertionType == 0:
+
                     if verifyType(self.value, list):
+
                             if self.insertionType == 0:
+
                                 self.insertRow(symbol, program)
         
 
                             elif self.insertionType == 1:
-                                self.insertColumn(symbol, program)     
+
+                                self.insertColumn(symbol, program)
+
                     else:
+
                         program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
+
                 else:
+
                     program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
             else:
+                
                 program.semanticError.insertMatrixProcedureError(self.ID)
 
 

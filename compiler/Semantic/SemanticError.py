@@ -14,6 +14,9 @@ class SemanticError:
             print(self.errors[i])
 
 
+    def getErrors(self):
+        return self.errors
+
     def addError(self, error):
         self.errors.append(error)
 
@@ -32,7 +35,10 @@ class SemanticError:
     # if error 
 
     def invalidComparatorBoolean(self):
-        self.errors.append(f"")
+        self.errors.append(f"Semantic error: Invalid comparator for booleans")
+
+    def IncompatibleIteratorAndValuesInIf(self):
+        self.errors.append(f"Semantic error: Incompatible iterator and value in if statement")
   
 
     #Arithmetic operation errors
