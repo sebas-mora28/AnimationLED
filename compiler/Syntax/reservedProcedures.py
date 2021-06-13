@@ -48,7 +48,8 @@ def p_printLedX(p):
 def p_procedure_value(p):
     '''procedure_value : ID
                        | INTEGER
-                       | BOOLEAN'''
+                       | BOOLEAN
+                       | list'''
     p[0] = p[1]
 
 
