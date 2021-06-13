@@ -73,5 +73,5 @@ class Traductor():
                 self.codePrintLedX(datos)
             else:
                 print("Error en el output " + datos[0]+ " no reconocido")
-            self.code += "9"
+            self.code += " "
         return self.code
