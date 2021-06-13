@@ -23,13 +23,13 @@ def p_reserved_procedures(p):
 
 #LED functions
 def p_delay(p):
-    '''delay : DELAY LPAREN procedure_value COMMA TIMERANGE RPAREN SEMICOLON'''
+    '''delay : DELAY LPAREN procedure_value COMMA STRING RPAREN SEMICOLON'''
     print("delay %d %s" % (p[3], p[5]))
     p[0] = Delay(p[3], p[5])
 
 
 def p_blink(p):
-    '''blink : BLINK LPAREN procedure_value COMMA procedure_value COMMA procedure_value COMMA TIMERANGE COMMA procedure_value RPAREN SEMICOLON'''
+    '''blink : BLINK LPAREN procedure_value COMMA procedure_value COMMA procedure_value COMMA STRING COMMA procedure_value RPAREN SEMICOLON'''
     p[0] = Blink(p[3],p[5],p[7],p[9],p[11])
 
 
@@ -40,7 +40,7 @@ def p_printLed(p):
 
 
 def p_printLedX(p):
-    '''printLedX : PRINTLEDX LPAREN OBJECTTYPE COMMA procedure_value COMMA procedure_value RPAREN SEMICOLON'''
+    '''printLedX : PRINTLEDX LPAREN STRING COMMA procedure_value COMMA procedure_value RPAREN SEMICOLON'''
     print("printLEDX")
     p[0] = PrintLedX(p[3], p[5], p[7])
 

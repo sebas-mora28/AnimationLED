@@ -24,9 +24,6 @@ class MatrixDimension(Instruction):
                 if self.dimension == ".shapeC":
                     return len(symbol.value[0])
 
-                else:
-                    program.semanticError.addError()
-
             else:
                 program.semanticError.isNotAMatrix(self.ID)
     
