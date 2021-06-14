@@ -51,6 +51,8 @@ class Ui_MainWindow(QMainWindow):
         self.actionCargar.setObjectName("actionCargar")
         self.actionGuardar = QtWidgets.QAction(MainWindow)
         self.actionGuardar.setObjectName("actionGuardar")
+        self.actionGuardarComo = QtWidgets.QAction(MainWindow)
+        self.actionGuardarComo.setObjectName("actionGuadarComo")
         self.actionEjecutar = QtWidgets.QAction(MainWindow)
         self.actionEjecutar.setObjectName("actionEjecutar")
         self.actionNuevo = QtWidgets.QAction(MainWindow)
@@ -60,15 +62,18 @@ class Ui_MainWindow(QMainWindow):
         self.menufile.addAction(self.actionNuevo)
         self.menufile.addAction(self.actionCargar)
         self.menufile.addAction(self.actionGuardar)
+        self.menufile.addAction(self.actionGuardarComo)
         self.menuConstruir.addAction(self.actionCompilar)
         self.menuConstruir.addAction(self.actionEjecutar)
         self.menubar.addAction(self.menufile.menuAction())
         self.menubar.addAction(self.menuConstruir.menuAction())
         self.actionCargar.triggered.connect(self.cargarArchivo)
         self.actionGuardar.triggered.connect(self.guardarArchivo)
+        self.actionGuardarComo.triggered.connect(self.saveAs)
         self.actionNuevo.triggered.connect(self.nuevoProyecto)
         self.actionCompilar.triggered.connect(self.compilar)
         self.actionEjecutar.triggered.connect(self.ejecutar)
+        self.archivo = None
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -84,6 +89,9 @@ class Ui_MainWindow(QMainWindow):
         self.actionGuardar.setText(_translate("MainWindow", "Guardar"))
         self.actionGuardar.setStatusTip(_translate("MainWindow", "Guardar Archivo"))
         self.actionGuardar.setShortcut(_translate("MainWindow", "Ctrl+S"))
+        self.actionGuardarComo.setText(_translate("MainWindow", "Guardar como..."))
+        self.actionGuardarComo.setStatusTip(_translate("MainWindow", "Guardar Archivo Como"))
+        self.actionGuardarComo.setShortcut(_translate("MainWindow", "Ctrl+G"))
         self.actionNuevo.setText(_translate("MainWindow", "Nuevo"))
         self.actionNuevo.setStatusTip(_translate("MainWindow", "Crear Nuevo Archivo"))
         self.actionNuevo.setShortcut(_translate("MainWindow", "Ctrl+N"))
@@ -95,20 +103,44 @@ class Ui_MainWindow(QMainWindow):
         self.actionEjecutar.setShortcut(_translate("MainWindow", "Ctrl+E"))
     # Funcion que carga un archivo desde el computador
     def cargarArchivo(self):
-        archivo = QFileDialog.getOpenFileName(self,'Cargar Archivo','c:\\','Text files (*.txt)')
-        if archivo[0]:
-            with open(archivo[0], "rt") as buff:
-                texto = buff.read()
-                self.plainTextEdit.insertPlainText(texto)
+        try:
+            archivo = QFileDialog.getOpenFileName(self,'Cargar Archivo','c:\\','Text files (*.txt)')
+            self.archivo =archivo[0]
+            self.plainTextEdit.clear()
+            if archivo[0]:
+                with open(archivo[0], "rt") as buff:
+                    texto = buff.read()
+                    self.plainTextEdit.insertPlainText(texto)
+        except:
+            pass
     # Funcion que guarda el archivo que se esta editando
     def guardarArchivo(self):
-        opciones = QFileDialog.Options()
-        archivo, _ = QFileDialog.getSaveFileName(self,'Guardar Archivo...','c:\\','Text files (*.txt)', options=opciones)
-        with open(archivo, 'wt') as buff:
-            buff.write(self.plainTextEdit.toPlainText())
+        if self.archivo == None:
+            self.saveAs()
+        else:
+            self.save()
+    # Funcion que sobre escribe el archivo que se esta utilizando
+    def save(self):
+        try:
+            with open(self.archivo, 'w') as buff:
+                buff.write(self.plainTextEdit.toPlainText())
+        except:
+            pass
+    # Funcion que guarda el archivo creado
+    def saveAs(self):
+        try:
+            opciones = QFileDialog.Options()
+            archivo, _ = QFileDialog.getSaveFileName(self,'Guardar Archivo...','c:\\','Text files (*.txt)', options=opciones)
+            with open(archivo, 'wt') as buff:
+                buff.write(self.plainTextEdit.toPlainText())
+        except:
+            pass
+        
+
     # Crea un nuevo archivo para editar el codigo
     def nuevoProyecto(self):
         self.plainTextEdit.clear()
+        self.archivo = None
     # Funcion encargada del compilado
     # Asociada al boton compilar
     # Toma el codigo del textEdit y lo envia al compilador
