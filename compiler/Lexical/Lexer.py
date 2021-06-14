@@ -135,6 +135,8 @@ class Lexer(object):
     
     def t_STRING(self, t):
         r'["]{1}[^"]*["]{1}'
+        print(t.value)
+        t.value = t.value[1:len(t.value) - 1]
         return t
 
     def t_COMMENT(self, t):
