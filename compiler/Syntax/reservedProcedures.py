@@ -24,7 +24,6 @@ def p_reserved_procedures(p):
 #LED functions
 def p_delay(p):
     '''delay : DELAY LPAREN procedure_value COMMA STRING RPAREN SEMICOLON'''
-    print("delay %d %s" % (p[3], p[5]))
     p[0] = Delay(p[3], p[5])
 
 
