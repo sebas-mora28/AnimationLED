@@ -20,8 +20,8 @@ def run(code):
         if syntaxError.getErrors()== []:
             program = semantic_analysis(res)
             if program.getErrors() != []:
-                #return program.getErrors()
-                program.semanticError.printErrors()
+                return program.getErrors()
+                #program.semanticError.printErrors()
                 
             else:
                 trad = Traductor(program.programOutput) #Hace la traduccion del codigo

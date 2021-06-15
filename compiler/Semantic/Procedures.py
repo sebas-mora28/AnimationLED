@@ -22,14 +22,21 @@ class Procedure(Instruction):
         return self.expressions
 
     def eval(self, program, symbolTable):
+
         if program.symbolTable.existProcedure(self.ID):
+
             procedureSymbol = program.symbolTable.getProcedureByID(self.ID)
 
             if not self.existProcedureSign(procedureSymbol):
+
                 program.symbolTable.addProcedureSymbol(self.ID, self)
+
             else:
+
                 program.semanticError.sameProcedureSign(self.ID)
+                
         else:
+
             program.symbolTable.addProcedureSymbol(self.ID, self)
 
 
@@ -37,6 +44,7 @@ class Procedure(Instruction):
     def existProcedureSign(self, procedureSymbol):
 
         for procedure in procedureSymbol.getProcedures():
+
                 if len(self.parameters) == len(procedure.getParameters()):
                     return True
         
@@ -62,14 +70,19 @@ class CallProcedure(Instruction):
                 parameters = procedure.getParameters()
                 expressions = procedure.getExpressions()
                 self.set_arguments(program, symbolTable, self.arguments, parameters)
+
                 for expression in expressions:
+                    
                     expression.eval(program, self.localsymbolTable)
+
                 self.localsymbolTable.print()
 
             else:
+
                 program.semanticError.procedureSignNotFound(self.ID, len(self.arguments))
                 
         else:
+
             program.semanticError.procedureNotFound(self.ID)
 
 
@@ -100,4 +113,5 @@ class CallProcedure(Instruction):
                     self.localsymbolTable.addSymbol(parameters[i], symbol.value, symbol.type, "local")
 
                 else:
+
                     program.semanticError.symbolNotFound(self.ID)

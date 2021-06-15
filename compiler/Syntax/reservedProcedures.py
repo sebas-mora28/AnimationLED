@@ -23,34 +23,36 @@ def p_reserved_procedures(p):
 
 #LED functions
 def p_delay(p):
-    '''delay : DELAY LPAREN INTEGER COMMA TIMERANGE RPAREN SEMICOLON'''
-    print("delay %d %s" % (p[3], p[5]))
+    '''delay : DELAY LPAREN procedure_value COMMA STRING RPAREN SEMICOLON'''
     p[0] = Delay(p[3], p[5])
 
 
 def p_blink(p):
-    '''blink : BLINK LPAREN INTEGER COMMA INTEGER COMMA INTEGER COMMA TIMERANGE COMMA BOOLEAN RPAREN SEMICOLON'''
+    '''blink : BLINK LPAREN procedure_value COMMA procedure_value COMMA procedure_value COMMA STRING COMMA procedure_value RPAREN SEMICOLON'''
     p[0] = Blink(p[3],p[5],p[7],p[9],p[11])
 
 
 def p_printLed(p):
-    '''printLed : PRINTLED LPAREN INTEGER COMMA INTEGER COMMA BOOLEAN RPAREN SEMICOLON'''
+    '''printLed : PRINTLED LPAREN procedure_value COMMA procedure_value COMMA procedure_value RPAREN SEMICOLON'''
     print("printLED")
     p[0] = PrintLed(p[3], p[5],p[7])
 
 
-def p_printLed_value(p):
-    '''printLed_value : ID
-                      | list'''
-    p[0] = p[1]
-
 def p_printLedX(p):
-    '''printLedX : PRINTLEDX LPAREN OBJECTTYPE COMMA INTEGER COMMA printLed_value RPAREN SEMICOLON'''
+    '''printLedX : PRINTLEDX LPAREN STRING COMMA procedure_value COMMA procedure_value RPAREN SEMICOLON'''
     print("printLEDX")
     p[0] = PrintLedX(p[3], p[5], p[7])
 
-#list functions
 
+def p_procedure_value(p):
+    '''procedure_value : ID
+                       | INTEGER
+                       | BOOLEAN
+                       | list'''
+    p[0] = p[1]
+
+
+#list functions
 def p_type(p):
     '''type : TYPE LPAREN ID RPAREN SEMICOLON
             | TYPE LPAREN BOOLEAN RPAREN SEMICOLON
@@ -131,3 +133,4 @@ def p_list_boolean_operation_index(p):
     '''list_boolean_operation : index_type LISTOPERATOR SEMICOLON''' 
     print("LIST BOOLEAN OPERATION INDEX")
     p[0] = BooleanOperationIndex(p[1], p[2])
+

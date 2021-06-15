@@ -14,6 +14,9 @@ class SemanticError:
             print(self.errors[i])
 
 
+    def getErrors(self):
+        return self.errors
+
     def addError(self, error):
         self.errors.append(error)
 
@@ -27,6 +30,15 @@ class SemanticError:
 
     def mainMultipleDefinition(self):
         self.errors.append(f"Semantic error: Main multiple definition")
+
+
+    # if error 
+
+    def invalidComparatorBoolean(self):
+        self.errors.append(f"Semantic error: Invalid comparator for booleans")
+
+    def IncompatibleIteratorAndValuesInIf(self):
+        self.errors.append(f"Semantic error: Incompatible iterator and value in if statement")
   
 
     #Arithmetic operation errors
@@ -127,7 +139,7 @@ class SemanticError:
 
     #Delay 
     def delayInvalidArgumentTimeRange(self):
-        self.errors.append("Semantic error: Invalid argument for timeRange. Mil, seg, min, is expected")
+        self.errors.append("Semantic error: Invalid argument for timeRange. Mil, Seg, Min, is expected")
 
     def delayInvalidArgumentTime(self):
         self.errors.append("Semantic error: Invalid argument for time, an int is expected")

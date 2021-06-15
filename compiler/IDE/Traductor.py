@@ -39,7 +39,7 @@ class Traductor():
     # Funcion que traduce la instruccion blink a en un formato para enviar a arduino
     # datos: lista con los datos de la instruccion
     def codeBlink(self, datos):
-        self.code += "8" + datos[5]+ datos[2]+datos[1]+ datos[3]
+        self.code += "8" + datos[5]+ datos[1]+datos[2]+ datos[3]
     # Funcion que traduce la instruccion Delay a en un formato para enviar a arduino
     # datos: lista con los datos de la instruccion
     def codeDelay(self,datos):
@@ -47,7 +47,7 @@ class Traductor():
     # Funcion que traduce la instruccion PrintLed a en un formato para enviar a arduino
     # datos: lista con los datos de la instruccion
     def codePrintLed(self,datos):
-        self.code +="3" + datos[3] + datos[2] + datos[1]
+        self.code +="3" + datos[3] + datos[1] + datos[2]
     # Funcion que traduce la instruccion PrintLedX a en un formato para enviar a arduino
     # datos: lista con los datos de la instruccion
     def codePrintLedX(self,datos):

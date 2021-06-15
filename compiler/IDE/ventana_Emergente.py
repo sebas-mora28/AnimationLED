@@ -15,6 +15,8 @@ class Ui_VentanaEmergente(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
+        MainWindow.setMinimumSize(QtCore.QSize(800, 600))
+        MainWindow.setMaximumSize(QtCore.QSize(800, 600))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setMinimumSize(QtCore.QSize(800, 575))
         self.centralwidget.setMaximumSize(QtCore.QSize(800, 575))

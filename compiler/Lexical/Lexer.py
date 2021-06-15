@@ -39,8 +39,9 @@ class Lexer(object):
     tokens = [
         'ID',
 
-        'TIMERANGE',
-        'OBJECTTYPE',
+        #'TIMERANGE',
+        #'OBJECTTYPE',
+        'STRING',
 
 
         # Data types 
@@ -99,7 +100,6 @@ class Lexer(object):
     t_COMMA = r'\,'
     t_COLON = r'\:'
     t_ASSIGN =  r'\='
-    t_ignore  = ' \t\r'
 
     
     def t_INTEGER(self, t):
@@ -109,6 +109,7 @@ class Lexer(object):
 
     def t_SPACETAB(self,t):
         r'[ \t]+'
+        pass
 
     def t_newline(self, t):
         r"""[\n]"""
@@ -124,23 +125,18 @@ class Lexer(object):
         return t
     
     def t_LISTSHAPE(self, t):
-        r'\.shape([A-Z])'
-        print(t)
+        r'\.shape(C|F)'
         return t
 
     def t_LISTOPERATOR(self , t):
-        r'\.(Neg|F|T)'
+        r'\.(Neg|F|T|)'
         t.value = t.value[1:]
         return t 
-
-    def t_TIMERANGE(self, t):
-        r'\"(Seg|Min|Mil)\"'
-        t.value = t.value[1:-1]
-        return t
-
-    def t_OBJECTTYPE(self, t):
-        r'\"(C|F|M)\"'
-        t.value = t.value[1:-1]
+    
+    def t_STRING(self, t):
+        r'["]{1}[^"]*["]{1}'
+        print(t.value)
+        t.value = t.value[1:len(t.value) - 1]
         return t
 
     def t_COMMENT(self, t):
@@ -172,7 +168,10 @@ class Lexer(object):
         t.type = current
         return t
 
-    
+
+    #def t_invalid(self, t):
+    #    r'.[a-zA-Z]'
+    #    pass
     
 
     def t_error(self, t):

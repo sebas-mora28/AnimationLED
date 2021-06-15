@@ -12,18 +12,32 @@ class Delay(Instruction):
     def __init__(self, time, timeRange):
         self.time = time
         self.timeRange = timeRange
+    # Funcion que valida si lo enviado como parametro time es una variable
+    # program: programa
+    # symbolTable: tabla de simbolos
+    # Retorna un bool que valida la variable
+    def verifySeg(self,program, symbolTable):
+        temp = searchSymbolByID(self.time,program,symbolTable)
+        if temp != None:
+            if verifyType(temp.value, int):
+                self.time = str(temp.value)
+                return True
+            else:
+                return False
+        else:
+            return False
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self,program, symbolTable):
-        if (verifyType(self.time, int)):
+        if (verifyType(self.time, int) or self.verifySeg(program,symbolTable)):
             if (self.timeRange == "Seg"):
                 self.delay(program)
             elif self.timeRange == "Mil":
-                self.time = self.time / 1000
+                self.time = int(self.time) / 1000
                 self.delay(program)
             elif self.timeRange == "Min":
-                self.time = self.time *60
+                self.time = int(self.time) *60
                 self.delay(program)
             else:
                 program.semanticError.delayInvalidArgumentTimeRange()
@@ -52,15 +66,65 @@ class Blink(Instruction):
         self.time = time
         self.timeRange = timeRange
         self.state = state
+    # Funcion que valida si lo enviado como parametros son variables
+    # program: programa
+    # symbolTable: tabla de simbolos
+    # Retorna un bool que valida la variable
+    def verifyVar(self,program, symbolTable,type):
+        if type == "c":# Verifica si en la tabla de simbolos existe una variable que sirva para col, según el ID dado
+            temp = searchSymbolByID(self.col,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, int):
+                    self.col = str(temp.value)
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        
+        elif type == "r":# Verifica si en la tabla de simbolos existe una variable que sirva para row, según el ID dado
+            temp = searchSymbolByID(self.row,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, int):
+                    self.row = str(temp.value)
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        
+        elif type == "t":# Verifica si en la tabla de simbolos existe una variable que sirva para time, según el ID dado
+            temp = searchSymbolByID(self.time,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, int):
+                    self.time = str(temp.value)
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        
+        else:# Verifica si en la tabla de simbolos existe una variable que sirva para state, según el ID dado
+            temp = searchSymbolByID(self.state,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, bool):
+                    self.state = temp.value
+                    return True
+                else:
+                    return False
+            else:
+                return False
+
+        
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self, program, symbolTable):
-        if (verifyType(self.col, int)):
-            if (verifyType(self.row, int)):
-                if (verifyType(self.time, int)):
+        if (verifyType(self.col, int) or self.verifyVar(program,symbolTable,"c")):
+            if (verifyType(self.row, int) or self.verifyVar(program,symbolTable,"r")):
+                if (verifyType(self.time, int)or self.verifyVar(program,symbolTable,"t")):
                     if (self.timeRange == "Seg"):
-                        if (verifyType(self.state,bool)):
+                        if (verifyType(self.state,bool) or self.verifyVar(program,symbolTable,"s")):
                                 self.blink(program)
                         else:
                             program.semanticError.blinkInvalidArgumentState()
@@ -104,13 +168,49 @@ class PrintLed(Instruction):
         self.col = col
         self.row = row
         self.value = value
+    # Funcion que valida si lo enviado como parametros son variables
+    # program: programa
+    # symbolTable: tabla de simbolos
+    # Retorna un bool que valida la variable
+    def verifyVar(self,program, symbolTable,type):
+        if type == "c": # Verifica si en la tabla de simbolos existe una variable que sirva para col, según el ID dado
+            temp = searchSymbolByID(self.col,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, int):
+                    self.col = str(temp.value)
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        
+        elif type == "r":# Verifica si en la tabla de simbolos existe una variable que sirva para row, según el ID dado
+            temp = searchSymbolByID(self.row,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, int):
+                    self.row = str(temp.value)
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        else:# Verifica si en la tabla de simbolos existe una variable que sirva para value, según el ID dado
+            temp = searchSymbolByID(self.value,program,symbolTable)
+            if temp != None:
+                if verifyType(temp.value, bool):
+                    self.value = temp.value
+                    return True
+                else:
+                    return False
+            else:
+                return False
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self,program, symbolTable):
-        if (verifyType(self.col, int)):
-            if (verifyType(self.row, int)):
-                if(verifyType(self.value, bool)):
+        if (verifyType(self.col, int) or self.verifyVar(program,symbolTable,"c")):
+            if (verifyType(self.row, int)or self.verifyVar(program,symbolTable,"r")):
+                if(verifyType(self.value, bool)or self.verifyVar(program,symbolTable,"s")):
                     self.printLed(program)
                 else:
                     program.semanticError.printLedInvalidArgumentValue()
@@ -137,14 +237,25 @@ class PrintLedX(Instruction):
         self.objectType = objectType
         self.index = index
         self.list = list
-     # Funcion que evalua que los parametros ingresados sean los solicitados
+    
+    def verifyIndex(self,program, symbolTable):
+        temp = searchSymbolByID(self.index,program,symbolTable)
+        if temp != None:
+            if verifyType(temp.value, int):
+                self.index = temp.value
+                return True
+            else:
+                return False
+        else:
+            return False
+    # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self,program, symbolTable):
         if(self.objectType == "F" or self.objectType == "C"):
-            if (verifyType(self.index, int)):
+            if (verifyType(self.index, int)) or self.verifyIndex(program,symbolTable):
                 if (isList(self.list)and len(self.list)<= 8):
-                    self.printLedX(program, temp.value)
+                    self.printLedX(program,self.list)
                 elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,symbolTable)
                     if temp != None:
@@ -157,9 +268,9 @@ class PrintLedX(Instruction):
             else:
                 program.semanticError.printLedXInvalidArgumentIndex()
         elif self.objectType =="M":
-            if (verifyType(self.index, int)):
+            if (verifyType(self.index, int) or self.verifyIndex(program,symbolTable)):
                 if (isMatrix(self.list)and len(self.list) <= 8 and len(self.list[0]) <= 8):
-                    self.printLedX(program, temp.value)
+                    self.printLedX(program, self.list)
                 elif verifyType(self.list, str):
                     temp = searchSymbolByID(self.list,program,symbolTable)
                     if temp !=None:
