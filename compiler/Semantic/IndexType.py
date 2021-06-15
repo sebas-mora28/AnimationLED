@@ -155,7 +155,6 @@ class IndexRange(Index):
                 program.semanticError.invalidIndexAccessList(self.ID)
      
 
-
     def assignValue(self, value, program, symbolTable):
 
             symbol = searchSymbolByID(self.ID, program, symbolTable)
@@ -213,7 +212,7 @@ class IndexColumn(Index):
                 if self.columnIndex != None:
 
                     if verifyListBoundariesOne(self.columnIndex, symbol.value[0]):
-
+                            print("Entraaa")
                             return getColumn(self.columnIndex, symbol.value)
 
                     else:
@@ -269,8 +268,6 @@ class IndexOne(Index):
 
 
         def getValuesFromIndex(self,  program, symbolTable):
-
-            self.checkIndexValues(program, symbolTable)
             symbol = searchSymbolByID(self.ID, program, symbolTable)
 
 
@@ -278,6 +275,7 @@ class IndexOne(Index):
 
                 if isList(symbol.value) or isMatrix(symbol.value):
 
+                    self.checkIndexValues(program, symbolTable)
                     if self.indexValue != None:
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
@@ -299,11 +297,10 @@ class IndexOne(Index):
 
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program, symbolTable)
-        
+    
             if self.indexValue != None and symbol != None and value != None:
                 
                     if isList(symbol.value):
-
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
 
                             if verifyType(value, bool):
@@ -321,21 +318,20 @@ class IndexOne(Index):
                     elif isMatrix(symbol.value):
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
+                            print(value)
 
                             if verifyType(value, list):
 
                                 symbol.value[self.indexValue] = value
 
                             else:
-
                                 program.semanticError.incompatibleType(self.ID)
 
                         else:
 
                             program.semanticError.indexOutRange(self.ID)
 
-                    else:
-                        
+                    else: 
                         program.semanticError.invalidIndexAccess(self.ID)
                
             

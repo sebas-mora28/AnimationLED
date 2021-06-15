@@ -72,10 +72,10 @@ class SemanticError:
         self.errors.append(f"Semantic error: Incompatible type in variable {ID}")
 
     def sameProcedureSign(self, ID):
-        self.errors.append(f"Semantic error: Same procedure sign in {ID} procedure")
+        self.errors.append(f"Semantic error: Procedure sign duplicate in {ID} procedure")
 
     def invalidListValue(self):
-        self.errors.append(f"Semantic error: Invalid list value, it's not a bool")
+        self.errors.append(f"Semantic error: Invalid list value, must be a bool")
     
     # List functions
     def isNotAMatrix(self, ID):
@@ -87,11 +87,27 @@ class SemanticError:
     def invalidIndexArguments(self, ID):
         self.errors.append(f"Semantic error: Invalid index value in {ID}")
 
+
+    #Insert and delete list
+
+        #Insert
+    def invalidIndexValueInsert(self, ID):
+        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a integer")
+
+    def invalidValueInsertList(self, ID):
+        self.errors.append(f"Semantic error: Invalid value argument insert procedure for {ID}, must be a boolean")
+
     def insertListProcedureError(self, ID):
         self.errors.append(f"Semantic error: insert procedure only applicable in list, {ID} is not a list")
 
     def insertIndexOutRange(self, ID):
         self.errors.append(f"Semantic error: Index out of range in {ID} in insert function")
+
+
+    #delete 
+
+    def invalidIndexValueDelete(self, ID):
+        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
 
     def deleteIndexOutRange(self, ID):
         self.errors.append(f"Semantic error: Index out of range in {ID} in delete function")
@@ -99,11 +115,36 @@ class SemanticError:
     def deleteListProcedureError(self, ID):
         self.errors.append(f"Semantic error: delete procedure only applicable in list, {ID} is not a list")
 
-    def insertMatrixProcedureInvalidArguments(self, ID):
-        self.errors.append(f"Semantic error: Invalid argument in insert function in {ID}")
 
+    # Insert and delete matrix
+
+
+    #insert 
+    def invalidInsertionTypeValueInsertMatrix(self, ID):
+        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a integer")
+
+    def invalidValueInsertMatrix(self, ID):
+        self.errors.append(f"Semantic error: Invalid value argument in insert procedure for {ID}, must be a list")
+
+
+    # Delete
     def deleteMatrixProcedureError(self, ID):
         self.errors.append(f"Semantic error: insert procedure only applicable in matrix, {ID} is not a matrix")
+
+    def invalidInsertionTypeValueDeleteMatrix(self, ID):
+        self.errors.append(f"Semantic error: Invalid insertion type argument in delete procedure for {ID}, must be a integer")
+
+    def invalidIndexDeleteMatrix(self, ID):
+        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
+
+    
+    def invalidInsertionTypeRange(self, ID):
+        self.errors.append(f"Semantic error: Insertion type must be 0 or 1 in {ID} ")
+
+
+    
+
+
 
     def invalidDimensions(self, ID):
         self.errors.append(f"Semantic error: Trying to insert a list with diferent dimentions in {ID}")

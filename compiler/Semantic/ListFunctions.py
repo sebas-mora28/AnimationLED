@@ -259,11 +259,13 @@ class BooleanOperationIndex(Instruction):
         
             if self.operation == "T":
                 value = self.booleanOperator(True, program, symbolTable)
-                self.index_type.assignValue(value, program, symbolTable)
+                if value != None:
+                    self.index_type.assignValue(value, program, symbolTable)
 
             if self.operation == "F":
                 value = self.booleanOperator(False, program, symbolTable)
-                self.index_type.assignValue(value, program, symbolTable)
+                if value != None:
+                    self.index_type.assignValue(value, program, symbolTable)
                 
             if self.operation == "Neg":
                 value = self.notOperator(program, symbolTable)
@@ -273,20 +275,48 @@ class BooleanOperationIndex(Instruction):
 
     def booleanOperator(self, boolValue, program, symbolTable):
 
-        if isinstance(self.index_type, IndexOne) or isinstance(self.index_type, IndexPair):
+
+        if isinstance(self.index_type, IndexOne):
+
+            ID = self.index_type.ID
+            symbol = searchSymbolByID(ID, program, symbolTable)
+    
+           
+            if symbol != None:
+                
+                if isList(symbol.value):
+                    return boolValue
+                
+                elif isMatrix(symbol.value):
+
+                    value = self.index_type.getValuesFromIndex(program, symbolTable)
+
+                    if value != None:
+
+                        return [boolValue]*len(value)
+
+                else:
+                     program.semanticError.invalidIndexAccess(ID)
+
+
+
+        elif isinstance(self.index_type, IndexPair):
             return boolValue 
         
-        if isinstance(self.index_type, IndexRange):
-            range = self.index_type.toIndex - self.index_type.fromIndex
-            return [boolValue]*range 
-        
-        if isinstance(self.index_type, IndexColumn):
+        elif isinstance(self.index_type, IndexRange):
+            value = self.index_type.getValuesFromIndex(program, symbolTable)
+            
+            if value != None:
+                return [boolValue]*len(value)
+
+        elif isinstance(self.index_type, IndexColumn):
             value = self.index_type.getValuesFromIndex(program, symbolTable)
             if value != None:
                 return [boolValue]*len(value)
 
-    def notOperator(self, program, symbolTable):
 
+
+    def notOperator(self, program, symbolTable):
         value = self.index_type.getValuesFromIndex(program, symbolTable)
         if value != None:
             if isinstance(self.index_type, IndexOne) or isinstance(self.index_type, IndexPair):

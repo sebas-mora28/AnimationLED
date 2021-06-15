@@ -28,5 +28,6 @@ def p_element_set(p):
 def p_element(p):
      '''element : BOOLEAN
                 | list
-                | ID'''
+                | ID
+                | INTEGER   '''
      p[0] = [p[1]]

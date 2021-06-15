@@ -22,49 +22,56 @@ class value(Instruction):
         elif verifyType(self.value, list):
 
             if isList(self.value):
-
-                self.value = verifyListValueList(self.value, program, symbolTable)
-                self.assignment(ID, self.value, program, symbolTable, scope)
+                value = verifyListValueList(self.value, program, symbolTable)
+                if value != None:
+                    self.assignment(ID, value, program, symbolTable, scope)
 
             elif isMatrix(self.value):
-
-                self.value = verifyListValueMatrix(self.value, program, symbolTable)
-                self.assignment(ID, self.value, program, symbolTable, scope)
+                value = verifyListValueMatrix(self.value, program, symbolTable)
+                if value != None:
+                    self.assignment(ID, value, program, symbolTable, scope)
 
         elif verifyType(self.value, str):
 
             symbol = searchSymbolByID(self.value, program, symbolTable)
-            self.assignment(ID, symbol.value, program, symbolTable, scope)
+            if symbol != None:
+                self.assignment(ID, symbol.value, program, symbolTable, scope)
           
         elif verifyType(self.value, MatrixDimension):
 
             value = self.value.eval(program, symbolTable)
-            self.assignment(ID, value, program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
     
         elif verifyType(self.value, Len):
 
             value = self.value.eval(program, symbolTable)
-            self.assignment(ID, value,program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, value,program, symbolTable, scope)
         
         elif verifyType(self.value, Range):
 
             value = self.value.eval(program, symbolTable)
-            self.assignment(ID, value, program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
 
         elif verifyType(self.value, IndexAccess):
 
             value = self.value.getValues(program, symbolTable)
-            self.assignment(ID, value, program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
         
         elif verifyType(self.value, ArithmeticOperation):
 
             value = self.value.eval(program, symbolTable)
-            self.assignment(ID, value, program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, value, program, symbolTable, scope)
 
         elif verifyType(self.value, MathValueNegative):
 
             value = self.value.eval(program, symbolTable)
-            self.assignment(ID, int(value), program, symbolTable, scope)
+            if value != None:
+                self.assignment(ID, int(value), program, symbolTable, scope)
         
     def assignment(self, ID, value, program, symbolTable, scope):
 

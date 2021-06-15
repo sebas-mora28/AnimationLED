@@ -290,6 +290,7 @@ class PrintLedX(Instruction):
     # Funcion que crea y almacena el output de la instruccion PrintLedX
     # program: programa que maneja la ejecucion del compilador 
     def printLedX(self, program, value):
+        value = fillList(value)
         output = "PrintLedX;" + str(self.objectType) + ";" + str(self.index) +";"+ str(value)
         program.programOutput.append(output)
     
