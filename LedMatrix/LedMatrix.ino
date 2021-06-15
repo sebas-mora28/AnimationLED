@@ -25,6 +25,7 @@ int indiceInicial;
 int indiceFinal;
 
 //variable para el delay 
+int dela;
 float dela2;
 float blinkTime;
 int blinkdela;
@@ -44,6 +45,7 @@ void setup() {
   dela2=0;
   indiceFinal=0;
   inpuTotal="";
+  dela=650;
    //Se inicializa la matriz leds con todas sus posiciones en L
    //para que todos los leds esten apagados al inicio.
    for (int x = 0; x < 8; x++) {
@@ -76,7 +78,7 @@ void loop() {
     indiceLectura();  
     input=inpuTotal.substring(indiceInicial,indiceFinal);
     if (input.substring(0,1)=="0"){
-      dela2=input.substring(1).toFloat()*800;
+      dela2=input.substring(1).toFloat()*dela;
       }
     if (input.substring(0,1)=="1"){
      if (input.substring(1,2)=="1"){
@@ -166,7 +168,7 @@ void indiceLectura(){
 
 void prenderBlink(int fila, int col,float tiempo){
     leds[fila][col]=3;
-    blinkdela=tiempo*800;
+    blinkdela=tiempo*dela;
   }
 
 void apagarBlink(int fila, int col){
