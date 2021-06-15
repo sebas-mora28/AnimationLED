@@ -158,6 +158,14 @@ void loop() {
   
 }
 
+/*
+Función que mueve los indices de lectura del input total, analiza el input y busca un espacio 
+en blanco desde la ultima posicion que se encontro uno y hace que el indice inicial sea el 
+indice final anterior
+Entrada NONE
+Salida NONE
+
+*/
 void indiceLectura(){
   indiceInicial=indiceFinal;
   if(indiceInicial!=0)
@@ -166,15 +174,37 @@ void indiceLectura(){
   
   }
 
+/*
+Función que avtiva el blink de un led y configura el tiempo que estara activo, 
+cambia en la matriz interna el valor por un 3 y guarda el tiempo de actividad 
+en blinkdela
+Entrada :
+  fila: int que representa la fila del led a encender
+  col: int que representa la columna del led a encender
+Salida: None
+*/
 void prenderBlink(int fila, int col,float tiempo){
     leds[fila][col]=3;
     blinkdela=tiempo*dela;
   }
 
+/*
+ * Función que quita el 3 de la matriz en un punto especifico para desactivar el blink
+ * Entradas:
+ *  fila: int que representa la fila del led a encender
+ *col: int que representa la columna del led a encender
+ *Salidas: None
+ */
 void apagarBlink(int fila, int col){
   leds[fila][col]=0;
   }
 
+/*
+ * Función que recorre toda la matriz interna quitando todos los 3 
+ * y poniendolos como 0 para apagar la matriz
+ * Entradas: None
+ * Salidas: None
+ */
 void apagarBlinks(){
   for (int x = 0; x < 8; x++) {
     for (int y = 0; y < 8; y++) {
@@ -184,18 +214,22 @@ void apagarBlinks(){
     }
   }
   }
-//Función que llama a prenderfila() para poder cambiar toda la matriz de leds a H
-//Entradas: NONE
-//Salidas: NONE
+/*
+ * Función que llama a prenderfila() para poder cambiar toda la matriz de leds a H
+ * Entradas: NONE
+ * Salidas: NONE
+ */
 void prenderMatriz(){
   for(int i=0;i<8;i++){
       prenderFila(i);
     }    
   }
 
-//Función que llama a prenderfila() para poder cambiar toda la matriz de leds a L
-//Entradas: NONE
-//Salidas: NONE
+/*
+ * Función que llama a prenderfila() para poder cambiar toda la matriz de leds a L
+ * Entradas: NONE
+ * Salidas: NONE
+ */
 void apagarMatriz(){
     for(int i=0;i<8;i++){
       apagarFila(i);
@@ -213,10 +247,12 @@ void prenderColumna(int col){
     }
   }
 
-//Función que pone todas las posiciones de una columna de la matriz leds en L
-//Entradas: 
-//  col: int que representa la columna que se desea poner en L
-//Salidas: NONE
+/*
+ *Función que pone todas las posiciones de una columna de la matriz leds en L
+ *Entradas: 
+ *  col: int que representa la columna que se desea poner en L
+ *Salidas: NONE
+ */
 void apagarColumna(int col){
   digitalWrite(columnas[col], L);
   for(int fila=0;fila<8;fila++){
@@ -224,11 +260,12 @@ void apagarColumna(int col){
     }
   }
 
-
-//Función que pone todas las posiciones de una fila de la matriz leds en H
-//Entradas: 
-//  fila: int que representa la fila que se desea poner en H
-//Salidas: NONE
+/*
+ *Función que pone todas las posiciones de una fila de la matriz leds en H
+ *Entradas: 
+ *  fila: int que representa la fila que se desea poner en H
+ *Salidas: NONE
+ */
 void prenderFila(int fila){
   digitalWrite(filas[fila], L);
   for(int columna=0;columna<8;columna++){
