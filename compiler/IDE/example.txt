@@ -10,12 +10,8 @@ Procedure Main(){
 
 	matrix = [[True, True, True, True],[False, False, False, False]];
 
-
-	
-
-
-
 };
+
 
 
 Procedure Main(){	

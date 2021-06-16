@@ -140,7 +140,9 @@ class SemanticError:
 
     def invalidRowValueFormatInsert(self, ID):
         self.errors.append(f"Semantic error: Invalid row value format in insert function for {ID} symbol, must be [ [ ... ] ]")
-        
+
+    def invalidInsertionTypeRange(self, ID):
+        self.errors.append(f"Semantic error: Insertion type must be 0 or 1")  
 
 
     # Delete
@@ -153,15 +155,11 @@ class SemanticError:
     def invalidIndexDeleteMatrix(self, ID):
         self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
 
-    
-    def invalidInsertionTypeRange(self, ID):
-        self.errors.append(f"Semantic error: Insertion type must be 0 or 1")
-
+    def invalidDeleteTypeRange(self, ID):
+        self.errors.append(f"Semantic error: elimination type must be 0 or 1") 
 
     
 
-
-    
 
 
 

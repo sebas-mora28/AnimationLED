@@ -223,6 +223,9 @@ class MatrixDelete(Instruction):
 
                     elif self.eliminationType == 1:
                         self.deletColumn(symbol, program)
+
+                    else:
+                        program.semanticError.invalidDeleteTypeRange()
                 else:
                     program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
             else:
@@ -349,7 +352,37 @@ class BooleanOperationIndex(Instruction):
     def notOperator(self, program, symbolTable):
         value = self.index_type.getValuesFromIndex(program, symbolTable)
         if value != None:
-            if isinstance(self.index_type, IndexOne) or isinstance(self.index_type, IndexPair):
+
+            if isinstance(self.index_type, IndexOne):
+
+                ID = self.index_type.ID
+                symbol = searchSymbolByID(ID, program, symbolTable)
+    
+           
+                if symbol != None:
+                
+                    if isList(symbol.value):
+                        return not(value)
+                
+                    elif isMatrix(symbol.value):
+
+                        value = self.index_type.getValuesFromIndex(program, symbolTable)
+
+                        if value != None:
+
+                            res = []
+                            for i in range(len(value)):
+                                res.insert(i, not(value[i]))
+
+
+                            return res
+
+                else:
+                     program.semanticError.invalidIndexAccess(ID)
+
+
+
+            if isinstance(self.index_type, IndexPair):
                 return not(value)
         
             if isinstance(self.index_type, IndexRange) or isinstance(self.index_type, IndexColumn):
@@ -384,29 +417,32 @@ class BooleanOperation(Instruction):
             self.notOperator(symbol, program)
 
     def boolOperator(self, boolValue, symbol, program):
-        if isList(symbol.value):
-            for i in range(len(symbol.value)):
-                symbol.value[i] = boolValue
 
-        elif isMatrix(symbol.value):
+        if symbol != None:
+            if isList(symbol.value):
+                for i in range(len(symbol.value)):
+                    symbol.value[i] = boolValue
 
-            for i in range(len(symbol.value)):
-                for j in range(len(symbol.value[i])):
-                    symbol.value[i][j] = boolValue
+            elif isMatrix(symbol.value):
 
-        else:
-            program.semanticError.booleanOperatorError(self.ID)
+                for i in range(len(symbol.value)):
+                    for j in range(len(symbol.value[i])):
+                        symbol.value[i][j] = boolValue
+
+            else:
+                program.semanticError.booleanOperatorError(self.ID)
 
     def notOperator(self, symbol, program):
      
-        if isList(symbol.value):
-            for i in range(len(symbol.value)):
-                symbol.value[i] = not(symbol.value[i])
+        if symbol != None:
+            if isList(symbol.value):
+                for i in range(len(symbol.value)):
+                    symbol.value[i] = not(symbol.value[i])
 
-        elif isMatrix(symbol.value):
+            elif isMatrix(symbol.value):
 
-            for i in range(len(symbol.value)):
-                for j in range(len(symbol.value[i])):
-                    symbol.value[i][j] = not(symbol.value[i][j])
-        else:
-            program.semanticError.booleanOperatorError(self.ID)
+                for i in range(len(symbol.value)):
+                    for j in range(len(symbol.value[i])):
+                        symbol.value[i][j] = not(symbol.value[i][j])
+            else:
+                program.semanticError.booleanOperatorError(self.ID)
