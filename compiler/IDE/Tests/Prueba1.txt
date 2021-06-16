@@ -1,0 +1,121 @@
+Procedure Main(){
+    #Call letrero();
+    matriz =[[False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False]];
+    matriz2 =[[True,True,True,True,True,True,True,True],
+              [True,False,False,False,False,False,False,True],
+              [True,False,True,True,True,True,False,True],
+              [True,False,True,False,False,True,False,True],
+              [True,False,True,False,False,True,False,True],
+              [True,False,True,True,True,True,False,True],
+              [True,False,False,False,False,False,False,True],
+              [True,True,True,True,True,True,True,True]];
+     #PrintLedX("M",0,matriz);
+    #Call animacion2(matriz2);
+    #Call animacion(matriz);
+};
+Procedure animacion2(matriz){
+    filas = matriz.shapeF;
+    col = matriz.shapeC;
+    PrintLedX("M",0,matriz);
+    Delay(1,"Seg");
+    for r in 5{
+       for i in filas {
+           for j in col {
+               matriz[i,j].Neg;
+          };
+      };
+    PrintLedX("M",0,matriz);
+    Delay(1,"Seg");
+    };
+};
+Procedure animacion(matriz){
+    filas = matriz.shapeF;
+    col = matriz.shapeC;
+    for i in filas {
+        for j in col {
+            PrintLed(j,i,True);
+            Delay(1,"Seg");
+        };
+    };
+};
+Procedure letrero(){
+    matrizM = [[True,True,False,False,False,False,True,True],
+              [True,True,True,False,False,True,True,True],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,True,True,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True]];
+
+    matrizA = [[False,False,False,True,True,False,False,False],
+           [False,False,True,True,True,True,False,False],
+           [False,True,True,False,False,True,True,False],
+           [True,True,False,False,False,False,True,True],
+           [True,True,True,True,True,True,True,True],
+           [True,True,True,True,True,True,True,True],
+           [True,True,False,False,False,False,True,True],
+           [True,True,False,False,False,False,True,True]];
+
+    matrizT =    [[True,True,True,True,True,True,True,True],
+              [True,True,True,True,True,True,True,True],
+              [False,False,False,True,True,False,False,False],
+              [False,False,False,True,True,False,False,False],
+              [False,False,False,True,True,False,False,False],
+              [False,False,False,True,True,False,False,False],
+              [False,False,False,True,True,False,False,False],
+              [False,False,False,True,True,False,False,False]];
+    
+    matrizE =    [[True,True,True,True,True,True,True,True],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,False,False,False,False,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,False,False,False,False,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,True,True,True,True,True,True]];
+
+    matrizN =    [[True,True,False,False,False,False,True,True],
+              [True,True,True,False,False,False,True,True],
+              [True,True,True,True,False,False,True,True],
+              [True,True,True,True,True,False,True,True],
+              [True,True,False,True,True,True,True,True],
+              [True,True,False,False,True,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,False,False,False,False,True,True]];
+
+    matrizF =[[False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False]];
+
+
+    PrintLedX("M",0,matrizM);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizA);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizT);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizE);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizN);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizM);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizE);
+    Delay(2,"Seg");
+    PrintLedX("M",0,matrizF);
+    
+
+};
