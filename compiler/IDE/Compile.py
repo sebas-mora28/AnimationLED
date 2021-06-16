@@ -4,6 +4,8 @@ from Lexical.Lexer import *
 from Syntax.Syntax import * 
 from Semantic.SemanticAnalysis import *
 from Traductor import *
+from Comunicacion import *
+
 
 
 
@@ -23,6 +25,9 @@ def run(code):
                 
             else:
                 trad = Traductor(program.programOutput) #Hace la traduccion del codigo
+                abrir()
+                enviar(trad.Traducir())
+                cerrar()
                 print(trad.output)
                 print("\n output: "+ trad.Traducir()) # agregar la funcion de envio
                 return ["Archivo compilado con exito!!"]
@@ -30,12 +35,12 @@ def run(code):
 
         else:
             #for i in range(len(syntaxError.getErrors())):
-             #   print(syntaxError.getErrors()[i])
+            #    print(syntaxError.getErrors()[i])
             return syntaxError.getErrors()
 
     else:
         #for i in range(lexer.errors):
-            #    print(lexer.errors[i])
+        #        print(lexer.errors[i])
         return lexer.errors
 #Funcion que compila el programa pero no lo ejecuta    
 def compile(code):
