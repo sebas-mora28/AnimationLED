@@ -17,3 +17,22 @@ Procedure Main(){
 
 };
 
+
+Procedure Main(){	
+
+	matrix = [[True, True, True, True],[False, False, False, False]];
+
+
+	caca = 1;
+	
+	xd = True;
+	
+	Blink(xd,2, 3, "Seg", True);
+
+
+	
+
+
+
+};
+

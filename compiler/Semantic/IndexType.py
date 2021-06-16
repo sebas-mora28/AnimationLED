@@ -84,9 +84,9 @@ class IndexPair(Index):
 
             if self.indexValue1 != None and self.indexValue2 != None and symbol != None and value !=None  :
 
-                if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
+                if isMatrix(symbol.value):
 
-                    if isMatrix(symbol.value):
+                    if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
 
                         if value != None:
 
@@ -100,15 +100,12 @@ class IndexPair(Index):
 
                     else:
 
-                        program.semanticError.invalidIndexAccessMatrix(self.ID)
+                        program.semanticError.indexOutRange(self.ID)
 
                 else:
 
-                    program.semanticError.indexOutRange(self.ID)
+                    program.semanticError.invalidIndexAccessMatrix(self.ID)
 
-            else:
-
-                program.semanticError.symbolNotFound(self.ID)
 
 
 

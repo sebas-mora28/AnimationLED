@@ -101,6 +101,8 @@ class MatrixInsert(Instruction):
         self.value = value 
         self.insertionType = insertionType
         self.index = index
+
+
     def eval(self, program, symbolTable):
 
         symbol = searchSymbolByID(self.ID, program, symbolTable)
@@ -115,29 +117,58 @@ class MatrixInsert(Instruction):
 
                             if self.insertionType == 0:
 
-                                self.insertRow(symbol, program)
+                                if self.verifyValueRow():
+
+                                    self.insertRow(symbol, program)
+
+                                else:
+                                    program.semanticError.invalidRowValueFormatInsert(self.ID)
         
 
                             elif self.insertionType == 1:
+                                print(self.verifyValueColumns())
+                                if self.verifyValueColumns():
 
-                                self.insertColumn(symbol, program)
+                                    self.insertColumn(symbol, program)
+
+                                else:
+
+                                    program.semanticError.invalidColumnValueFormatInsert(self.ID)
+
+
 
                     else:
 
-                        program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
+                        program.semanticError. invalidValueInsertMatrix(self.ID)
 
                 else:
 
-                    program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
+                    program.semanticError.invalidInsertionTypeRange(self.ID)
             else:
                 
                 program.semanticError.insertMatrixProcedureError(self.ID)
 
 
 
+    def verifyValueColumns(self):
+            
+            if isMatrix(self.value):
+                for i in self.value:
+                    if len(i) != 1:
+                        return False
+                return True
+            return False
+
+
+    
+    def verifyValueRow(self):
+        return len(self.value) == 1 and isMatrix(self.value)
+
 
 
     def insertColumn(self, symbol, program):
+
+        
         if len(self.value) == len(symbol.value):
                 if self.index == None:
                     for i in range(len(symbol.value)):
@@ -149,7 +180,7 @@ class MatrixInsert(Instruction):
                     else:
                         program.semanticError.insertIndexOutRange(self.ID)
         else:
-            program.semanticError.invalidDimensions(self.ID)
+            program.semanticError.invalidColumnDimensions(self.ID)
 
 
         
@@ -165,7 +196,7 @@ class MatrixInsert(Instruction):
                     else:
                         program.semanticError.insertIndexOutRange(self.ID)
             else:
-                program.semanticError.invalidDimensions(self.ID)
+                program.semanticError.invalidRowDimensions(self.ID)
 
 
 
@@ -297,7 +328,6 @@ class BooleanOperationIndex(Instruction):
 
                 else:
                      program.semanticError.invalidIndexAccess(ID)
-
 
 
         elif isinstance(self.index_type, IndexPair):
