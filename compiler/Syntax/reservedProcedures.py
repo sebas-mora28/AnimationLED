@@ -115,7 +115,7 @@ def p_matrix_delete(p):
 
 
 def p_matrix_dimension(p):
-    '''matrix_dimensions : ID LISTSHAPE SEMICOLON'''
+    '''matrix_dimensions : ID LISTSHAPE'''
     print("MATRIX DIMENSIONS")
     print(p[2])
     p[0] = MatrixDimension(p[1], p[2])
