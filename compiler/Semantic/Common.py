@@ -102,6 +102,27 @@ def checkIndexValue(ID, indexValue, program, symbolTable):
 
 
 
+
+def checkValue(value, typeValue, program, symbolTable, error):
+    
+        if verifyType(value, typeValue):
+            return value
+
+        elif verifyType(value, str):
+
+            symbol = searchSymbolByID(value, program, symbolTable)
+
+            if symbol != None:
+
+                if verifyType(symbol.value, typeValue ):
+                    
+                    return symbol.value
+                else:
+                    error()
+
+        else:
+            error() 
+
                 
 def searchSymbolByID(ID, program, symbolTable):
 

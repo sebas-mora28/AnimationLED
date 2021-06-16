@@ -26,28 +26,49 @@ class Delay(Instruction):
                 return False
         else:
             return False
-    # Funcion que evalua que los parametros ingresados sean los solicitados
-    # program: programa que maneja la ejecucion del compilador 
-    # SymbolTable: tabla de simbolos
-    def eval(self,program, symbolTable):
-        if (verifyType(self.time, int) or self.verifySeg(program,symbolTable)):
-            if (self.timeRange == "Seg"):
-                self.delay(program)
-            elif self.timeRange == "Mil":
-                self.time = int(self.time) / 1000
-                self.delay(program)
-            elif self.timeRange == "Min":
-                self.time = int(self.time) *60
-                self.delay(program)
-            else:
-                program.semanticError.delayInvalidArgumentTimeRange()
+
+    def checkTimeValue(self, program, symbolTable):
+
+        if verifyType(self.time, int):
+            return self.time
+
+        elif verifyType(self.time, str):
+            symbol = searchSymbolByID(self.time, program, symbolTable)
+
+            if symbol != None:
+
+                if verifyType(symbol.value, int):
+                    return symbol.value
+        
         else:
             program.semanticError.delayInvalidArgumentTime()
 
+
+    # Funcion que evalua que los parametros ingresados sean los solicitados
+    # program: programa que maneja la ejecucion del compilador
+    # SymbolTable: tabla de simbolos
+    def eval(self,program, symbolTable):
+
+        evaluatedTime = self.checkTimeValue(program, symbolTable)
+
+        if evaluatedTime != None:
+
+            if (self.timeRange == "Seg"):
+                self.delay(program, evaluatedTime)
+            elif self.timeRange == "Mil":
+                evaluatedTime = evaluatedTime / 1000
+                self.delay(program)
+            elif self.timeRange == "Min":
+                evaluatedTime = evaluatedTime *60
+                self.delay(program, evaluatedTime)
+            else:
+                program.semanticError.delayInvalidArgumentTimeRange()
+      
+
     # Funcion encargada de la creacion y almacenamiento del output de la instruccion
     # program: programa que maneja la ejecucion del compilador 
-    def delay(self, program):
-       output= "Delay;"+ str(self.time) + ";" + self.timeRange
+    def delay(self, program, time):
+       output= "Delay;"+ str(time) + ";" + self.timeRange
        program.programOutput.append(output)
 
 
@@ -66,95 +87,64 @@ class Blink(Instruction):
         self.time = time
         self.timeRange = timeRange
         self.state = state
-    # Funcion que valida si lo enviado como parametros son variables
-    # program: programa
-    # symbolTable: tabla de simbolos
-    # Retorna un bool que valida la variable
-    def verifyVar(self,program, symbolTable,type):
-        if type == "c":# Verifica si en la tabla de simbolos existe una variable que sirva para col, según el ID dado
-            temp = searchSymbolByID(self.col,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, int):
-                    self.col = str(temp.value)
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        
-        elif type == "r":# Verifica si en la tabla de simbolos existe una variable que sirva para row, según el ID dado
-            temp = searchSymbolByID(self.row,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, int):
-                    self.row = str(temp.value)
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        
-        elif type == "t":# Verifica si en la tabla de simbolos existe una variable que sirva para time, según el ID dado
-            temp = searchSymbolByID(self.time,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, int):
-                    self.time = str(temp.value)
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        
-        else:# Verifica si en la tabla de simbolos existe una variable que sirva para state, según el ID dado
-            temp = searchSymbolByID(self.state,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, bool):
-                    self.state = temp.value
-                    return True
-                else:
-                    return False
-            else:
-                return False
+  
 
-        
+
+
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self, program, symbolTable):
-        if (verifyType(self.col, int) or self.verifyVar(program,symbolTable,"c")):
-            if (verifyType(self.row, int) or self.verifyVar(program,symbolTable,"r")):
-                if (verifyType(self.time, int)or self.verifyVar(program,symbolTable,"t")):
+
+        evaluatedCol = checkValue(self.col, int, program, symbolTable, program.semanticError.blinkInvalidArgumentCol)
+        print(evaluatedCol)
+        if evaluatedCol != None:
+
+            evaluatedRow = checkValue(self.row, int, program, symbolTable, program.semanticError.blinkInvalidArgumentRow)
+            if evaluatedRow != None:
+
+                evaluatedTime = checkValue(self.time, int,  program, symbolTable, program.semanticError.blinkInvalidArgumentTime)
+                if evaluatedTime != None:
+
                     if (self.timeRange == "Seg"):
-                        if (verifyType(self.state,bool) or self.verifyVar(program,symbolTable,"s")):
-                                self.blink(program)
-                        else:
-                            program.semanticError.blinkInvalidArgumentState()
+
+
+                        evaluatedState = checkValue(self.state, bool,  program, symbolTable,  program.semanticError.blinkInvalidArgumentState)
+                        if evaluatedState != None:
+
+                                self.blink(program, evaluatedCol, evaluatedRow, evaluatedTime, self.timeRange, evaluatedState)
+
+
                     elif self.timeRange == "Mil":
-                        self.time = self.time / 1000
-                        if (verifyType(self.state,bool)):
-                                self.blink(program)
-                        else:
-                            program.semanticError.blinkInvalidArgumentState()
+
+                        evaluatedTime = evaluatedTime / 1000
+                        evaluatedState = checkValue(self.state, bool,  program, symbolTable,  program.semanticError.blinkInvalidArgumentState)
+                        if evaluatedState != None:
+
+                                self.blink(program, evaluatedCol, evaluatedRow, evaluatedTime, self.timeRange, evaluatedState)
+
+
                     elif self.timeRange == "Min":
-                        self.time = self.time *60
-                        if (verifyType(self.state,bool)):
-                                self.blink(program)
-                        else:
-                            program.semanticError.blinkInvalidArgumentState()
+
+                        evaluatedTime = evaluatedTime *60
+                        evaluatedState = checkValue(self.state, bool,  program, symbolTable,  program.semanticError.blinkInvalidArgumentState)
+                        if evaluatedState != None:
+
+                                self.blink(program, evaluatedCol, evaluatedRow, evaluatedTime, self.timeRange, evaluatedState)
+
                     else:
+
                         program.semanticError.blinkInvalidArgumentTimeRange() 
-                else:
-                    program.semanticError.blinkInvalidArgumentTime()
-            else:
-                program.semanticError.blinkInvalidArgumentRow() 
-        else:
-            program.semanticError.blinkInvalidArgumentCol()
-        
+
         
     # Funcion que crea y almacena el output de la instruccion blink 
     # program: programa que maneja la ejecucion del compilador 
-    def blink(self, program):
-        output = "Blink;"+str(self.col) +";"+ str(self.row) +";" +str(self.time)+";" + self.timeRange +";" +str(int(self.state))
+    def blink(self, program, col, row, time, timeRange, state):
+        output = "Blink;"+str(col) +";"+ str(row) +";" +str(time)+";" + timeRange +";" +str(int(state))
         program.programOutput.append(output)
+
+
+
 
 
 
@@ -168,61 +158,30 @@ class PrintLed(Instruction):
         self.col = col
         self.row = row
         self.value = value
-    # Funcion que valida si lo enviado como parametros son variables
-    # program: programa
-    # symbolTable: tabla de simbolos
-    # Retorna un bool que valida la variable
-    def verifyVar(self,program, symbolTable,type):
-        if type == "c": # Verifica si en la tabla de simbolos existe una variable que sirva para col, según el ID dado
-            temp = searchSymbolByID(self.col,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, int):
-                    self.col = str(temp.value)
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        
-        elif type == "r":# Verifica si en la tabla de simbolos existe una variable que sirva para row, según el ID dado
-            temp = searchSymbolByID(self.row,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, int):
-                    self.row = str(temp.value)
-                    return True
-                else:
-                    return False
-            else:
-                return False
-        else:# Verifica si en la tabla de simbolos existe una variable que sirva para value, según el ID dado
-            temp = searchSymbolByID(self.value,program,symbolTable)
-            if temp != None:
-                if verifyType(temp.value, bool):
-                    self.value = temp.value
-                    return True
-                else:
-                    return False
-            else:
-                return False
+   
+   
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self,program, symbolTable):
-        if (verifyType(self.col, int) or self.verifyVar(program,symbolTable,"c")):
-            if (verifyType(self.row, int)or self.verifyVar(program,symbolTable,"r")):
-                if(verifyType(self.value, bool)or self.verifyVar(program,symbolTable,"s")):
-                    self.printLed(program)
-                else:
-                    program.semanticError.printLedInvalidArgumentValue()
-            else:
-                program.semanticError.printLedInvalidArgumentRow()
-        
-        else:
-            program.semanticError.printLedInvalidArgumentCol()
+
+        evaluatedCol = checkValue(self.col, int,  program, symbolTable,  program.semanticError.printLedInvalidArgumentCol)
+        if evaluatedCol != None:
+
+            evaluatedRow = checkValue(self.row, int,  program, symbolTable,  program.semanticError.printLedInvalidArgumentRow)
+            if evaluatedRow != None:
+
+                evaluatedValue = checkValue(self.value, bool,  program, symbolTable, program.semanticError.printLedInvalidArgumentValue)
+                if evaluatedValue != None:
+                    
+                    self.printLed(program, evaluatedCol, evaluatedRow, evaluatedValue)
+             
+
+
     # Funcion que crea y almacena el output de la instruccion PrintLed 
     # program: programa que maneja la ejecucion del compilador 
-    def printLed(self, program):
-        output = "PrintLed;" + str(self.col) + ";" + str(self.row) + ";" + str(int(self.value))
+    def printLed(self, program, col , row, value):
+        output = "PrintLed;" + str(col) + ";" + str(row) + ";" + str(int(value))
         program.programOutput.append(output)
 
 
@@ -233,65 +192,85 @@ class PrintLedX(Instruction):
     # objectType: string con el tipo de objeto a enviar (M,C,F)
     # index: int del numero de columna, fila o en el caso de matriz 0
     # list: lista o matriz con los valores deseados
-    def __init__(self,objectType, index, list):
+    def __init__(self,objectType, index, list_):
         self.objectType = objectType
         self.index = index
-        self.list = list
+        self.list = list_
     
-    def verifyIndex(self,program, symbolTable):
-        temp = searchSymbolByID(self.index,program,symbolTable)
-        if temp != None:
-            if verifyType(temp.value, int):
-                self.index = temp.value
-                return True
-            else:
-                return False
-        else:
-            return False
     # Funcion que evalua que los parametros ingresados sean los solicitados
     # program: programa que maneja la ejecucion del compilador 
     # SymbolTable: tabla de simbolos
     def eval(self,program, symbolTable):
+
+
         if(self.objectType == "F" or self.objectType == "C"):
-            if (verifyType(self.index, int)) or self.verifyIndex(program,symbolTable):
+
+            evaluatedIndex = checkValue(self.index, int,  program, symbolTable,  program.semanticError.printLedXInvalidArgumentIndex)
+            if evaluatedIndex != None:
+
+
                 if (isList(self.list)and len(self.list)<= 8):
-                    self.printLedX(program,self.list)
+
+                        self.printLedX(program,self.list)
+
+
                 elif verifyType(self.list, str):
+
                     temp = searchSymbolByID(self.list,program,symbolTable)
+
                     if temp != None:
+
                         if isList(temp.value) and len(temp.value)<= 8:
-                            self.printLedX(program, temp.value)
+
+                            self.printLedX(program, temp.value, evaluatedIndex)
+
                         else:
+
                             program.semanticError.printLedXInvalidArgumentList()
+
                 else:
-                       program.semanticError.printLedXInvalidArgumentList() 
-            else:
-                program.semanticError.printLedXInvalidArgumentIndex()
+
+                       program.semanticError.printLedXInvalidArgumentList()
+
+
         elif self.objectType =="M":
-            if (verifyType(self.index, int) or self.verifyIndex(program,symbolTable)):
+
+
+            evaluatedIndex = checkValue(self.index, int,  program, symbolTable,  program.semanticError.printLedXInvalidArgumentIndex)
+            if evaluatedIndex != None:
+
                 if (isMatrix(self.list)and len(self.list) <= 8 and len(self.list[0]) <= 8):
+
                     self.printLedX(program, self.list)
+
                 elif verifyType(self.list, str):
+
                     temp = searchSymbolByID(self.list,program,symbolTable)
+
                     if temp !=None:
+
                         if isMatrix(temp.value) and len(temp.value) <= 8 and len(temp.value[0]) <= 8:
-                            self.printLedX(program, temp.value)
+
+                            self.printLedX(program, temp.value, evaluatedIndex)
+
                         else:
+
                             program.semanticError.printLedXInvalidArgumentMatrix()
+
                 else:
+
                     program.semanticError.printLedXInvalidArgumentMatrix()
                 
-            else:
-                program.semanticError.printLedXInvalidArgumentIndex()
 
         else:
+
              program.semanticError.printLedXInvalidArgumentObjectType()
             
     # Funcion que crea y almacena el output de la instruccion PrintLedX
     # program: programa que maneja la ejecucion del compilador 
-    def printLedX(self, program, value):
+    def printLedX(self, program, value, index):
         value = fillList(value)
-        output = "PrintLedX;" + str(self.objectType) + ";" + str(self.index) +";"+ str(value)
+        output = "PrintLedX;" + str(self.objectType) + ";" + str(index) +";"+ str(value)
         program.programOutput.append(output)
     
 

@@ -46,6 +46,9 @@ class SemanticError:
     def invalidArithmeticOperationValue(self):
         self.errors.append(f"Semantic error: Invalid value in arithmetic operation, value is not a integer")
 
+
+
+
     # Variables and procedures errors
     def symbolNotFound(self, ID):
         self.errors.append(f"Semantic error: Symbol {ID} not found")
@@ -101,7 +104,7 @@ class SemanticError:
         self.errors.append(f"Semantic error: insert procedure only applicable in list, {ID} is not a list")
 
     def insertIndexOutRange(self, ID):
-        self.errors.append(f"Semantic error: Index out of range in {ID} in insert function")
+        self.errors.append(f"Semantic error: Index out of range in insert function for {ID} symbol")
 
 
     #delete 
@@ -110,7 +113,7 @@ class SemanticError:
         self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
 
     def deleteIndexOutRange(self, ID):
-        self.errors.append(f"Semantic error: Index out of range in {ID} in delete function")
+        self.errors.append(f"Semantic error: Index out of range in delete function for {ID} symbol")
 
     def deleteListProcedureError(self, ID):
         self.errors.append(f"Semantic error: delete procedure only applicable in list, {ID} is not a list")
@@ -126,6 +129,19 @@ class SemanticError:
     def invalidValueInsertMatrix(self, ID):
         self.errors.append(f"Semantic error: Invalid value argument in insert procedure for {ID}, must be a list")
 
+    def invalidColumnDimensions(self, ID):
+        self.errors.append(f"Semantic error: Invalid dimensions, trying to insert a list with diferent number of columns in {ID} symbol")
+
+    def invalidRowDimensions(self, ID):
+        self.errors.append(f"Semantic error: Invalid dimensions, trying to insert a list with diferent numbers of rows in {ID} symbol")
+
+    def invalidColumnValueFormatInsert(self, ID):
+        self.errors.append(f"Semantic error: Invalid column value format in insert function for {ID} symbol, must be [ [ ..] [..] [..] ]")
+
+    def invalidRowValueFormatInsert(self, ID):
+        self.errors.append(f"Semantic error: Invalid row value format in insert function for {ID} symbol, must be [ [ ... ] ]")
+        
+
 
     # Delete
     def deleteMatrixProcedureError(self, ID):
@@ -139,7 +155,10 @@ class SemanticError:
 
     
     def invalidInsertionTypeRange(self, ID):
-        self.errors.append(f"Semantic error: Insertion type must be 0 or 1 in {ID} ")
+        self.errors.append(f"Semantic error: Insertion type must be 0 or 1")
+
+
+    
 
 
     
@@ -147,7 +166,7 @@ class SemanticError:
 
 
     def invalidDimensions(self, ID):
-        self.errors.append(f"Semantic error: Trying to insert a list with diferent dimentions in {ID}")
+        self.errors.append(f"Semantic error: Trying to insert a list with diferent dimentions in {ID} symbol")
 
     def lenInvalidArgument(self,ID):
         self.errors.append(f"Semantic error: Argument {ID} is not a list or matrix")
