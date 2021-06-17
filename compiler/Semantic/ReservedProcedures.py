@@ -275,7 +275,7 @@ class PrintLedX(Instruction):
     
 
 
-class Type:
+class Type(Instruction):
 
     def __init__(self, value):
         self.value = value
@@ -283,16 +283,56 @@ class Type:
 
     def eval(self, program, symbolTable):
 
-        if verifyType(self.value, str):
-            symbol = searchSymbolByID(self.value, program, symbolTable)
-            if symbol != None and (verifyType(symbol.value, int) or verifyType(symbol.value, bool)):
-                return type(symbol)
-        
-        elif verifyType(self.value, bool):
-            return bool
+        tempValue = self.value
 
-        elif verifyType(self.value, int):
-            return int
+        if verifyType(tempValue, str):
+            symbol = searchSymbolByID(tempValue, program, symbolTable)
+            if symbol != None:
+                tempValue = symbol.value
+                
+        
+        if verifyType(tempValue, list):
+            return "type : list"
+
+        if verifyType(tempValue, bool):
+            return "type : bool"
+
+        if verifyType(tempValue, int):
+            return "type : int"
         
         else:
             program.semanticError.incompatibleError(self.value)
+
+
+
+
+
+class Print(Instruction):
+
+    def __init__(self, print_argument):
+        self.print_argument = print_argument
+
+
+    
+    def eval(self, program, symbolTable):
+
+        
+        if verifyType(self.print_argument, int) or verifyType(self.print_argument, bool):
+
+            program.prints.append(f"{str(self.print_argument)}")
+
+        if verifyType(self.print_argument, Type) or verifyType(self.print_argument, Len):
+
+            value = self.print_argument.eval(program, symbolTable)
+
+            if value != None:
+                program.prints.append(f"{str(value)}")
+
+
+        if verifyType(self.print_argument, str):
+            symbol = searchSymbolByID(self.print_argument, program, symbolTable)
+
+            if symbol != None:
+
+                program.prints.append(f"{str(symbol.value)}")
+

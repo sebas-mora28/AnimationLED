@@ -54,10 +54,10 @@ def p_procedure_value(p):
 
 #list functions
 def p_type(p):
-    '''type : TYPE LPAREN ID RPAREN SEMICOLON
-            | TYPE LPAREN BOOLEAN RPAREN SEMICOLON
-            | TYPE LPAREN INTEGER RPAREN SEMICOLON 
-            | TYPE LPAREN list RPAREN SEMICOLON'''
+    '''type : TYPE LPAREN ID RPAREN 
+            | TYPE LPAREN BOOLEAN RPAREN 
+            | TYPE LPAREN INTEGER RPAREN  
+            | TYPE LPAREN list RPAREN'''
 
     p[0] = Type(p[3])
 
@@ -71,8 +71,8 @@ def p_len(p):
 
 #range
 def p_range(p):
-    'range : RANGE LPAREN INTEGER COMMA BOOLEAN RPAREN'
-    p[0] = Range(p[3], p[5])
+    'range : LIST LPAREN RANGE LPAREN INTEGER COMMA BOOLEAN RPAREN RPAREN'
+    p[0] = Range(p[5], p[7])
 
 
 #list insert 
@@ -134,3 +134,20 @@ def p_list_boolean_operation_index(p):
     print("LIST BOOLEAN OPERATION INDEX")
     p[0] = BooleanOperationIndex(p[1], p[2])
 
+
+
+#Print 
+def p_print(p):
+    '''print : PRINT LPAREN print_argument RPAREN SEMICOLON'''
+    p[0] = Print(p[3])
+
+
+def p_print_argument(p):
+    '''print_argument : type 
+                      | len 
+                      | ID
+                      | BOOLEAN 
+                      | INTEGER'''
+    p[0] = p[1]
+
+    pass

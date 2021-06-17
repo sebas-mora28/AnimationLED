@@ -32,6 +32,8 @@ class Lexer(object):
         'PrintLedX':'PRINTLEDX',
         'Procedure': 'PROCEDURE',
         'type':'TYPE',
+        'list':'LIST',
+        'print':'PRINT',
     }
 
 
@@ -95,6 +97,7 @@ class Lexer(object):
     t_LCBRACKET = r'\{'
     t_RCBRACKET = r'\}'
     t_SEMICOLON = r'\;'
+
     t_COMMA = r'\,'
     t_COLON = r'\:'
     t_ASSIGN =  r'\='

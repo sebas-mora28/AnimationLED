@@ -30,7 +30,8 @@ def run(code):
                 cerrar()
                 print(trad.output)
                 print("\n output: "+ trad.Traducir()) # agregar la funcion de envio
-                return ["Archivo compilado con exito!!"]
+                program.getPrints().insert(0, "Archivo compilado con exito !!")
+                return program.getPrints()
                 #pass
 
         else:
@@ -55,7 +56,8 @@ def compile(code):
             if program.getErrors() != []:
                 return program.getErrors()
             else:
-                return ["Archivo compilado con exito!!"]
+                program.getPrints().insert(0, "Archivo compilado con exito !!")
+                return program.getPrints()
 
         else:
             return syntaxError.getErrors()
