@@ -38,13 +38,13 @@ class SemanticError:
         self.errors.append(f"Semantic error: Invalid comparator for booleans")
 
     def IncompatibleIteratorAndValuesInIf(self):
-        self.errors.append(f"Semantic error: Incompatible iterator and value in if statement")
+        self.errors.append(f"Semantic error: Incompatible iterator and value type in if statement")
   
 
     #Arithmetic operation errors
 
     def invalidArithmeticOperationValue(self):
-        self.errors.append(f"Semantic error: Invalid value in arithmetic operation, value is not a integer")
+        self.errors.append(f"Semantic error: Invalid value in arithmetic operation, value is not a int")
 
 
 
@@ -88,14 +88,14 @@ class SemanticError:
         self.errors.append(f"Semantic error: Index out of range in {ID}")
 
     def invalidIndexArguments(self, ID):
-        self.errors.append(f"Semantic error: Invalid index value in {ID}")
+        self.errors.append(f"Semantic error: Invalid index value in {ID}, must be a int")
 
 
     #Insert and delete list
 
         #Insert
     def invalidIndexValueInsert(self, ID):
-        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a integer")
+        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a int")
 
     def invalidValueInsertList(self, ID):
         self.errors.append(f"Semantic error: Invalid value argument insert procedure for {ID}, must be a boolean")
@@ -110,7 +110,7 @@ class SemanticError:
     #delete 
 
     def invalidIndexValueDelete(self, ID):
-        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
+        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a int")
 
     def deleteIndexOutRange(self, ID):
         self.errors.append(f"Semantic error: Index out of range in delete function for {ID} symbol")
@@ -124,7 +124,7 @@ class SemanticError:
 
     #insert 
     def invalidInsertionTypeValueInsertMatrix(self, ID):
-        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a integer")
+        self.errors.append(f"Semantic error: Invalid index argument in insert procedure for {ID}, must be a int")
 
     def invalidValueInsertMatrix(self, ID):
         self.errors.append(f"Semantic error: Invalid value argument in insert procedure for {ID}, must be a list")
@@ -150,10 +150,10 @@ class SemanticError:
         self.errors.append(f"Semantic error: insert procedure only applicable in matrix, {ID} is not a matrix")
 
     def invalidInsertionTypeValueDeleteMatrix(self, ID):
-        self.errors.append(f"Semantic error: Invalid insertion type argument in delete procedure for {ID}, must be a integer")
+        self.errors.append(f"Semantic error: Invalid insertion type argument in delete procedure for {ID}, must be a int")
 
     def invalidIndexDeleteMatrix(self, ID):
-        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a integer")
+        self.errors.append(f"Semantic error: Invalid index argument in delete procedure for {ID}, must be a int")
 
     def invalidDeleteTypeRange(self, ID):
         self.errors.append(f"Semantic error: elimination type must be 0 or 1") 
@@ -164,7 +164,11 @@ class SemanticError:
 
 
     def invalidDimensions(self, ID):
-        self.errors.append(f"Semantic error: Trying to insert a list with diferent dimentions in {ID} symbol")
+        self.errors.append(f"Semantic error: Trying to insert a list with diferent dimensions in {ID} symbol")
+
+    def invalidDimensionAssign(self, ID):
+        self.errors.append(f"Semantic error: Trying to assign a list with diferent dimensions in {ID} symbol")
+
 
     def lenInvalidArgument(self,ID):
         self.errors.append(f"Semantic error: Argument {ID} is not a list or matrix")

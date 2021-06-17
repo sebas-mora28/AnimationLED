@@ -147,7 +147,8 @@ def p_print_argument(p):
                       | len 
                       | ID
                       | BOOLEAN 
-                      | INTEGER'''
+                      | INTEGER
+                      | index_access'''
     p[0] = p[1]
 
     pass

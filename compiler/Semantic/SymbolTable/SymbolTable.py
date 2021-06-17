@@ -47,7 +47,9 @@ class SymbolTable:
 
 
     def addSymbol(self, ID, value, symbol_type, scope):
-        new_symbol = SymbolVariable(ID, value, symbol_type, scope)
+
+        temp = copy.deepcopy(value)
+        new_symbol = SymbolVariable(ID, temp, symbol_type, scope)
         self.variableTable[ID] = new_symbol
 
     def getSymbolByID(self , ID):

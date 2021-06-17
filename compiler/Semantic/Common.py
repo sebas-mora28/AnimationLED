@@ -23,6 +23,8 @@ def verifyBoundariesMatrix(index1, index2, matrixSymbol):
 def verifyType(value1, instance):
     return type(value1) == instance
 
+
+
 def getColumn(index, matrix):
     
     res = []

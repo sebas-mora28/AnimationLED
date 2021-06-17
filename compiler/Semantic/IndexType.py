@@ -209,7 +209,6 @@ class IndexColumn(Index):
                 if self.columnIndex != None:
 
                     if verifyListBoundariesOne(self.columnIndex, symbol.value[0]):
-                            print("Entraaa")
                             return getColumn(self.columnIndex, symbol.value)
 
                     else:
@@ -237,7 +236,13 @@ class IndexColumn(Index):
 
                             if verifyType(value, list):
 
-                                symbol.value = setColumn(self.columnIndex, symbol.value, value)
+                                if len(value) == len(symbol.value):
+
+                                    symbol.value = setColumn(self.columnIndex, symbol.value, value)
+
+                                else:
+
+                                    program.semanticError.invalidDimensionAssign(self.ID)
 
                             else:
 
@@ -277,6 +282,7 @@ class IndexOne(Index):
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
 
+            
                             return symbol.value[self.indexValue]
                             
                         else:
@@ -315,11 +321,15 @@ class IndexOne(Index):
                     elif isMatrix(symbol.value):
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
-                            print(value)
-
+    
                             if verifyType(value, list):
 
-                                symbol.value[self.indexValue] = value
+                                if len(value) == len(symbol.value[self.indexValue]):
+
+                                        symbol.value[self.indexValue] = value
+
+                                else:
+                                    program.semanticError.invalidDimensionAssign(self.ID)
 
                             else:
                                 program.semanticError.incompatibleType(self.ID)

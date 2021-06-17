@@ -225,7 +225,7 @@ class MatrixDelete(Instruction):
                         self.deletColumn(symbol, program)
 
                     else:
-                        program.semanticError.invalidDeleteTypeRange()
+                        program.semanticError.invalidDeleteTypeRange(self.ID)
                 else:
                     program.semanticError.insertMatrixProcedureInvalidArguments(self.ID)
             else:

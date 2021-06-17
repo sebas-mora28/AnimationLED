@@ -3,6 +3,7 @@ import sys
 sys.path.append("..")
 from Semantic.SemanticError import*
 from Semantic.Common import*
+from Semantic.VariableAssignment import *
 
 # Clase encargada de las instrucciones Delay
 class Delay(Instruction):
@@ -309,28 +310,33 @@ class Type(Instruction):
 
 class Print(Instruction):
 
-    def __init__(self, print_argument):
-        self.print_argument = print_argument
+    def __init__(self, printArgument):
+        self.printArgument = printArgument
 
 
     
     def eval(self, program, symbolTable):
 
         
-        if verifyType(self.print_argument, int) or verifyType(self.print_argument, bool):
+        if verifyType(self.printArgument, int) or verifyType(self.printArgument, bool):
 
-            program.prints.append(f"{str(self.print_argument)}")
+            program.prints.append(f"{str(self.printArgument)}")
 
-        if verifyType(self.print_argument, Type) or verifyType(self.print_argument, Len):
+        if verifyType(self.printArgument, Type) or verifyType(self.printArgument, Len):
 
-            value = self.print_argument.eval(program, symbolTable)
+            value = self.printArgument.eval(program, symbolTable)
 
             if value != None:
                 program.prints.append(f"{str(value)}")
 
+        if verifyType(self.printArgument, IndexAccess):
+            value = self.printArgument.getValues(program, symbolTable)
 
-        if verifyType(self.print_argument, str):
-            symbol = searchSymbolByID(self.print_argument, program, symbolTable)
+            if value != None:
+                program.prints.append(f"{str(value)}")
+
+        if verifyType(self.printArgument, str):
+            symbol = searchSymbolByID(self.printArgument, program, symbolTable)
 
             if symbol != None:
 
