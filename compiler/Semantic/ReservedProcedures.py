@@ -58,7 +58,7 @@ class Delay(Instruction):
                 self.delay(program, evaluatedTime)
             elif self.timeRange == "Mil":
                 evaluatedTime = evaluatedTime / 1000
-                self.delay(program)
+                self.delay(program, evaluatedTime)
             elif self.timeRange == "Min":
                 evaluatedTime = evaluatedTime *60
                 self.delay(program, evaluatedTime)
