@@ -311,6 +311,7 @@ void apagarPunto(int fila, int col){
 //y al final apaga la fila y pasa a la siguiente
 //Entrada:NONE
 //Salidas: NONE
+//Función basada en el codigo de https://www.arduino.cc/en/Tutorial/BuiltInExamples/RowColumnScanning#code
 void refreshScreen() {
   // iterate over the rows :
   for (int thisRow = 0; thisRow < 8; thisRow++) {
