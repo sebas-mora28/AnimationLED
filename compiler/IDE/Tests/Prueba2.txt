@@ -16,9 +16,9 @@ Procedure Main(){
               [True,False,True,True,True,True,False,True],
               [True,False,False,False,False,False,False,True],
               [True,True,True,True,True,True,True,True]];
-     #PrintLedX("M",0,matriz);
-    #Call animacion2(matriz2);
-    #Call animacion(matriz);
+
+     lista = [True,True,True,True,True,True,True,True];
+     PrintLedX("F",2,lista);
 };
 Procedure animacion2(matriz){
     filas = matriz.shapeF;
@@ -46,14 +46,14 @@ Procedure animacion(matriz){
     };
 };
 Procedure letrero(){
-    matrizH = [[True,True,False,False,False,False,True,True],
-           [True,True,False,False,False,False,True,True],
-           [True,True,False,False,False,False,True,True],
-           [True,True,True,True,True,True,True,True],
-           [True,True,True,True,True,True,True,True],
-           [True,True,False,False,False,False,True,True],
-           [True,True,False,False,False,False,True,True],
-           [True,True,False,False,False,False,True,True]];
+    matrizM = [[True,True,False,False,False,False,True,True],
+              [True,True,True,False,False,True,True,True],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,True,True,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True],
+              [True,True,False,False,False,False,True,True]];
 
     matrizA = [[False,False,False,True,True,False,False,False],
            [False,False,True,True,True,True,False,False],
@@ -73,14 +73,23 @@ Procedure letrero(){
            [False,True,True,True,True,True,True,False],
            [False,False,True,True,True,True,False,False]];
     
-    matrizL = [[True,True,False,False,False,False,False,False],
-           [True,True,False,False,False,False,False,False],
-           [True,True,False,False,False,False,False,False],
-           [True,True,False,False,False,False,False,False],
-           [True,True,False,False,False,False,False,False],
-           [True,True,False,False,False,False,False,False],
-           [True,True,True,True,True,True,True,True],
-           [True,True,True,True,True,True,True,True]];
+    matrizR     =[[True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,False,False],
+              [True,True,False,False,True,True,False,False],
+              [True,True,False,False,False,True,True,False]];
+
+    matrizC = [[False,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,True,False,False,False,True,True],
+              [True,True,False,False,False,False,False,False],
+              [True,True,False,False,False,False,False,False],
+              [True,True,True,False,False,False,True,True],
+              [True,True,True,True,True,True,True,True],
+              [False,True,True,True,True,True,True,False]];
 
     matrizSon1 =[[False,False,False,False,False,False,False,False],
               [False,True,True,False,False,True,True,False],
@@ -110,16 +119,18 @@ Procedure letrero(){
               [False,False,False,False,False,False,False,False]];
 
 
-    PrintLedX("M",0,matrizH);
-    Delay(1,"Seg");
-    PrintLedX("M",0,matrizO);
-    Delay(1,"Seg");
-    PrintLedX("M",0,matrizL);
+    PrintLedX("M",0,matrizM);
     Delay(1,"Seg");
     PrintLedX("M",0,matrizA);
     Delay(1,"Seg");
-    PrintLedX("M",0,matrizSon1);
+    PrintLedX("M",0,matrizR);
     Delay(1,"Seg");
+    PrintLedX("M",0,matrizC);
+    Delay(1,"Seg");
+    PrintLedX("M",0,matrizO);
+    Delay(1,"Seg");
+    PrintLedX("M",0,matrizSon1);
+    Delay(500,"Mil");
     PrintLedX("M",0,matrizSon2);
     Delay(1,"Seg");
     #PrintLedX("M",0,matrizE);

@@ -96,6 +96,42 @@ matrizT =    [[True,True,True,True,True,True,True,True],
               [False,False,False,True,True,False,False,False],
               [False,False,False,True,True,False,False,False]]
 
+matrizSonrisa1 =[[False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,True,True,False,False,True,True,False],
+              [False,True,True,False,False,True,True,False],
+              [True,False,False,False,False,False,False,True],
+              [True,True,False,False,False,False,True,True],
+              [False,True,True,True,True,True,True,False],
+              [False,False,True,True,True,True,False,False]]
+
+matrizR     =[[True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,False,False],
+              [True,True,False,False,True,True,False,False],
+              [True,True,False,False,False,True,True,False]]
+
+matrizC =    [[False,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,True,False,False,False,True,True],
+              [True,True,False,False,False,False,False,False],
+              [True,True,False,False,False,False,False,False],
+              [True,True,True,False,False,False,True,True],
+              [True,True,True,True,True,True,True,True],
+              [False,True,True,True,True,True,True,False]]
+
+matrizP     =[[True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,False,False,False,True,True,True],
+              [True,True,True,True,True,True,True,False],
+              [True,True,True,True,True,True,True,False],
+              [True,True,False,False,False,False,False,False],
+              [True,True,False,False,False,False,False,False]]
+
 matrizFalse =[[False,False,False,False,False,False,False,False],
               [False,False,False,False,False,False,False,False],
               [False,False,False,False,False,False,False,False],
