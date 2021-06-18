@@ -106,10 +106,10 @@ class Ui_MainWindow(QMainWindow):
         try:
             archivo = QFileDialog.getOpenFileName(self,'Cargar Archivo','c:\\','Text files (*.txt)')
             self.archivo =archivo[0]
-            self.plainTextEdit.clear()
             if archivo[0]:
                 with open(archivo[0], "rt") as buff:
                     texto = buff.read()
+                    self.plainTextEdit.clear()
                     self.plainTextEdit.insertPlainText(texto)
         except:
             pass

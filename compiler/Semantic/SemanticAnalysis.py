@@ -14,10 +14,14 @@ class Program:
         self.semanticError = SemanticError()
         self.programOutput = []
         self.symbolTable = SymbolTable()
+        self.prints = []
 
 
     def getErrors(self):
         return self.semanticError.errors
+
+    def getPrints(self):
+        return self.prints
 
     def isEmpty(self):
         return self.expressions_set[0] == None

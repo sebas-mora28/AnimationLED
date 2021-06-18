@@ -84,9 +84,9 @@ class IndexPair(Index):
 
             if self.indexValue1 != None and self.indexValue2 != None and symbol != None and value !=None  :
 
-                if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
+                if isMatrix(symbol.value):
 
-                    if isMatrix(symbol.value):
+                    if verifyBoundariesMatrix(self.indexValue1, self.indexValue2, symbol.value):
 
                         if value != None:
 
@@ -100,15 +100,12 @@ class IndexPair(Index):
 
                     else:
 
-                        program.semanticError.invalidIndexAccessMatrix(self.ID)
+                        program.semanticError.indexOutRange(self.ID)
 
                 else:
 
-                    program.semanticError.indexOutRange(self.ID)
+                    program.semanticError.invalidIndexAccessMatrix(self.ID)
 
-            else:
-
-                program.semanticError.symbolNotFound(self.ID)
 
 
 
@@ -154,7 +151,6 @@ class IndexRange(Index):
 
                 program.semanticError.invalidIndexAccessList(self.ID)
      
-
 
     def assignValue(self, value, program, symbolTable):
 
@@ -213,7 +209,6 @@ class IndexColumn(Index):
                 if self.columnIndex != None:
 
                     if verifyListBoundariesOne(self.columnIndex, symbol.value[0]):
-
                             return getColumn(self.columnIndex, symbol.value)
 
                     else:
@@ -241,7 +236,13 @@ class IndexColumn(Index):
 
                             if verifyType(value, list):
 
-                                symbol.value = setColumn(self.columnIndex, symbol.value, value)
+                                if len(value) == len(symbol.value):
+
+                                    symbol.value = setColumn(self.columnIndex, symbol.value, value)
+
+                                else:
+
+                                    program.semanticError.invalidDimensionAssign(self.ID)
 
                             else:
 
@@ -269,8 +270,6 @@ class IndexOne(Index):
 
 
         def getValuesFromIndex(self,  program, symbolTable):
-
-            self.checkIndexValues(program, symbolTable)
             symbol = searchSymbolByID(self.ID, program, symbolTable)
 
 
@@ -278,10 +277,12 @@ class IndexOne(Index):
 
                 if isList(symbol.value) or isMatrix(symbol.value):
 
+                    self.checkIndexValues(program, symbolTable)
                     if self.indexValue != None:
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
 
+            
                             return symbol.value[self.indexValue]
                             
                         else:
@@ -299,11 +300,10 @@ class IndexOne(Index):
 
             symbol = searchSymbolByID(self.ID, program, symbolTable)
             self.checkIndexValues(program, symbolTable)
-        
+    
             if self.indexValue != None and symbol != None and value != None:
                 
                     if isList(symbol.value):
-
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
 
                             if verifyType(value, bool):
@@ -321,21 +321,24 @@ class IndexOne(Index):
                     elif isMatrix(symbol.value):
 
                         if verifyListBoundariesOne(self.indexValue, symbol.value):
-
+    
                             if verifyType(value, list):
 
-                                symbol.value[self.indexValue] = value
+                                if len(value) == len(symbol.value[self.indexValue]):
+
+                                        symbol.value[self.indexValue] = value
+
+                                else:
+                                    program.semanticError.invalidDimensionAssign(self.ID)
 
                             else:
-
                                 program.semanticError.incompatibleType(self.ID)
 
                         else:
 
                             program.semanticError.indexOutRange(self.ID)
 
-                    else:
-                        
+                    else: 
                         program.semanticError.invalidIndexAccess(self.ID)
                
             

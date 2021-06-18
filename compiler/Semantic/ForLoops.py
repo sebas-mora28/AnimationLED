@@ -73,17 +73,24 @@ class ForLoop(Instruction):
 
     def startLoop(self, program, symbolTable):
         self.localSymbolTable.print()
+        len_error = len(program.semanticError.getErrors())
 
         if not symbolTable == program.symbolTable:
             self.localSymbolTable.attachSymboltable(symbolTable)
 
         for i in range(0, self.end,self.step):
             self.localSymbolTable.changeSymbolValue(self.changingValue, i)
-            for expression in self.expressions:
-                print("----------------------")
-                self.localSymbolTable.print()
-                print("-----------------------")
-                expression.eval(program, self.localSymbolTable)
-            i += self.step
+            
+            if len_error == len(program.semanticError.getErrors()):
+                for expression in self.expressions:
+                    print("----------------------")
+                    self.localSymbolTable.print()
+                    print("-----------------------")
+                    expression.eval(program, self.localSymbolTable)
+                i += self.step
+
+            else:
+                break
+            
         
   

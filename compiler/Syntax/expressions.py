@@ -19,6 +19,7 @@ def p_expression(p):
                   | procedureCall
                   | conditional
                   | for_loop
+                  | print
                   | empty'''
         
     p[0] = p[1]

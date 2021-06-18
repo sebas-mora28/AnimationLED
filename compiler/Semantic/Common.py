@@ -1,6 +1,6 @@
 import sys
 sys.path.append("..")
-
+import copy
 
 class Instruction:
 
@@ -22,6 +22,8 @@ def verifyBoundariesMatrix(index1, index2, matrixSymbol):
 
 def verifyType(value1, instance):
     return type(value1) == instance
+
+
 
 def getColumn(index, matrix):
     
@@ -80,9 +82,6 @@ def isMatrix(matrix):
 
 
 
-
-
-
 def checkIndexValue(ID, indexValue, program, symbolTable):
 
     if verifyType(indexValue, int):
@@ -100,9 +99,33 @@ def checkIndexValue(ID, indexValue, program, symbolTable):
                     else:
                         program.semanticError.invalidIndexArguments(ID)
                         return
-                 
+    else:
+        program.semanticError.invalidIndexArguments(ID)
 
 
+
+
+def checkValue(value, typeValue, program, symbolTable, error):
+    
+        if verifyType(value, typeValue):
+            return value
+
+        elif verifyType(value, str):
+
+            symbol = searchSymbolByID(value, program, symbolTable)
+
+            if symbol != None:
+
+                if verifyType(symbol.value, typeValue ):
+                    
+                    return symbol.value
+                else:
+                    error()
+
+        else:
+            error() 
+
+                
 def searchSymbolByID(ID, program, symbolTable):
 
     if symbolTable.exist(ID):
@@ -165,12 +188,13 @@ def verifyListValueMatrix(matrix, program, symbolTable):
 
             elif verifyType(matrixValue, str):
 
-                val = searchSymbolByID(i, program, symbolTable)
+                val = searchSymbolByID(matrixValue, program, symbolTable)
+                print(val)
                 if val != None:
 
-                    if verifyType(val, bool):
+                    if verifyType(val.value, bool):
 
-                        lista[i] = val  
+                        matrix[i][j] = val.value  
 
                     else:
 
@@ -182,3 +206,64 @@ def verifyListValueMatrix(matrix, program, symbolTable):
                 program.semanticError.invalidListValue()
     
     return matrix
+
+
+
+
+def is8x8(matrix):
+
+    if len(matrix) != 8:
+        return False
+    
+    for i in range(0, len(matrix)):
+
+        if len(matrix[i]) != 8:
+            return False
+
+    
+    return True
+        
+
+
+
+def fillList(value_):
+
+    value = copy.deepcopy(value_)
+
+    print(value)
+    if isList(value):
+
+        if len(value) == 8:
+            return value
+        else:
+            i = len(value)
+            for i in range(i, 8):
+                value.append(False)
+
+            return value
+        
+    elif isMatrix(value):
+
+
+        if not is8x8(value):
+
+            if len(value) < 8:
+                for i in range(len(value), 8):
+                    value.append([])
+
+            for i in range(0, len(value)):
+                
+                if len(value[i]) == 8:
+                    continue
+
+                else:
+
+                    j = len(value[i])
+                    for j in range(j, 8):
+                        value[i].append(False)
+
+
+        print(len(value))
+        for i in range(0, len(value)):
+            print(len(value[i]))
+        return value

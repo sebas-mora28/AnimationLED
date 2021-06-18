@@ -32,15 +32,15 @@ class Lexer(object):
         'PrintLedX':'PRINTLEDX',
         'Procedure': 'PROCEDURE',
         'type':'TYPE',
+        'list':'LIST',
+        'print':'PRINT',
     }
 
 
 
     tokens = [
         'ID',
-
-        #'TIMERANGE',
-        #'OBJECTTYPE',
+        
         'STRING',
 
 
@@ -97,6 +97,7 @@ class Lexer(object):
     t_LCBRACKET = r'\{'
     t_RCBRACKET = r'\}'
     t_SEMICOLON = r'\;'
+
     t_COMMA = r'\,'
     t_COLON = r'\:'
     t_ASSIGN =  r'\='
@@ -157,7 +158,7 @@ class Lexer(object):
         return t
 
     def t_ID(self, t):
-        r"""[a-zA-Z][a-zA-Z0-9_@?]*"""
+        r'[a-zA-Z][a-zA-Z0-9_@?]*'
         current = self.reserved.get(t.value, 'ID')
         if len(t.value) > 10:
             self.t_error(t)
