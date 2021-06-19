@@ -25,6 +25,7 @@ def p_value(p):
 
 def p_variable_assign_single(p):
     '''variable_assign : ID ASSIGN value SEMICOLON'''
+    print(p.lineno(1))
     p[0] = VariableAssign(p[1], p[3])
 
 

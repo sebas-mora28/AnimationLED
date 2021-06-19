@@ -4,7 +4,9 @@ sys.path.append("..")
 from Semantic.Common import * 
 
 
-
+#ArithmeticOperation: Clase encargada de manejra las operaciones matematicas, evalua el string de la operacion matematica
+#Entradas:
+#           -Operacion: operacion matematica completa 
 class ArithmeticOperation(Instruction):
 
     def __init__(self, operation):
@@ -25,8 +27,12 @@ class ArithmeticOperation(Instruction):
 
 
 
-
-class MathOperation:
+#MathOperation: se encarga de evaluar sub operaciones mateticas según sus valores 
+#Entradas:
+#               - left_operation: operacion a la izquierda del operador 
+#               - operator: operador de la operacion 
+#               - right_operation: operacion a la derecha del operador 
+class MathOperation(Instruction):
 
     def __init__(self, left_operation, operator, right_operation):
         self.left_operation = left_operation
@@ -66,6 +72,10 @@ class MathOperation:
 
 
 
+
+# MathValue: Valor de una operacion matematica, puede ser un entero, id u otra operacion matematica 
+# Entradas:
+#                   - mathValue: valor de la operacion 
 
 
 class MathValue:

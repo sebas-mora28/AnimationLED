@@ -6,7 +6,9 @@ from Semantic.Common import *
 from Semantic.ListFunctions import *
 from Semantic.ArithmeticOperation import *
 
-
+#Evalua el valor dado en una asignacion segun su tipo
+#Entradas:
+#               - value = valor de la asignacion  
 class value(Instruction):
 
     def __init__(self, value):
@@ -96,6 +98,11 @@ class value(Instruction):
 
 
 
+#Define el comportamiento para la asignacion de variables 
+#Entradas:
+#                   - ID: indentificador del simbolo al que se le va a asignar el valor 
+#                   - value: valor de la asignacion 
+
 
 class VariableAssign(Instruction):
 
@@ -112,6 +119,12 @@ class VariableAssign(Instruction):
             self.value.eval(self.ID, program, symbolTable, "local")
     
     
+
+#Define el comportamiento para la asignacion de multiples variables 
+#Entradas:
+#                   - IDs: conjuntos de indentificadores de los simbolos a los que se le va a asignar los valores 
+#                   - values: valores de las asignaciones 
+
 class  MultipleAssign(Instruction):
 
     def __init__(self, IDs, values):
@@ -141,8 +154,9 @@ class  MultipleAssign(Instruction):
 
 
 
-
-
+#Evalua el valor dado en una asignacion de tipo indice segun su tipo
+#Entradas:
+#               - value = valor de la asignacion  
 class IndexValue:
 
     def __init__(self, value):
@@ -168,6 +182,11 @@ class IndexValue:
             return self.value 
 
 
+#Define el comportamiento para la asignacion de tipo indice 
+#Entradas:
+#                   - ID: indentificador del simbolo al que se le va a asignar el valor 
+#                   - index: tipo del indice 
+#                   - value: valor de la asignacion 
 class IndexAssign(Instruction):
 
     def __init__(self, index, value):

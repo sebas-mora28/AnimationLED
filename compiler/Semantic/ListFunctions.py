@@ -3,6 +3,12 @@ sys.path.append("..")
 from Semantic.Common import * 
 from Semantic.IndexType import *
 
+
+
+#Define el comportamiento para la funcion que devuelve las dimensiones de una matriz, ya sea su numero de filas o columnas
+#Entradas:
+#                       - ID: indentificador de la matriz a la que se desea conocer las dimensiones
+#                       - dimension: filas o columnas
 class MatrixDimension(Instruction):
 
     def __init__(self, ID, dimension):
@@ -30,7 +36,11 @@ class MatrixDimension(Instruction):
 
 
 
-
+#Define el comportamiento para insertar un valor a una lista
+#Entrrada:
+#                   -ID : indentificar de la lista 
+#                   -indice : posicion en la que se desea insertar el nuevo elemento 
+#                   -value : valor que se desea insertar
 class ListInsert(Instruction):
 
     def __init__(self, ID, index, value):
@@ -65,6 +75,12 @@ class ListInsert(Instruction):
                 program.semanticError.insertListProcedureError(self.ID)
 
 
+
+#Define el comportamiento para eliminar un valor a una lista
+#Entrrada:
+#                   -ID : indentificar de la lista 
+#                   -indice : posicion en la que se desea eliminar el nuevo elemento 
+#                   -value : valor que se desea eliminar
 class ListDelete(Instruction):
 
     def __init__(self, ID, index):
@@ -94,6 +110,12 @@ class ListDelete(Instruction):
 
 
 
+#Define el comportamiento para insertar un valor a una matriz
+#Entrrada:
+#                   -ID : indentificar de la matriz
+#                   -indice : posicion en la que se desea insertar el nuevo elemento 
+#                   -value : valor que se desea insertar
+#                   -insertionType: tipo de insercion, 0 filas 1 columnas
 class MatrixInsert(Instruction):
 
     def __init__(self, ID, value, insertionType, index):
@@ -200,7 +222,11 @@ class MatrixInsert(Instruction):
 
 
 
-
+#Define el comportamiento para eliminar un valor a una matriz
+#Entrrada:
+#                   -ID : indentificar de la matriz
+#                   -indice : posicion en la que se desea eliminar el nuevo elemento 
+#                   -insertionType: tipo de insercion, 0 filas 1 columnas
 class MatrixDelete(Instruction):
 
     def __init__(self, ID, index, eliminationType):
@@ -249,7 +275,9 @@ class MatrixDelete(Instruction):
 
 
 
-
+#Define el comportamiento de funcion len
+#Entradas: 
+#               -ID: identificador del simbolo a la que se aplicará la funcion 
 class Len(Instruction):
     def __init__(self, ID):
         self.ID = ID
@@ -265,6 +293,10 @@ class Len(Instruction):
 
 
 
+#Define el comportamiento de funcion range, crea una nueva lista dado un tamaño y un valor 
+#Entradas: 
+#               -list_size : tamaño de la lista
+#               -value : valor que tendran los elementos de la lista, debe ser un booleano
 class Range(Instruction):
 
     def __init__(self, list_size, value):
@@ -278,7 +310,10 @@ class Range(Instruction):
             program.semanticError.rangeInvalidArguments()
 
 
-
+#Define el comportamiento de las operaciones boolenas en listas y matrices
+#Entradas:
+#                   - index_type: tipo de indice 
+#                   - operation : operacion boolean, puede ser .T .F .Neg
 class BooleanOperationIndex(Instruction):
 
     def __init__(self, index_type, operation):
@@ -392,6 +427,11 @@ class BooleanOperationIndex(Instruction):
                 return res
             
     
+#Define el comportamiento de las operaciones boolenas en listas y matrices
+#Entradas:
+#                   - ID: identificador de la lista o matriz donde se aplicara la funcion
+#                   - operation : operacion boolean, puede ser .T .F .Neg
+
 
 class BooleanOperation(Instruction):
 

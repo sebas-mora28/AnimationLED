@@ -6,6 +6,11 @@ from Semantic.IndexType import *
 from Semantic.VariableAssignment import * 
 from Semantic.Common import *
 
+
+
+#Define el comportamiento del programa principal, se busca el Main y se evalual
+#Entradas:
+#                   -expressions_set: cuerpo del programa
 class Program:
 
     def __init__(self, expressions_set):
@@ -67,7 +72,11 @@ class Program:
 
 
 
-
+#Define el comportamiento del main, se encarga de validas las particularidades del main y ejecuta el cuerpo de este 
+#Entradas:
+#                   - ID: identificador del procedimiento
+#                   - parameter: parametros de la funcion
+#                   - expressions: cuerpo del procedimiento 
 class MainProcedure(Instruction):
 
     def __init__(self, ID, parameters, expressions):

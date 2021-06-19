@@ -7,6 +7,13 @@ from Semantic.Common import *
 from Semantic.SymbolTable.SymbolTable import *
 from Semantic.IndexType import *
 
+
+#Se encarga de definir el comportamiento del for 
+#Entradas:
+#                   - chagingValue: valor que cambia 
+#                   - iterable : valor que se itera
+#                   - step : valor que debe subir el valor que cambia en cada iteracion
+#                   - expressions: cuerpo del for 
 class ForLoop(Instruction):
 
     def __init__(self, changingValue, iterable, step, expressions):

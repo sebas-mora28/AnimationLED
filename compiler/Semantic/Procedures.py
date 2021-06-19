@@ -5,6 +5,12 @@ from Semantic.Common import *
 from Semantic.SymbolTable.SymbolTable import *
 
 
+
+#Define el comportamiento de un procedimiento, evalua el cuerpo del procedimiento
+#Entradas:
+#                   - ID: identificador del procedimiento
+#                   - parameter: parametros de la funcion
+#                   - expressions: cuerpo del procedimiento 
 class Procedure(Instruction):
 
     def __init__(self,ID, parameters, expressions):
@@ -49,6 +55,15 @@ class Procedure(Instruction):
                     return True
         
         return False
+
+
+
+#Define el comportamiento de la ejecucion de un procedimiento, evalua el cuerpo del procedimiento
+#Entradas:
+#                   - ID: identificador del procedimiento
+#                   - arguments: argumentos de la ejecucion del procedimiento 
+
+
 
 class CallProcedure(Instruction):
 
